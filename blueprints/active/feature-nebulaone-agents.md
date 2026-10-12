@@ -89,7 +89,7 @@ All three options live in **one file**. That is already how the schema works, so
 
 2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `Agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
 
-3. **Build the Json Handler.** Capabilities: Add Files, Data & File Tools, Generate Artifacts. Attach the skill. The system prompt must require it to:
+3. **Build the Json Handler.** Configuration, system prompt, chat starters, and test cases are written up in `Agents/json-handler-setup.md` — follow that file. Capabilities: Add Files, Data & File Tools, Generate Artifacts. Attach the skill. The system prompt must require it to:
    - load the transcript with Python rather than reading it inline
    - select the moments that answer the request
    - apply the clip buffer
