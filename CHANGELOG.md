@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-12
+
+- Rewrote `main` history to remove four large input videos and force-pushed the cleaned branch to GitHub.
+
 ## 2026-10-11
 
 - Set up the Raw to Reels project structure, README, and technical notes.
