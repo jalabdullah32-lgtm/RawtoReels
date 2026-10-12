@@ -28,6 +28,10 @@ The editing is also almost instant. The application gets passed the words from _
 - Uses the exact words and timestamps to create captions and find moments in the original video.
 - Exports a finished captioned video.
 
+## Open Caption Studio
+
+Open `app/index.html` directly from File Explorer. The page loads its CSS and JavaScript from the adjacent `app/css/` and `app/js/` folders, so it does not require a local host command.
+
 ## What I Want Next
 
 - Turn a raw voice note into a simple recording outline when useful. This is like a pre planning phase. I would do all of this on a sunday, and then record mon-tue.
