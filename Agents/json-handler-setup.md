@@ -11,7 +11,7 @@ Everything needed to build this agent in NebulaOne. Step 3 of
 
 | Setting | Value |
 |---|---|
-| Name | Raw to Reels Json Handler |
+| Name | RawtoReels - Json handler |
 | Model | `gpt terra` |
 | Capabilities | Add Files, Data & File Tools, Generate Artifacts |
 | Skill | Raw to Reels Reel JSON v1.0 — `Agents/skills/raw-to-reels-reel-json-v1.md` |
@@ -100,8 +100,8 @@ Never return an invalid file in order to return something.
 
 ## Chat starters
 
-None. Only the Orchestrator carries chat starters — users arrive here by being
-routed, not by picking a starter.
+None. This agent is silent. The only agent with chat starters will be the
+Orchestrator — users arrive here by being routed, not by picking a starter.
 
 ## Testing
 
@@ -130,7 +130,9 @@ loaded the file with Python instead of reading it.
 
 ### Results, 12 October 2026
 
-All six passed. Every returned file validated.
+All six passed. Every returned file validated, and agent output loads cleanly in
+Caption Studio — which also settles the open question of whether the validator in
+the skill agrees with the browser's `app.fromReels`. It does.
 
 | # | Result |
 |---|---|
@@ -174,13 +176,9 @@ Both constants are at the top of the validator code block in the skill.
 
 ## Known unknowns
 
-- Whether the validator in the skill agrees with the browser's `app.fromReels` in
-  every case. It was written against that code, and four agent outputs have now
-  passed it, but no file has been loaded in Caption Studio yet. Until one is, the
-  agreement is unproven. Loading any file from `test-fixtures/` settles it, and
-  needs no video.
 - Whether the merge instruction added to step 3 actually stops the agent splitting
-  continuous speech. Added after testing, so unverified.
+  continuous speech. Added after testing, so unverified. Case 2 is the sharper
+  re-test, since it produced three touching clips where one would do.
 - Whether an attachment survives a hand-off from the Orchestrator. Expected not to,
   so the Orchestrator's chat starters must tell the user to attach the transcript
   after arriving here, not before.

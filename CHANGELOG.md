@@ -8,6 +8,11 @@
 - Completed the NebulaOne capabilities investigation and moved its blueprint to `blueprints/completed`. _(claude)_
 - Confirmed a NebulaOne agent loads a full transcript with Python and reports accurate counts, so the Json Handler needs no pre-filtering step. _(claude)_
 - Updated `feature-nebulaone-agents.md` to mark the investigation dependency resolved and carry its findings into the build. _(claude)_
+- Documented the real reel JSON schema in `Technical Notes.md`, replacing an example the application rejects. _(claude)_
+- Added the shared agent skill `Agents/skills/raw-to-reels-reel-json-v1.md` with the output contract, clip buffer rules, and a Python validator. _(claude)_
+- Added the Json Handler setup guide and three fabricated test transcripts. _(claude)_
+- Built the Json Handler in NebulaOne. All six test cases passed and its output loads in Caption Studio without manual repair.
+- Fixed the Json Handler splitting continuous speech into separate clips, by telling it to merge touching selections. Not yet re-tested. _(claude)_
 
 ## 2026-10-11
 

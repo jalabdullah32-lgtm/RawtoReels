@@ -55,6 +55,66 @@ the Json Handler is built.
 - Author the shared "Raw to Reels Reel JSON v1.0" skill with its Python validator.
 - Build the Json Handler, Video Planner, and Orchestrator.
 
+## 2026-10-12 — Json Handler built and tested
+**Tool:** Claude Code, with the agent testing done by hand in NebulaOne
+
+### Goal
+
+Get the first of the three agents working end to end: a transcript goes in, reel
+JSON comes out, and it loads in Caption Studio without repair.
+
+### Completed
+
+- Replaced the reel JSON example in `Technical Notes.md` with the real contract.
+  The old one used `source_video` and `reels[]`, omitted three required keys, and
+  flattened clips into the reel, so anything built from it would have failed.
+- Wrote `Agents/skills/raw-to-reels-reel-json-v1.md`, the skill attached to the
+  agent: the output contract, the clip buffer rules, a Python validator, and a
+  list of the ways this output usually breaks.
+- Wrote `Agents/json-handler-setup.md` with the agent's configuration, system
+  prompt, and test cases.
+- Generated three fabricated transcripts in `Agents/test-fixtures/` matching the
+  exact shape `transcribe.py` writes, sized so each test can only pass honestly.
+- Built the agent in NebulaOne and ran all six test cases.
+
+### Results
+
+All six passed, and the output loads in Caption Studio without manual repair.
+
+- Clean transcript: three options, 67–73 s against a 60–75 s target.
+- Short transcript: returned 15.14 s for a 55–65 s ask and said it ran short,
+  rather than padding to fake the length.
+- Silences: not one clip spanned any gap. Zero dead air across five clips.
+- Vague request: asked one clarifying question, then committed when told to
+  surprise it.
+- Topic not present: named the mismatch and asked for the right transcript.
+- Code use: reported 405 words and 148.36 s exactly, which is only possible by
+  loading the file with Python rather than reading it.
+
+### Discoveries
+
+- The clip buffer is being applied as specified: 0.5 s lead-in and 0.4 s tail on
+  every clip, dropping to zero exactly where the rules require clamping.
+- One defect. The agent split continuous speech into separate clips — a boundary
+  at 117.58 s in two separate runs, and the whole short fixture chopped into three
+  touching clips. Valid output, but a clip boundary where nothing is removed is
+  not a cut. The system prompt now tells it to merge touching selections.
+- The validator in the skill agrees with the browser's `app.fromReels`. That was
+  an open question until a real agent file loaded.
+- An editor buffer overwrote the setup file with a stale version partway through,
+  which would have silently dropped the test results and the merge fix. Caught in
+  the diff before committing.
+
+### Next steps
+
+- Re-test the merge fix. Case 2 is the sharper test, since it produced three
+  touching clips where one would do.
+- Build the Video Planner.
+- Build the Orchestrator, whose chat starters must tell the user to attach the
+  transcript after being routed rather than before.
+- Judge the buffer defaults against a real reel with video, now that valid JSON
+  can be produced on demand.
+
 ## 2026-10-11
 
 ### Goal

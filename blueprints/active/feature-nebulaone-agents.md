@@ -89,12 +89,11 @@ All three options live in **one file**. That is already how the schema works, so
 
 2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `Agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
 
-3. **Build the Json Handler.** Configuration, system prompt, chat starters, and test cases are written up in `Agents/json-handler-setup.md` — follow that file. Capabilities: Add Files, Data & File Tools, Generate Artifacts. Attach the skill. The system prompt must require it to:
-   - load the transcript with Python rather than reading it inline
-   - select the moments that answer the request
-   - apply the clip buffer
-   - run the validator and fix any failure before returning anything
-   - emit the result as a **downloadable `.json` artifact, never as JSON in the chat body**
+3. ~~**Build the Json Handler.**~~ — **built and tested.** Configuration, system prompt, and test cases live in `Agents/json-handler-setup.md`. All six test cases passed on 12 October, and its output loads in Caption Studio without manual repair, which is the bar this step was set against.
+
+   One defect found: the agent split continuous speech into separate clips. The system prompt now tells it to merge touching selections. **That fix has not been re-tested** — re-run case 2, which produced three touching clips where one would do.
+
+   The agent is silent, with no chat starters. Only the Orchestrator carries those.
 
 4. **Build the Video Planner.** Chat plus file attachment, plus artifact generation so it can hand back markdown or HTML. Its skill should make it genuinely conversational — ask, listen, refine, and keep going until the user says they have it. The rubric comes at the end, not immediately.
 
@@ -150,14 +149,20 @@ Run the Video Planner on a real rough idea and confirm it keeps the thread acros
 
 ## Definition of done
 
-- Three agents exist and the Orchestrator routes correctly on both paths.
-- The Json Handler returns one `.json` that loads in Caption Studio without manual repair.
-- The Video Planner holds a real back-and-forth conversation.
-- `Technical Notes.md` matches the code.
+- [ ] Three agents exist and the Orchestrator routes correctly on both paths.
+- [x] The Json Handler returns one `.json` that loads in Caption Studio without manual repair.
+- [ ] The Video Planner holds a real back-and-forth conversation.
+- [x] `Technical Notes.md` matches the code.
 
 ## Status
 
-**Draft for review. Not approved for implementation.**
+**In progress.** Steps 1 to 3 are done: the schema is documented, the shared skill is written, and the Json Handler is built and passing all six of its test cases with output that loads in Caption Studio.
+
+Remaining:
+
+- **Step 4, the Video Planner.** Not started.
+- **Step 5, the Orchestrator.** Not started. Its chat starters must tell the user to attach the transcript *after* being routed, since an attachment is not expected to survive a hand-off.
+- **Re-test the merge fix** on the Json Handler. One line added to its system prompt after testing finished, so it is unverified.
 
 ---
 _Authored with Claude Code._
