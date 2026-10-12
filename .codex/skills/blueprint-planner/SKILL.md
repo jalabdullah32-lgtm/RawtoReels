@@ -34,6 +34,27 @@ After approval, create the blueprint in `blueprints/active/` using one of these 
 
 Use a clear lowercase hyphenated filename, such as `feature-audio-library.md`. Create `blueprints/active/`, `blueprints/completed/`, and `blueprints/parked/` only when they are first needed.
 
+## Authorship Tag
+
+Every blueprint created through this skill is tagged so the user can later tell which assistant produced the work.
+
+Open the file with frontmatter:
+
+```markdown
+---
+tool: codex
+---
+```
+
+End the file with a footer:
+
+```markdown
+---
+_Authored with Codex._
+```
+
+Keep the tag factual and do not remove or rewrite a `tool:` value set by another assistant. When editing a blueprint that another assistant created, leave its original tag in place and note the Codex contribution in the `Status` section instead.
+
 ## Starting Implementation
 
 After the user approves a blueprint, show how the work would be divided into focused implementation tasks. Wait for the user to approve that division before starting coding or delegating work to agents.
