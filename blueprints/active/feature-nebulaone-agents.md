@@ -95,13 +95,25 @@ All three options live in **one file**. That is already how the schema works, so
 
    The agent is silent, with no chat starters. Only the Orchestrator carries those.
 
-4. **Build the Video Planner.** Chat plus file attachment, plus artifact generation so it can hand back markdown or HTML. Its skill should make it genuinely conversational — ask, listen, refine, and keep going until the user says they have it. The rubric comes at the end, not immediately.
+4. **Build the Video Planner.** — **written, not yet built.** Configuration, system prompt, and seven test cases live in `Agents/video-planner-setup.md`; its skill is `Agents/skills/raw-to-reels-video-planning-v1.md` (8,624 characters). Add Files and Generate Artifacts, so it can take notes to plan from and hand back markdown or HTML. Data & File Tools is optional here — there is no transcript to load.
 
-5. **Build the Orchestrator.** Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Chat starters:
+   The skill is built around one rule: **no rubric on the first reply.** Talk first, keep going until the user says they have the angle, and only then produce it. Every question in the rubric has to be built from what the user already said, which is the difference between a prompt they can answer in one take and an interview question. Prompts to speak to, never a script to read.
+
+   Nothing here can be verified automatically. Case 1 — does it resist delivering a plan on turn one — is the sharp test, and the internship rant at `Agents/test-fixtures/internship-rant.md` is the fixture.
+
+   **The agent is built in NebulaOne. Cases 1 and 2 passed; testing is parked.** It reflected the idea back and asked instead of planning, and it held the thread across follow-up turns, which is the failure it was most at risk of. The owner stopped the phase there on purpose, to resume closer to real integration — this is a deliberate pause, not a blocked step. One artifact was kept, `Agents/test-fixtures/internship-reel-rubric.html`, and it reads well against the bar in the skill.
+
+5. **Build the Orchestrator.** — **written, not yet built.** Configuration, system prompt, chat starters, and eight test cases live in `Agents/orchestrator-setup.md`. Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Anything unclear gets one question rather than a guess.
+
+   **It has no file capabilities, deliberately.** Since an attachment is not expected to survive a hand-off, the Orchestrator cannot be allowed to take the transcript — accepting one would teach a habit that loses the user's file. No skill either; the routing rule and the project explainer both fit in the system prompt.
+
+   Chat starters:
    - one for cutting an existing recording
    - one for planning a video from an idea
    - one that explains what this whole thing is and how to use it
-   - one spare, to be decided once the other two are in use
+   - one spare, left unassigned on purpose until the other two have seen real use. Three candidates are recorded in the setup file.
+
+   Starter 1 deliberately does **not** mention attaching a file. That instruction belongs in the reply, after routing.
 
 ## Testing approach
 
@@ -151,18 +163,22 @@ Run the Video Planner on a real rough idea and confirm it keeps the thread acros
 
 - [ ] Three agents exist and the Orchestrator routes correctly on both paths.
 - [x] The Json Handler returns one `.json` that loads in Caption Studio without manual repair.
-- [ ] The Video Planner holds a real back-and-forth conversation.
+- [ ] The Video Planner holds a real back-and-forth conversation. *Early evidence says yes — cases 1 and 2 passed — but left unchecked while testing is parked.*
 - [x] `Technical Notes.md` matches the code.
 
 ## Status
 
 **In progress.** Steps 1 to 3 are done: the schema is documented, the shared skill is written, and the Json Handler is built and passing all six of its test cases with output that loads in Caption Studio.
 
-Remaining:
+**Step 4 is built and parked.** The Video Planner exists in NebulaOne and passed cases 1 and 2 — it asks instead of planning, and it holds a thread. Testing was stopped there by the owner, to resume closer to real integration. Step 5 is written but not built.
 
-- **Step 4, the Video Planner.** Not started.
-- **Step 5, the Orchestrator.** Not started. Its chat starters must tell the user to attach the transcript *after* being routed, since an attachment is not expected to survive a hand-off.
-- **Re-test the merge fix** on the Json Handler. One line added to its system prompt after testing finished, so it is unverified.
+Remaining, all of it hands-on in NebulaOne:
+
+- **Finish testing the Video Planner** when integration comes round. The best resumption is not cases 3 to 7 — it is recording one video against the saved rubric and running the transcript through the Json Handler, which exercises the planner, the hand-off, and the cut in one pass.
+- **Create the Orchestrator** from `Agents/orchestrator-setup.md` and run its eight cases. Case 4 — an ambiguous request that should get a question rather than a guess — is the sharp one.
+- **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `Agents/json-handler-setup.md` under **Merge re-test**.
+
+Two assumptions get confirmed or killed on the first real route, and both are recorded as known unknowns in the setup files: whether an attachment survives a hand-off, and whether the user lands back at the Orchestrator afterwards. The build is deliberately safe in the direction of both being true as assumed.
 
 ---
 _Authored with Claude Code._

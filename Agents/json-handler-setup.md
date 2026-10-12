@@ -156,6 +156,48 @@ the prompt now tells it to merge selections that touch. **Not yet re-tested.**
 Agent outputs from these runs are kept in `Agents/test-fixtures/` for comparison
 against later changes.
 
+### Merge re-test — pending
+
+Re-run **case 2** (`short.transcript.json`, a 60 second ask). It is the sharpest test
+because it produced the worst version of the defect: one 15.14 s option chopped into
+three clips with nothing removed between them.
+
+**The check is a one-liner.** Measure the gap between each clip's `end` and the next
+clip's `start`. A gap of exactly 0 means nothing was cut there, so the boundary should
+not exist.
+
+```python
+import json
+d = json.load(open("output.json", encoding="utf-8"))
+for o in d["options"]:
+    c = o["clips"]
+    print(o["id"], [round(c[i+1]["start"] - c[i]["end"], 3) for i in range(len(c) - 1)])
+```
+
+Baseline from the stored outputs of the 12 October runs, before the fix:
+
+| Fixture | Option | Zero gaps |
+|---|---|---|
+| `narcolepsy_diagnosis_reel_short_json.json` | option_1 | 2 of 2 boundaries — the whole thing is one stretch |
+| `narcolepsy_60-75_second_reels_clean_transcript.json` | option_1 | 1 of 3 |
+| | option_3 | 2 of 3 |
+| `narcolepsy_story_reels.json` | option_3 | 1 of 1 |
+
+**Pass:** case 2 returns one clip, and no option in any re-run prints a zero gap.
+Duration should land near 15.14 s either way — merging touching clips removes a
+boundary, not footage, so a big duration change means something else moved.
+
+Watch for the opposite failure too. Over-merging swallows a real pause: if a reel comes
+back with two clips where it used to have five, check that nothing now spans a silence,
+which is what case 3 exists to catch.
+
+One subtlety worth knowing before reading results. A zero gap in the output does not
+prove the agent picked touching selections — the padding closes gaps on its own, since
+`LEAD_IN + TAIL` is 0.9 s and `pad_clips` clamps each end to the next clip's start. It
+does not matter. A boundary with nothing removed is the defect whichever step created
+it, and the merge threshold in the prompt, "about a second", lines up with the 0.9 s
+the padding would close anyway.
+
 ### Reference output
 
 `expected-reel.json` is a hand-built valid reel: three clips, 46.88 s, inside a
@@ -177,11 +219,12 @@ Both constants are at the top of the validator code block in the skill.
 ## Known unknowns
 
 - Whether the merge instruction added to step 3 actually stops the agent splitting
-  continuous speech. Added after testing, so unverified. Case 2 is the sharper
-  re-test, since it produced three touching clips where one would do.
+  continuous speech. Added after testing, so unverified. See **Merge re-test** above
+  for the procedure and the before-the-fix numbers to compare against.
 - Whether an attachment survives a hand-off from the Orchestrator. Expected not to,
   so the Orchestrator's chat starters must tell the user to attach the transcript
-  after arriving here, not before.
+  after arriving here, not before. Built that way in `orchestrator-setup.md`: the
+  Orchestrator has no file capabilities at all, so the mistake is hard to make.
 
 ---
 _Authored with Claude Code._
