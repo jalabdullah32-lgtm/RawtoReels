@@ -85,9 +85,9 @@ All three options live in **one file**. That is already how the schema works, so
 
 ## Implementation steps
 
-1. **Fix `Technical Notes.md`** so later prompts are built from the real contract. Replace the example block and correct the SRT line.
+1. ~~**Fix `Technical Notes.md`**~~ — **done.** The file now carries the real contract under "Reel JSON schema v1.0", with a corrected example. The SRT line says removal is complete; legacy JSON is still accepted and still scheduled for removal.
 
-2. **Author the shared skill, "Raw to Reels Reel JSON v1.0."** Contains the contract above plus a Python validator mirroring `fromReels` — including the 0.005 duration tolerance and the no-overlap rule. Written as plain markdown so it survives a move off NebulaOne. Must fit under 30k characters.
+2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `Agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
 
 3. **Build the Json Handler.** Capabilities: Add Files, Data & File Tools, Generate Artifacts. Attach the skill. The system prompt must require it to:
    - load the transcript with Python rather than reading it inline
