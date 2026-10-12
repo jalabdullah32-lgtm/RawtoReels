@@ -12,7 +12,12 @@ This blueprint covers the agents themselves. Embedding them in the app is `impro
 
 ## Depends on
 
-`investigation-nebulaone-capabilities.md` — if the agent cannot process a large transcript in code, the Json Handler design below changes substantially.
+`blueprints/completed/investigation-nebulaone-capabilities.md` — **resolved.** The agent loads a full transcript with Python and reports accurate numbers, so the Json Handler is built as designed here with no pre-filtering. Artifacts proved reliable, so no paste-JSON fallback is needed.
+
+Two findings to carry into the build:
+
+- The attachment is expected to be lost on hand-off. Chat starters must tell the user to attach the transcript *after* routing, and the intended shape is a round trip — the Orchestrator routes out, the specialist works, the user lands back at the Orchestrator.
+- Four chat starters are available, matching the four planned below.
 
 ## Proposed user experience
 

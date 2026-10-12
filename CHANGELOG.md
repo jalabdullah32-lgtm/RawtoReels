@@ -3,6 +3,11 @@
 ## 2026-10-12
 
 - Rewrote `main` history to remove four large input videos and force-pushed the cleaned branch to GitHub.
+- Added authorship tagging to the blueprint-planner and project-worklog skills so each entry records which assistant produced the work. _(claude)_
+- Authored blueprints for the NebulaOne agents, the clip timeline editor, the caption studio layout, and the NebulaOne capabilities investigation, and parked an earlier agent-system draft. _(claude)_
+- Completed the NebulaOne capabilities investigation and moved its blueprint to `blueprints/completed`. _(claude)_
+- Confirmed a NebulaOne agent loads a full transcript with Python and reports accurate counts, so the Json Handler needs no pre-filtering step. _(claude)_
+- Updated `feature-nebulaone-agents.md` to mark the investigation dependency resolved and carry its findings into the build. _(claude)_
 
 ## 2026-10-11
 
