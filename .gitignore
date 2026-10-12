@@ -1,0 +1,10 @@
+# Personal source media and generated local transcripts
+Videos/input/*
+!Videos/input/.gitkeep
+Videos/transcripts/*
+!Videos/transcripts/.gitkeep
+
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+.venv/

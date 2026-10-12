@@ -30,7 +30,11 @@ The editing is also almost instant. The application gets passed the words from _
 
 ## Open Caption Studio
 
-Open `app/index.html` directly from File Explorer. The page loads its CSS and JavaScript from the adjacent `app/css/` and `app/js/` folders, so it does not require a local host command.
+Double-click `run-raw-to-reels.cmd`. It uses the project virtual environment when present, otherwise the Windows Python launcher, then starts a local server at `127.0.0.1` and opens Caption Studio in your default browser.
+
+Put source videos in `Videos/input`. The **Your videos** library lists them with a preview and shows whether a matching transcript exists. Click **Transcribe new videos** to create a local JSON transcript for each new video, then click a ready card to load its video and captions together. Transcripts live in `Videos/transcripts` and preserve any subfolder structure from `Videos/input`.
+
+You can still use **Load video** and **Load JSON** for files outside the local library. Raw source videos and generated transcripts stay on your computer and are excluded from Git.
 
 ## What I Want Next
 

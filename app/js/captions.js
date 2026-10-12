@@ -63,9 +63,11 @@ app.fromTranscript = (raw) => {
       let batch = []; let last = segment.start;
       const flush = () => { if (batch.length) { const items = batch; cues.push(app.cue(items[0].start, items.at(-1).end, items.map((word) => word.text).join(' '), { segment: segmentIndex, words: items.map((word) => word.index) })); batch = []; } };
       segment.words.forEach((word, wordIndex) => {
-        if (typeof word.text !== 'string' || !word.text.trim() || !app.validTime(word.start) || !app.validTime(word.end) || word.start < segment.start || word.end > segment.end || word.end < word.start || word.start < last) throw Error(`Segment ${segmentIndex + 1}, word ${wordIndex + 1}: invalid text or timestamps.`);
-        if (batch.length && (batch.length >= 5 || word.start - last > .5)) flush();
-        batch.push({ ...word, end: Math.max(word.end, word.start + .045), index: wordIndex }); last = word.end;
+        if (typeof word.text !== 'string' || !word.text.trim() || !app.validTime(word.start) || !app.validTime(word.end) || word.end < word.start) throw Error(`Segment ${segmentIndex + 1}, word ${wordIndex + 1}: invalid text or timestamps.`);
+        const start = Math.max(segment.start, last, word.start);
+        const end = Math.max(start, Math.min(segment.end, word.end));
+        if (batch.length && (batch.length >= 5 || start - last > .5)) flush();
+        batch.push({ ...word, start, end: Math.max(end, start + .045), index: wordIndex }); last = end;
       });
       flush();
     } else if (segment.text.trim()) cues.push(app.cue(segment.start, segment.end, segment.text, { segment: segmentIndex }));

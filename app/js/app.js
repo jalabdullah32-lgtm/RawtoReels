@@ -32,3 +32,4 @@ app.$('video-file').addEventListener('change', (event) => { app.loadVideo(event.
 app.$('export').addEventListener('click', app.exportVideo);
 app.updateStylePreview();
 app.loadModel(app.sample());
+app.refreshLibrary();

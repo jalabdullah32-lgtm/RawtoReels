@@ -40,11 +40,13 @@ app.$('play').addEventListener('click', async () => {
 });
 elements.scrub.addEventListener('input', () => { app.stop(); state.sourceTime = app.sourceAt(Number(elements.scrub.value)); if (state.videoURL) elements.video.currentTime = Math.min(state.sourceTime, elements.video.duration || state.sourceTime); app.paint(); });
 elements.video.addEventListener('ended', () => { app.stop(); app.paint(); });
-app.loadVideo = (file) => {
-  if (!file) return;
-  app.stop(); if (state.videoURL) URL.revokeObjectURL(state.videoURL);
-  state.videoFile = file; state.videoURL = URL.createObjectURL(file); elements.video.src = state.videoURL; elements.stage.classList.add('has-video'); app.$('export').disabled = false;
+app.setVideoSource = (url, name, file, revokeWhenReplaced) => {
+  if (!url) return;
+  app.stop(); if (state.videoURL && state.revokeVideoURL) URL.revokeObjectURL(state.videoURL);
+  state.videoFile = file || { name }; state.videoURL = url; state.revokeVideoURL = revokeWhenReplaced; elements.video.src = state.videoURL; elements.stage.classList.add('has-video'); app.$('export').disabled = false;
   app.$('export-hint').textContent = 'Recording happens in real time. Keep this tab open until your download begins.';
   elements.video.addEventListener('loadedmetadata', () => { if (state.model.kind === 'empty') state.model.extent = elements.video.duration; app.update(); }, { once: true });
-  app.setStatus(`Video ready: ${file.name}. Captions and audio will be included in export.`);
+  app.setStatus(`Video ready: ${name}. Captions and audio will be included in export.`);
 };
+app.loadVideo = (file) => { if (file) app.setVideoSource(URL.createObjectURL(file), file.name, file, true); };
+app.loadVideoURL = (url, name) => app.setVideoSource(url, name, null, false);
