@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "source": "narcolepsy_story.mp4",
+  "transcript_end_seconds": 148.36,
+  "timestamp_unit": "seconds_from_source_start",
+  "target_duration_seconds": {
+    "min": 45,
+    "max": 60
+  },
+  "options": [
+    {
+      "id": "option_1",
+      "title": "Diagnosed with narcolepsy",
+      "duration_seconds": 46.88,
+      "clips": [
+        {
+          "start": 3.26,
+          "end": 18.5,
+          "captions": [
+            {
+              "start": 3.76,
+              "end": 5.46,
+              "text": "So I want to talk"
+            },
+            {
+              "start": 5.46,
+              "end": 7.16,
+              "text": "about how I got diagnosed"
+            },
+            {
+              "start": 7.16,
+              "end": 8.86,
+              "text": "with narcolepsy because honestly nobody"
+            },
+            {
+              "start": 8.86,
+              "end": 10.56,
+              "text": "believes me when I tell"
+            },
+            {
+              "start": 10.56,
+              "end": 11.24,
+              "text": "this story."
+            },
+            {
+              "start": 11.64,
+              "end": 13.34,
+              "text": "It started in my second"
+            },
+            {
+              "start": 13.34,
+              "end": 15.04,
+              "text": "year of college. I was"
+            },
+            {
+              "start": 15.04,
+              "end": 16.74,
+              "text": "falling asleep in lectures which,"
+            },
+            {
+              "start": 16.74,
+              "end": 18.1,
+              "text": "fine, everybody does that."
+            }
+          ]
+        },
+        {
+          "start": 34.1,
+          "end": 50.6,
+          "captions": [
+            {
+              "start": 34.6,
+              "end": 36.3,
+              "text": "The thing that finally made"
+            },
+            {
+              "start": 36.3,
+              "end": 38.0,
+              "text": "me go to a doctor"
+            },
+            {
+              "start": 38.0,
+              "end": 39.7,
+              "text": "was I fell asleep driving."
+            },
+            {
+              "start": 39.7,
+              "end": 41.4,
+              "text": "Not for long. Maybe two"
+            },
+            {
+              "start": 41.4,
+              "end": 41.74,
+              "text": "seconds."
+            },
+            {
+              "start": 42.04,
+              "end": 43.74,
+              "text": "But I drifted into the"
+            },
+            {
+              "start": 43.74,
+              "end": 45.44,
+              "text": "next lane and a guy"
+            },
+            {
+              "start": 45.44,
+              "end": 47.14,
+              "text": "honked at me and I"
+            },
+            {
+              "start": 47.14,
+              "end": 48.84,
+              "text": "pulled over and sat there"
+            },
+            {
+              "start": 48.84,
+              "end": 50.2,
+              "text": "shaking for twenty minutes."
+            }
+          ]
+        },
+        {
+          "start": 117.08,
+          "end": 132.22,
+          "captions": [
+            {
+              "start": 117.58,
+              "end": 119.28,
+              "text": "When the doctor told me,"
+            },
+            {
+              "start": 119.28,
+              "end": 120.98,
+              "text": "I did not feel sad."
+            },
+            {
+              "start": 120.98,
+              "end": 122.68,
+              "text": "I felt relieved. Genuinely relieved."
+            },
+            {
+              "start": 122.68,
+              "end": 124.38,
+              "text": "Because it meant I was"
+            },
+            {
+              "start": 124.38,
+              "end": 125.06,
+              "text": "not lazy."
+            },
+            {
+              "start": 125.36,
+              "end": 127.06,
+              "text": "I had spent six years"
+            },
+            {
+              "start": 127.06,
+              "end": 128.76,
+              "text": "thinking I had a character"
+            },
+            {
+              "start": 128.76,
+              "end": 130.46,
+              "text": "problem. It was a neurological"
+            },
+            {
+              "start": 130.46,
+              "end": 131.82,
+              "text": "condition the whole time."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,425 @@
+{
+  "source": "rambling_voice_note.mp4",
+  "language": "en",
+  "segments": [
+    {
+      "start": 3.76,
+      "end": 7.5,
+      "text": "Okay so, narcolepsy. Let me think about how to say this.",
+      "words": [
+        {
+          "start": 3.76,
+          "end": 4.1,
+          "text": " Okay"
+        },
+        {
+          "start": 4.1,
+          "end": 4.44,
+          "text": " so,"
+        },
+        {
+          "start": 4.44,
+          "end": 4.78,
+          "text": " narcolepsy."
+        },
+        {
+          "start": 4.78,
+          "end": 5.12,
+          "text": " Let"
+        },
+        {
+          "start": 5.12,
+          "end": 5.46,
+          "text": " me"
+        },
+        {
+          "start": 5.46,
+          "end": 5.8,
+          "text": " think"
+        },
+        {
+          "start": 5.8,
+          "end": 6.14,
+          "text": " about"
+        },
+        {
+          "start": 6.14,
+          "end": 6.48,
+          "text": " how"
+        },
+        {
+          "start": 6.48,
+          "end": 6.82,
+          "text": " to"
+        },
+        {
+          "start": 6.82,
+          "end": 7.16,
+          "text": " say"
+        },
+        {
+          "start": 7.16,
+          "end": 7.5,
+          "text": " this."
+        }
+      ]
+    },
+    {
+      "start": 26.18,
+      "end": 29.92,
+      "text": "Right. I got diagnosed in college after I fell asleep driving.",
+      "words": [
+        {
+          "start": 26.18,
+          "end": 26.52,
+          "text": " Right."
+        },
+        {
+          "start": 26.52,
+          "end": 26.86,
+          "text": " I"
+        },
+        {
+          "start": 26.86,
+          "end": 27.2,
+          "text": " got"
+        },
+        {
+          "start": 27.2,
+          "end": 27.54,
+          "text": " diagnosed"
+        },
+        {
+          "start": 27.54,
+          "end": 27.88,
+          "text": " in"
+        },
+        {
+          "start": 27.88,
+          "end": 28.22,
+          "text": " college"
+        },
+        {
+          "start": 28.22,
+          "end": 28.56,
+          "text": " after"
+        },
+        {
+          "start": 28.56,
+          "end": 28.9,
+          "text": " I"
+        },
+        {
+          "start": 28.9,
+          "end": 29.24,
+          "text": " fell"
+        },
+        {
+          "start": 29.24,
+          "end": 29.58,
+          "text": " asleep"
+        },
+        {
+          "start": 29.58,
+          "end": 29.92,
+          "text": " driving."
+        }
+      ]
+    },
+    {
+      "start": 36.12,
+      "end": 37.82,
+      "text": "Sorry, I need a second.",
+      "words": [
+        {
+          "start": 36.12,
+          "end": 36.46,
+          "text": " Sorry,"
+        },
+        {
+          "start": 36.46,
+          "end": 36.8,
+          "text": " I"
+        },
+        {
+          "start": 36.8,
+          "end": 37.14,
+          "text": " need"
+        },
+        {
+          "start": 37.14,
+          "end": 37.48,
+          "text": " a"
+        },
+        {
+          "start": 37.48,
+          "end": 37.82,
+          "text": " second."
+        }
+      ]
+    },
+    {
+      "start": 51.05,
+      "end": 55.81,
+      "text": "The sleep study is the part people find strange. Thirty electrodes on your head.",
+      "words": [
+        {
+          "start": 51.05,
+          "end": 51.39,
+          "text": " The"
+        },
+        {
+          "start": 51.39,
+          "end": 51.73,
+          "text": " sleep"
+        },
+        {
+          "start": 51.73,
+          "end": 52.07,
+          "text": " study"
+        },
+        {
+          "start": 52.07,
+          "end": 52.41,
+          "text": " is"
+        },
+        {
+          "start": 52.41,
+          "end": 52.75,
+          "text": " the"
+        },
+        {
+          "start": 52.75,
+          "end": 53.09,
+          "text": " part"
+        },
+        {
+          "start": 53.09,
+          "end": 53.43,
+          "text": " people"
+        },
+        {
+          "start": 53.43,
+          "end": 53.77,
+          "text": " find"
+        },
+        {
+          "start": 53.77,
+          "end": 54.11,
+          "text": " strange."
+        },
+        {
+          "start": 54.11,
+          "end": 54.45,
+          "text": " Thirty"
+        },
+        {
+          "start": 54.45,
+          "end": 54.79,
+          "text": " electrodes"
+        },
+        {
+          "start": 54.79,
+          "end": 55.13,
+          "text": " on"
+        },
+        {
+          "start": 55.13,
+          "end": 55.47,
+          "text": " your"
+        },
+        {
+          "start": 55.47,
+          "end": 55.81,
+          "text": " head."
+        }
+      ]
+    },
+    {
+      "start": 57.91,
+      "end": 61.65,
+      "text": "And then they tell you to sleep naturally, which, good luck.",
+      "words": [
+        {
+          "start": 57.91,
+          "end": 58.25,
+          "text": " And"
+        },
+        {
+          "start": 58.25,
+          "end": 58.59,
+          "text": " then"
+        },
+        {
+          "start": 58.59,
+          "end": 58.93,
+          "text": " they"
+        },
+        {
+          "start": 58.93,
+          "end": 59.27,
+          "text": " tell"
+        },
+        {
+          "start": 59.27,
+          "end": 59.61,
+          "text": " you"
+        },
+        {
+          "start": 59.61,
+          "end": 59.95,
+          "text": " to"
+        },
+        {
+          "start": 59.95,
+          "end": 60.29,
+          "text": " sleep"
+        },
+        {
+          "start": 60.29,
+          "end": 60.63,
+          "text": " naturally,"
+        },
+        {
+          "start": 60.63,
+          "end": 60.97,
+          "text": " which,"
+        },
+        {
+          "start": 60.97,
+          "end": 61.31,
+          "text": " good"
+        },
+        {
+          "start": 61.31,
+          "end": 61.65,
+          "text": " luck."
+        }
+      ]
+    },
+    {
+      "start": 69.34,
+      "end": 70.02,
+      "text": "Hold on.",
+      "words": [
+        {
+          "start": 69.34,
+          "end": 69.68,
+          "text": " Hold"
+        },
+        {
+          "start": 69.68,
+          "end": 70.02,
+          "text": " on."
+        }
+      ]
+    },
+    {
+      "start": 79.42,
+      "end": 86.22,
+      "text": "The relief was the part I did not expect. I was not lazy. I was ill. Those are different things.",
+      "words": [
+        {
+          "start": 79.42,
+          "end": 79.76,
+          "text": " The"
+        },
+        {
+          "start": 79.76,
+          "end": 80.1,
+          "text": " relief"
+        },
+        {
+          "start": 80.1,
+          "end": 80.44,
+          "text": " was"
+        },
+        {
+          "start": 80.44,
+          "end": 80.78,
+          "text": " the"
+        },
+        {
+          "start": 80.78,
+          "end": 81.12,
+          "text": " part"
+        },
+        {
+          "start": 81.12,
+          "end": 81.46,
+          "text": " I"
+        },
+        {
+          "start": 81.46,
+          "end": 81.8,
+          "text": " did"
+        },
+        {
+          "start": 81.8,
+          "end": 82.14,
+          "text": " not"
+        },
+        {
+          "start": 82.14,
+          "end": 82.48,
+          "text": " expect."
+        },
+        {
+          "start": 82.48,
+          "end": 82.82,
+          "text": " I"
+        },
+        {
+          "start": 82.82,
+          "end": 83.16,
+          "text": " was"
+        },
+        {
+          "start": 83.16,
+          "end": 83.5,
+          "text": " not"
+        },
+        {
+          "start": 83.5,
+          "end": 83.84,
+          "text": " lazy."
+        },
+        {
+          "start": 83.84,
+          "end": 84.18,
+          "text": " I"
+        },
+        {
+          "start": 84.18,
+          "end": 84.52,
+          "text": " was"
+        },
+        {
+          "start": 84.52,
+          "end": 84.86,
+          "text": " ill."
+        },
+        {
+          "start": 84.86,
+          "end": 85.2,
+          "text": " Those"
+        },
+        {
+          "start": 85.2,
+          "end": 85.54,
+          "text": " are"
+        },
+        {
+          "start": 85.54,
+          "end": 85.88,
+          "text": " different"
+        },
+        {
+          "start": 85.88,
+          "end": 86.22,
+          "text": " things."
+        }
+      ]
+    }
+  ]
+}
