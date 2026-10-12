@@ -115,7 +115,7 @@ The user runs this final browser test themselves:
 
 ## Status
 
-Ready for user acceptance.
+Complete.
 
 ## Approved amendment: transcription feedback and recovery
 
