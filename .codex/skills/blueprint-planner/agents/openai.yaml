@@ -1,0 +1,6 @@
+interface:
+  display_name: "Blueprint Planner"
+  short_description: "Plan Raw to Reels work before coding"
+  default_prompt: "Use $blueprint-planner to turn my idea into a reviewed blueprint."
+policy:
+  allow_implicit_invocation: true
