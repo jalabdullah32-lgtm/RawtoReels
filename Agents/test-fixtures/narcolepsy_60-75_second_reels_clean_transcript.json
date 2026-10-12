@@ -1,0 +1,580 @@
+{
+  "schema_version": "1.0",
+  "source": "narcolepsy_story.mp4",
+  "transcript_end_seconds": 148.36,
+  "timestamp_unit": "seconds_from_source_start",
+  "target_duration_seconds": {
+    "min": 60,
+    "max": 75
+  },
+  "options": [
+    {
+      "id": "option_1",
+      "title": "The moment I knew something was wrong",
+      "duration_seconds": 72.9,
+      "clips": [
+        {
+          "start": 34.1,
+          "end": 50.6,
+          "captions": [
+            {
+              "start": 34.6,
+              "end": 36.98,
+              "text": "The thing that finally made me go"
+            },
+            {
+              "start": 36.98,
+              "end": 39.36,
+              "text": "to a doctor was I fell asleep"
+            },
+            {
+              "start": 39.36,
+              "end": 40.72,
+              "text": "driving. Not for long."
+            },
+            {
+              "start": 40.72,
+              "end": 43.4,
+              "text": "Maybe two seconds. But I drifted into"
+            },
+            {
+              "start": 43.4,
+              "end": 45.78,
+              "text": "the next lane and a guy honked"
+            },
+            {
+              "start": 45.78,
+              "end": 48.16,
+              "text": "at me and I pulled over and"
+            },
+            {
+              "start": 48.16,
+              "end": 50.2,
+              "text": "sat there shaking for twenty minutes."
+            }
+          ]
+        },
+        {
+          "start": 68.0,
+          "end": 77.4,
+          "captions": [
+            {
+              "start": 68.5,
+              "end": 70.88,
+              "text": "But I pushed. I said no, I"
+            },
+            {
+              "start": 70.88,
+              "end": 73.26,
+              "text": "fell asleep at the wheel, this is"
+            },
+            {
+              "start": 73.26,
+              "end": 75.64,
+              "text": "not normal tired. And she referred me"
+            },
+            {
+              "start": 75.64,
+              "end": 77.0,
+              "text": "to a sleep clinic."
+            }
+          ]
+        },
+        {
+          "start": 85.22,
+          "end": 117.58,
+          "captions": [
+            {
+              "start": 85.72,
+              "end": 88.1,
+              "text": "Then the next day they do what"
+            },
+            {
+              "start": 88.1,
+              "end": 89.8,
+              "text": "is called a nap study."
+            },
+            {
+              "start": 89.8,
+              "end": 92.18,
+              "text": "They put you in a dark room"
+            },
+            {
+              "start": 92.18,
+              "end": 94.56,
+              "text": "five times and tell you to try"
+            },
+            {
+              "start": 94.56,
+              "end": 97.24,
+              "text": "to sleep. A normal person takes fifteen,"
+            },
+            {
+              "start": 97.24,
+              "end": 99.62,
+              "text": "twenty minutes to fall asleep in that"
+            },
+            {
+              "start": 99.62,
+              "end": 102.0,
+              "text": "situation. If they fall asleep at all."
+            },
+            {
+              "start": 102.4,
+              "end": 104.78,
+              "text": "I fell asleep in under three minutes"
+            },
+            {
+              "start": 104.78,
+              "end": 107.16,
+              "text": "every single time. And I went straight"
+            },
+            {
+              "start": 107.16,
+              "end": 109.54,
+              "text": "into REM, which you are not supposed"
+            },
+            {
+              "start": 109.54,
+              "end": 112.42,
+              "text": "to do. That is the diagnosis right"
+            },
+            {
+              "start": 112.42,
+              "end": 113.78,
+              "text": "there. That is narcolepsy."
+            },
+            {
+              "start": 113.78,
+              "end": 116.16,
+              "text": "Your brain skips the queue and goes"
+            },
+            {
+              "start": 116.16,
+              "end": 117.18,
+              "text": "straight to dreaming."
+            }
+          ]
+        },
+        {
+          "start": 117.58,
+          "end": 132.22,
+          "captions": [
+            {
+              "start": 117.58,
+              "end": 119.96,
+              "text": "When the doctor told me, I did"
+            },
+            {
+              "start": 119.96,
+              "end": 122.0,
+              "text": "not feel sad. I felt relieved."
+            },
+            {
+              "start": 122.0,
+              "end": 124.38,
+              "text": "Genuinely relieved. Because it meant I was"
+            },
+            {
+              "start": 124.38,
+              "end": 127.06,
+              "text": "not lazy. I had spent six years"
+            },
+            {
+              "start": 127.06,
+              "end": 129.1,
+              "text": "thinking I had a character problem."
+            },
+            {
+              "start": 129.1,
+              "end": 131.48,
+              "text": "It was a neurological condition the whole"
+            },
+            {
+              "start": 131.48,
+              "end": 131.82,
+              "text": "time."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "option_2",
+      "title": "From falling asleep to finding an answer",
+      "duration_seconds": 71.5,
+      "clips": [
+        {
+          "start": 11.14,
+          "end": 34.6,
+          "captions": [
+            {
+              "start": 11.64,
+              "end": 14.02,
+              "text": "It started in my second year of"
+            },
+            {
+              "start": 14.02,
+              "end": 16.4,
+              "text": "college. I was falling asleep in lectures"
+            },
+            {
+              "start": 16.4,
+              "end": 18.1,
+              "text": "which, fine, everybody does that."
+            },
+            {
+              "start": 18.4,
+              "end": 20.78,
+              "text": "But then I started falling asleep in"
+            },
+            {
+              "start": 20.78,
+              "end": 23.16,
+              "text": "conversations. Mid sentence. Someone would be talking"
+            },
+            {
+              "start": 23.16,
+              "end": 25.54,
+              "text": "to me and I would just go."
+            },
+            {
+              "start": 26.04,
+              "end": 28.08,
+              "text": "I thought I was just tired."
+            },
+            {
+              "start": 28.08,
+              "end": 30.46,
+              "text": "I genuinely thought for two years that"
+            },
+            {
+              "start": 30.46,
+              "end": 32.84,
+              "text": "I was just a tired person and"
+            },
+            {
+              "start": 32.84,
+              "end": 34.2,
+              "text": "that was my personality."
+            }
+          ]
+        },
+        {
+          "start": 68.0,
+          "end": 77.4,
+          "captions": [
+            {
+              "start": 68.5,
+              "end": 70.88,
+              "text": "But I pushed. I said no, I"
+            },
+            {
+              "start": 70.88,
+              "end": 73.26,
+              "text": "fell asleep at the wheel, this is"
+            },
+            {
+              "start": 73.26,
+              "end": 75.64,
+              "text": "not normal tired. And she referred me"
+            },
+            {
+              "start": 75.64,
+              "end": 77.0,
+              "text": "to a sleep clinic."
+            }
+          ]
+        },
+        {
+          "start": 101.9,
+          "end": 132.22,
+          "captions": [
+            {
+              "start": 102.4,
+              "end": 104.78,
+              "text": "I fell asleep in under three minutes"
+            },
+            {
+              "start": 104.78,
+              "end": 107.16,
+              "text": "every single time. And I went straight"
+            },
+            {
+              "start": 107.16,
+              "end": 109.54,
+              "text": "into REM, which you are not supposed"
+            },
+            {
+              "start": 109.54,
+              "end": 112.42,
+              "text": "to do. That is the diagnosis right"
+            },
+            {
+              "start": 112.42,
+              "end": 113.78,
+              "text": "there. That is narcolepsy."
+            },
+            {
+              "start": 113.78,
+              "end": 116.16,
+              "text": "Your brain skips the queue and goes"
+            },
+            {
+              "start": 116.16,
+              "end": 118.94,
+              "text": "straight to dreaming. When the doctor told"
+            },
+            {
+              "start": 118.94,
+              "end": 120.98,
+              "text": "me, I did not feel sad."
+            },
+            {
+              "start": 120.98,
+              "end": 122.68,
+              "text": "I felt relieved. Genuinely relieved."
+            },
+            {
+              "start": 122.68,
+              "end": 125.06,
+              "text": "Because it meant I was not lazy."
+            },
+            {
+              "start": 125.36,
+              "end": 127.74,
+              "text": "I had spent six years thinking I"
+            },
+            {
+              "start": 127.74,
+              "end": 129.1,
+              "text": "had a character problem."
+            },
+            {
+              "start": 129.1,
+              "end": 131.48,
+              "text": "It was a neurological condition the whole"
+            },
+            {
+              "start": 131.48,
+              "end": 131.82,
+              "text": "time."
+            }
+          ]
+        },
+        {
+          "start": 140.04,
+          "end": 148.36,
+          "captions": [
+            {
+              "start": 140.54,
+              "end": 142.92,
+              "text": "Anyway. If you are falling asleep in"
+            },
+            {
+              "start": 142.92,
+              "end": 144.62,
+              "text": "conversations, that is not normal."
+            },
+            {
+              "start": 144.62,
+              "end": 146.66,
+              "text": "Please go get a sleep study."
+            },
+            {
+              "start": 146.66,
+              "end": 148.36,
+              "text": "That is the whole message."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "option_3",
+      "title": "Pushing for the sleep study",
+      "duration_seconds": 67.1,
+      "clips": [
+        {
+          "start": 58.86,
+          "end": 77.4,
+          "captions": [
+            {
+              "start": 59.36,
+              "end": 61.74,
+              "text": "And I want to be clear, I"
+            },
+            {
+              "start": 61.74,
+              "end": 63.44,
+              "text": "am not mad at her."
+            },
+            {
+              "start": 63.44,
+              "end": 65.48,
+              "text": "That is what it looks like."
+            },
+            {
+              "start": 65.48,
+              "end": 67.86,
+              "text": "A tired college kid saying he is"
+            },
+            {
+              "start": 67.86,
+              "end": 69.52,
+              "text": "tired. But I pushed."
+            },
+            {
+              "start": 69.52,
+              "end": 71.9,
+              "text": "I said no, I fell asleep at"
+            },
+            {
+              "start": 71.9,
+              "end": 74.28,
+              "text": "the wheel, this is not normal tired."
+            },
+            {
+              "start": 74.28,
+              "end": 76.66,
+              "text": "And she referred me to a sleep"
+            },
+            {
+              "start": 76.66,
+              "end": 77.0,
+              "text": "clinic."
+            }
+          ]
+        },
+        {
+          "start": 77.4,
+          "end": 95.64,
+          "captions": [
+            {
+              "start": 77.5,
+              "end": 79.88,
+              "text": "The sleep study is the strangest night"
+            },
+            {
+              "start": 79.88,
+              "end": 82.26,
+              "text": "of your life. They glue about thirty"
+            },
+            {
+              "start": 82.26,
+              "end": 84.64,
+              "text": "electrodes to your head and say, okay,"
+            },
+            {
+              "start": 84.64,
+              "end": 87.42,
+              "text": "sleep naturally. Then the next day they"
+            },
+            {
+              "start": 87.42,
+              "end": 89.8,
+              "text": "do what is called a nap study."
+            },
+            {
+              "start": 89.8,
+              "end": 92.18,
+              "text": "They put you in a dark room"
+            },
+            {
+              "start": 92.18,
+              "end": 94.56,
+              "text": "five times and tell you to try"
+            },
+            {
+              "start": 94.56,
+              "end": 95.24,
+              "text": "to sleep."
+            }
+          ]
+        },
+        {
+          "start": 101.9,
+          "end": 117.58,
+          "captions": [
+            {
+              "start": 102.4,
+              "end": 104.78,
+              "text": "I fell asleep in under three minutes"
+            },
+            {
+              "start": 104.78,
+              "end": 107.16,
+              "text": "every single time. And I went straight"
+            },
+            {
+              "start": 107.16,
+              "end": 109.54,
+              "text": "into REM, which you are not supposed"
+            },
+            {
+              "start": 109.54,
+              "end": 112.42,
+              "text": "to do. That is the diagnosis right"
+            },
+            {
+              "start": 112.42,
+              "end": 113.78,
+              "text": "there. That is narcolepsy."
+            },
+            {
+              "start": 113.78,
+              "end": 116.16,
+              "text": "Your brain skips the queue and goes"
+            },
+            {
+              "start": 116.16,
+              "end": 117.18,
+              "text": "straight to dreaming."
+            }
+          ]
+        },
+        {
+          "start": 117.58,
+          "end": 132.22,
+          "captions": [
+            {
+              "start": 117.58,
+              "end": 119.96,
+              "text": "When the doctor told me, I did"
+            },
+            {
+              "start": 119.96,
+              "end": 122.0,
+              "text": "not feel sad. I felt relieved."
+            },
+            {
+              "start": 122.0,
+              "end": 124.38,
+              "text": "Genuinely relieved. Because it meant I was"
+            },
+            {
+              "start": 124.38,
+              "end": 127.06,
+              "text": "not lazy. I had spent six years"
+            },
+            {
+              "start": 127.06,
+              "end": 129.1,
+              "text": "thinking I had a character problem."
+            },
+            {
+              "start": 129.1,
+              "end": 131.48,
+              "text": "It was a neurological condition the whole"
+            },
+            {
+              "start": 131.48,
+              "end": 131.82,
+              "text": "time."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
