@@ -1,5 +1,32 @@
 # Worklog
 
+## 2026-10-12 — Clip timeline experiment parked
+**Tool:** Codex
+
+### Goal
+
+Try automatic breathing room and manual cut-boundary controls in Caption Studio, then decide whether the project was ready to define how video cuts should work.
+
+### Completed
+
+- Added a browser-side 0.5-second breathing-room baseline for reel clips that arrived flush with their captions. Clips already carrying padding were left unchanged.
+- Added a selected-reel timeline prototype with a live playhead, a jump-to-cut action, editable start and end sliders, boundary validation, reset controls, and JSON synchronization for exports.
+- Created local sample reel JSON files for `IMG_9372` and `IMG_9347`, then tightened the `IMG_9347` selection into a focused systems-and-outcomes reel. The files stay in ignored `Videos/reels` because they contain personal transcript excerpts.
+- Removed automatic caption-editor scrolling during playback. The active caption still highlights, while manual caption navigation still scrolls to the selected line.
+- Updated the blueprint-planner skill so one chat handles one primary feature. Related fixes may stay together; a larger independent feature moves to a new chat after the current one is completed or parked.
+- Moved the clip timeline blueprint to `blueprints/parked` on the experiment branch and pushed commit `dff58e3` to `codex/clip-timeline-experiment`.
+
+### Results and decision
+
+- The reel JSON fixtures and edited boundaries passed Caption Studio's strict loader. The timeline controls were functional enough to preserve as an experiment.
+- The project owner could not yet judge what padding or cut behavior should become the product default. The feature is parked rather than merged into `main`.
+- The no-scroll playback change was included with the experiment because it was necessary to watch a reel without the page being pulled into the caption editor.
+
+### Next steps
+
+- Start the Caption Studio UI overhaul in a new chat from `main`.
+- Resume the timeline only after real-video use reveals what controls are actually needed. Switch to `codex/clip-timeline-experiment` to revisit the saved prototype.
+
 ## 2026-10-12 — Agent planning and the NebulaOne capabilities investigation
 **Tool:** Claude Code
 

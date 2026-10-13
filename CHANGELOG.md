@@ -19,6 +19,10 @@
 - Added the Orchestrator setup guide, including hand-off conditions for both specialists and four chat starters with one left unassigned. _(claude)_
 - Built the Orchestrator in NebulaOne. Hand-off to both specialists confirmed working. Remaining cases not run.
 - Recorded the Json Handler merge re-test procedure, with the zero-gap baseline measured from the 12 October outputs. _(claude)_
+- Prototyped breathing-room padding and manual reel-boundary controls in Caption Studio, then parked the feature for later evaluation on real videos. _(codex)_
+- Stopped Caption Studio from scrolling the caption editor during playback while keeping the active-caption highlight. _(codex)_
+- Added local sample reel JSON files for `IMG_9372` and `IMG_9347`; they remain outside Git because they contain personal transcript excerpts. _(codex)_
+- Added a one-primary-feature-per-chat rule to the blueprint planner and pushed the timeline experiment to `codex/clip-timeline-experiment`. _(codex)_
 
 ## 2026-10-11
 
