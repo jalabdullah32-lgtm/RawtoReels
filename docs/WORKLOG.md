@@ -4,6 +4,53 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-13 — Caption Studio rail-layout mockup
+**Tool:** Claude Code
+
+### Goal
+
+Build the mockup the previous session stopped short of: the rail layout with all four real
+sections and a theme switcher, so the owner could see a UI he would actually use before any
+implementation blueprint gets written.
+
+### Completed
+
+- Built `rail-layout-mockup.html` as one self-contained file — no frameworks, no build step,
+  no external assets, same rules as the owner's prototype.
+- Filled all four sections with the app's actual controls rather than placeholders, and
+  verified every one of the 34 IDs `app/js` looks up is present.
+- Wired the Style controls to the caption overlay for real, so the four presets and the nine
+  appearance controls can be judged rather than just looked at.
+- Added `?theme=` and `#section` deep links so any combination can be opened directly.
+- Settled the theme: Cloud Blue.
+- Rewrote the folder `README.md` around the signed-off design.
+
+### Failed attempts
+
+- **The first mockup was rejected.** It read as a prototype because too many elements competed
+  at the same visual weight — large pills, cards, buttons, panels, and blue accents everywhere.
+  The owner's correction became the spec for the rebuild: 64px rail, flexible workspace, 360px
+  inspector; one 8px spacing scale, 8–10px radii, one border color; 14px controls, 16px body,
+  20–24px headings; accent reserved for the selected reel and the primary action; no
+  developer-facing copy.
+- Two CSS bugs caught by rendering it rather than reading it: `[hidden]` lost to the layout's
+  `display:flex`, so all four panels stacked at once; and `.control label` beat `.checkrow` on
+  specificity, right-aligning the All caps row.
+
+### Discoveries
+
+- Screenshotting the file with headless Chrome caught both layout bugs immediately. Worth doing
+  on every future mockup instead of trusting the markup.
+- `[hidden]{display:none !important}` is now a hard requirement for the rebuild, since the
+  design depends on every panel staying in the DOM and toggling `hidden`.
+
+### Next steps
+
+- Write the **Media** blueprint through the blueprint-planner, and ship it working before
+  Captions starts.
+- Three calls still need confirming: Clear captions living in the Captions section, the status
+  line becoming a save state, and the export hint staying hidden until it matters.
+
 ## 2026-10-13 — Caption Studio UI direction
 **Tool:** Claude Code
 

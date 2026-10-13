@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raw to Reels · Caption Studio</title>
+<style>
+/* ---------------------------------------------------------------
+   Caption Studio — rail layout mockup
+   Cosmetic only. No real video, no real file loading, no exports.
+   Every element app/js looks up by ID is present here.
+
+   Rules this file follows:
+     64px icon rail · flexible preview workspace · 360px inspector
+     one 8px spacing scale, 8-10px radii, one border color
+     accent reserved for the selected reel and the primary action
+     14px controls, 16px body, 20px section headings
+   --------------------------------------------------------------- */
+
+:root{
+  --rail:64px;
+  --inspector:360px;
+  --r:8px;
+  --r-lg:10px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+/* ---- Themes ---------------------------------------------------- */
+[data-theme="cloud-blue"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --ink:#1F2937; --accent:#2F6FED; --soft:#EAF2FF;
+  --line:#E7E9EE; --muted:#737B87; --sunk:#F2F4F7;
+}
+[data-theme="warm-studio"]{
+  --bg:#F5F4F1; --surface:#FFFEFC; --ink:#242424; --accent:#2563EB; --soft:#EAF2FF;
+  --line:#E8E5DF; --muted:#787269; --sunk:#F0EEE9;
+}
+[data-theme="cool-mist"]{
+  --bg:#F3F6F7; --surface:#FBFCFC; --ink:#20303A; --accent:#0F766E; --soft:#E6F4F1;
+  --line:#E2E8EA; --muted:#677B85; --sunk:#EEF2F3;
+}
+[data-theme="signal-red"]{
+  --bg:#F7F7F8; --surface:#FFFFFF; --ink:#171717; --accent:#E5473B; --soft:#FDECEA;
+  --line:#E8E8EA; --muted:#74747A; --sunk:#F3F3F5;
+}
+
+*{box-sizing:border-box}
+/* Panels stay in the page and toggle with `hidden`, so `hidden` has to beat
+   the display rules the layout sets on those same elements. */
+[hidden]{display:none !important}
+html,body{height:100%}
+body{
+  margin:0; font-family:var(--font); font-size:16px; line-height:1.5;
+  color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+h1,h2{margin:0; font-weight:600; letter-spacing:-.01em}
+p{margin:0}
+button,input,select,textarea{font:inherit; color:inherit}
+:focus-visible{outline:2px solid var(--accent); outline-offset:1px; border-radius:var(--r)}
+
+/* ---- Header: file, save state, export -------------------------- */
+header{
+  flex:0 0 auto; height:56px; background:var(--surface);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:16px; padding:0 16px;
+}
+.brand{display:flex; align-items:center; gap:8px; flex:0 0 auto}
+.mark{width:24px; height:24px; border-radius:6px; background:var(--ink); color:var(--surface); display:grid; place-items:center}
+.mark svg{width:12px; height:12px}
+.brand b{font-size:14px; font-weight:600}
+.sep{width:1px; height:20px; background:var(--line); flex:0 0 auto}
+
+.file{
+  display:flex; align-items:center; gap:6px; border:0; background:none; cursor:pointer;
+  padding:6px 8px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--ink);
+  max-width:320px;
+}
+.file:hover{background:var(--sunk)}
+.file span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.file svg{width:12px; height:12px; flex:0 0 auto; color:var(--muted)}
+
+.header-right{margin-left:auto; display:flex; align-items:center; gap:8px}
+.save-state{font-size:13px; color:var(--muted); white-space:nowrap}
+.save-state.error{color:#C0392B}
+
+/* ---- Controls --------------------------------------------------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  border-radius:var(--r); padding:6px 12px; height:32px; font-size:14px; font-weight:500;
+  cursor:pointer; white-space:nowrap; transition:background .12s;
+}
+.btn:hover{background:var(--sunk)}
+.btn svg{width:14px; height:14px; flex:0 0 auto}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn.primary:hover{background:var(--accent); filter:brightness(.94)}
+.btn.quiet{border-color:transparent; background:none; color:var(--ink)}
+.btn.quiet:hover{background:var(--sunk); color:var(--ink)}
+.btn.icon{width:32px; padding:0}
+.btn.block{width:100%}
+.btn:disabled{opacity:.4; cursor:not-allowed}
+.file-button{position:relative; overflow:hidden}
+.file-button input{position:absolute; inset:0; opacity:0; cursor:pointer}
+
+/* ---- Shell ------------------------------------------------------ */
+.shell{flex:1 1 auto; min-height:0; display:grid; grid-template-columns:var(--rail) minmax(0,1fr) var(--inspector)}
+
+/* ---- Rail ------------------------------------------------------- */
+.rail{
+  background:var(--surface); border-right:1px solid var(--line);
+  padding:8px; display:flex; flex-direction:column; gap:2px;
+}
+.rail-item{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  border:0; background:none; cursor:pointer; padding:8px 0;
+  border-radius:var(--r); color:var(--muted); font-size:10px; font-weight:500;
+  transition:background .12s, color .12s;
+}
+.rail-item svg{width:18px; height:18px}
+.rail-item:hover{background:var(--sunk); color:var(--ink)}
+.rail-item[aria-current="true"]{background:var(--sunk); color:var(--ink)}
+
+/* ---- Workspace -------------------------------------------------- */
+.workspace{
+  min-width:0; display:flex; flex-direction:column; align-items:center;
+  gap:16px; padding:16px; overflow:hidden;
+}
+
+/* reel selector: the one place besides Export that earns the accent */
+.reels{display:flex; gap:2px; padding:2px; background:var(--sunk); border-radius:var(--r); flex:0 0 auto}
+.reel{
+  border:0; background:none; cursor:pointer; border-radius:6px;
+  padding:5px 12px; font-size:14px; font-weight:500; color:var(--muted);
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+}
+.reel span{font-size:13px; opacity:.75; font-variant-numeric:tabular-nums}
+.reel:hover{color:var(--ink)}
+.reel.active{background:var(--accent); color:#fff}
+.reel.active span{opacity:.85}
+
+.stage{
+  position:relative; aspect-ratio:9/16; flex:1 1 auto; min-height:0;
+  border-radius:var(--r-lg); overflow:hidden; background:#131316;
+  display:grid; place-items:center;
+}
+.stage-art{position:absolute; inset:0; background:linear-gradient(172deg,#2A2A30,#131317 62%,#0D0D10)}
+.placeholder{position:relative; color:rgba(255,255,255,.38); font-size:13px}
+#video{width:100%; height:100%; object-fit:cover}
+
+.caption-overlay{position:absolute; left:0; right:0; bottom:20%; display:flex; justify-content:center; padding:0 8%; pointer-events:none}
+.caption-text{
+  font-size:28px; font-weight:800; line-height:1.2; text-align:center; color:#fff;
+  -webkit-text-stroke:3px #000; paint-order:stroke fill;
+  background:rgba(0,0,0,0); padding:2px 8px; border-radius:4px;
+}
+
+.transport{display:flex; align-items:center; gap:12px; width:100%; max-width:560px; flex:0 0 auto}
+#scrub{flex:1 1 auto; min-width:0; accent-color:var(--muted); height:4px}
+.time{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* ---- Inspector -------------------------------------------------- */
+.inspector{background:var(--surface); border-left:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+.inspector-head{
+  flex:0 0 auto; height:56px; padding:0 16px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.inspector-head h2{font-size:20px; letter-spacing:-.015em}
+.inspector-body{flex:1 1 auto; min-height:0; overflow-y:auto; padding:16px}
+.inspector-body::-webkit-scrollbar{width:8px}
+.inspector-body::-webkit-scrollbar-thumb{background:var(--line); border-radius:8px}
+
+.group{margin-bottom:24px}
+.group:last-child{margin-bottom:0}
+.group-label{font-size:13px; font-weight:500; color:var(--muted); margin-bottom:8px}
+.toolbar{display:flex; align-items:center; gap:8px; margin-bottom:8px}
+.toolbar .spacer{flex:1 1 auto}
+.row-stack{display:flex; gap:8px}
+.row-stack > .btn{flex:1 1 0; min-width:0; justify-content:flex-start}
+
+/* Media */
+.progress-strip{border:1px solid var(--line); border-radius:var(--r); padding:8px 12px; margin-bottom:8px}
+.progress-strip .top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.progress-strip strong{font-size:14px; font-weight:500}
+.progress-strip span,.progress-strip p{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+progress{width:100%; height:4px; margin:8px 0; accent-color:var(--muted); display:block}
+
+.video-library{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.video-card{border:1px solid var(--line); border-radius:var(--r); padding:8px; display:flex; flex-direction:column; gap:8px; background:var(--surface)}
+.video-still{aspect-ratio:9/16; height:88px; width:auto; margin:0 auto; border-radius:6px; object-fit:cover; background:linear-gradient(172deg,#2E2E34,#141418)}
+.video-card strong{font-size:14px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.video-card .state{font-size:13px; color:var(--muted); margin-top:-4px}
+.library-actions{display:flex; gap:8px}
+.library-actions .btn{flex:1 1 0; min-width:0; height:28px; font-size:13px; padding:0 8px}
+.library-actions .btn.icon{flex:0 0 28px; width:28px; padding:0}
+
+/* Captions */
+.list-head{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px}
+.list-head #cue-count{font-size:13px; color:var(--muted)}
+.editor{display:flex; flex-direction:column}
+.cue{
+  display:grid; grid-template-columns:52px 1fr; gap:8px; align-items:start;
+  padding:8px; border-radius:var(--r); cursor:pointer; border-left:2px solid transparent;
+}
+.cue:hover{background:var(--sunk)}
+.cue.active{background:var(--sunk); border-left-color:var(--ink)}
+.cue-time{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; padding-top:6px}
+.cue textarea{
+  width:100%; border:1px solid transparent; border-radius:6px; background:none;
+  padding:4px 6px; resize:none; font-size:16px; line-height:1.4; overflow:hidden;
+}
+.cue textarea:hover{border-color:var(--line)}
+.cue textarea:focus{outline:none; border-color:var(--accent); background:var(--surface)}
+.footer-actions{display:flex; gap:8px; margin-top:16px; padding-top:16px; border-top:1px solid var(--line)}
+
+/* Style */
+.presets{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.preset{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); cursor:pointer; padding:0; overflow:hidden}
+.preset:hover{background:var(--sunk)}
+.preset.active{border-color:var(--ink)}
+.preset-art{height:40px; display:grid; place-items:center; background:linear-gradient(172deg,#2E2E34,#141418)}
+.preset-art em{font-style:normal; font-size:10px; font-weight:800; padding:1px 4px}
+.preset-name{display:block; padding:6px; font-size:13px; text-align:center}
+
+.style-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.control{display:flex; flex-direction:column; gap:8px; min-width:0}
+.control.wide{grid-column:1 / -1}
+.control > label{font-size:13px; color:var(--muted); display:flex; justify-content:space-between; gap:8px}
+.control output{color:var(--ink); font-variant-numeric:tabular-nums}
+.control select{border:1px solid var(--line); border-radius:var(--r); padding:0 8px; height:32px; font-size:14px; background:var(--surface)}
+.control input[type=range]{width:100%; accent-color:var(--muted); height:4px}
+.control input[type=color]{width:100%; height:32px; padding:2px; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); cursor:pointer}
+.control label.checkrow{display:flex; align-items:center; justify-content:flex-start; gap:8px; font-size:14px; color:var(--ink); cursor:pointer}
+.checkrow input{accent-color:var(--accent); width:16px; height:16px}
+
+/* Assistant */
+.assistant-frame{
+  border:1px solid var(--line); border-radius:var(--r); background:var(--sunk);
+  min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; text-align:center; padding:24px; color:var(--muted);
+}
+.assistant-frame strong{color:var(--ink); font-size:16px; font-weight:500}
+.assistant-frame p{font-size:14px; max-width:240px}
+
+/* ---- Theme picker: review tool, floats clear of the product ----- */
+.theme-picker{
+  position:fixed; left:80px; bottom:16px; z-index:50;
+  display:flex; align-items:center; gap:6px; padding:6px;
+  background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  box-shadow:0 8px 24px -12px rgba(0,0,0,.4); opacity:.35; transition:opacity .15s;
+}
+.theme-picker:hover,.theme-picker:focus-within{opacity:1}
+.theme-picker .dot{width:18px; height:18px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0}
+.theme-picker .dot[aria-pressed="true"]{border-color:var(--ink)}
+</style>
+</head>
+
+<body data-theme="cloud-blue">
+
+<!-- ===== Header: file · save state · export ===================== -->
+<header>
+  <div class="brand">
+    <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></div>
+    <b>Raw to Reels</b>
+  </div>
+  <div class="sep" aria-hidden="true"></div>
+  <button class="file" type="button">
+    <span>internship-rant.mp4</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+
+  <div class="header-right">
+    <p class="save-state" id="status" role="status">All changes saved</p>
+    <button class="btn quiet" id="download-json" type="button">Save JSON</button>
+    <button class="btn primary" id="export" type="button">Export video</button>
+    <p class="export-hint" id="export-hint" hidden>Load a local video to enable export.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- ===== Rail ===== -->
+  <nav class="rail" aria-label="Sections">
+    <button class="rail-item" type="button" data-section="media" aria-current="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5M16 4v5"/></svg>
+      Media
+    </button>
+    <button class="rail-item" type="button" data-section="captions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M10 10.3a2.4 2.4 0 1 0 0 3.4M17 10.3a2.4 2.4 0 1 0 0 3.4"/></svg>
+      Captions
+    </button>
+    <button class="rail-item" type="button" data-section="style">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="12" r="1" fill="currentColor"/><circle cx="10" cy="7.8" r="1" fill="currentColor"/><circle cx="15" cy="8.3" r="1" fill="currentColor"/></svg>
+      Style
+    </button>
+    <button class="rail-item" type="button" data-section="assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.8 4.7L18.5 10l-4.7 1.8L12 16.5l-1.8-4.7L5.5 10l4.7-1.8z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg>
+      Assistant
+    </button>
+  </nav>
+
+  <!-- ===== Workspace ===== -->
+  <div class="workspace">
+    <div class="reels" id="options" role="group" aria-label="Reels">
+      <span id="option-count" hidden>2 REELS</span>
+      <button class="reel" type="button">Full source <span>10:24</span></button>
+      <button class="reel active" type="button">Why I quit <span>0:48</span></button>
+      <button class="reel" type="button">The 6am part <span>0:31</span></button>
+    </div>
+
+    <div class="stage" id="stage">
+      <video id="video" playsinline preload="auto" hidden></video>
+      <div class="stage-art" aria-hidden="true"></div>
+      <p class="placeholder">9:16</p>
+      <div class="caption-overlay" id="overlay" aria-live="off">
+        <span class="caption-text" id="caption-text">so I just stopped showing up</span>
+      </div>
+    </div>
+
+    <div class="transport">
+      <button class="btn icon quiet" id="play" type="button" aria-label="Play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
+      <input id="scrub" type="range" min="0" max="48" step="0.01" value="0" aria-label="Playhead">
+      <span class="time" id="time">0:00 / 0:48</span>
+    </div>
+  </div>
+
+  <!-- ===== Inspector ===== -->
+  <aside class="inspector">
+    <div class="inspector-head" data-head="media"><h2>Media</h2></div>
+    <div class="inspector-head" data-head="captions" hidden>
+      <h2>Captions</h2>
+      <div style="display:flex;gap:4px">
+        <button class="btn icon quiet" id="prev-cue" type="button" aria-label="Previous caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="btn icon quiet" id="next-cue" type="button" aria-label="Next caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="inspector-head" data-head="style" hidden><h2>Style</h2></div>
+    <div class="inspector-head" data-head="assistant" hidden><h2>Assistant</h2></div>
+
+    <!-- Media -->
+    <div class="inspector-body" data-panel="media">
+      <div class="group" id="library-section">
+        <div class="toolbar">
+          <span class="group-label" style="margin:0">Library</span>
+          <span class="spacer"></span>
+          <button class="btn quiet" id="transcribe" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>
+            Transcribe
+          </button>
+        </div>
+
+        <div class="progress-strip" id="transcription-progress" hidden aria-live="polite">
+          <div class="top">
+            <strong id="transcription-label">Transcribing internship-rant.mp4</strong>
+            <span id="transcription-count">2 of 5</span>
+          </div>
+          <progress id="transcription-meter" value="2" max="5"></progress>
+          <p id="transcription-detail">1 already transcribed</p>
+        </div>
+
+        <div class="video-library" id="video-library">
+          <article class="video-card">
+            <div class="video-still" aria-hidden="true"></div>
+            <strong>internship-rant.mp4</strong>
+            <p class="state">Ready</p>
+            <div class="library-actions">
+              <button class="btn" type="button">Load</button>
+              <button class="btn quiet icon" type="button" data-retranscribe="true" title="Re-transcribe" aria-label="Re-transcribe">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>
+              </button>
+            </div>
+          </article>
+          <article class="video-card">
+            <div class="video-still" aria-hidden="true"></div>
+            <strong>6am-routine.mov</strong>
+            <p class="state">No transcript</p>
+            <div class="library-actions">
+              <button class="btn" type="button">Preview</button>
+              <button class="btn quiet icon" type="button" data-retranscribe="true" title="Transcribe" aria-label="Transcribe">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Import</div>
+        <div class="row-stack">
+          <label class="btn quiet file-button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            Video file
+            <input id="video-file" type="file" accept="video/*,.mp4,.mov,.webm" aria-label="Load video">
+          </label>
+          <label class="btn quiet file-button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2M15 4h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-2"/></svg>
+            Caption JSON
+            <input id="json-file" type="file" accept=".json,application/json" aria-label="Load transcript or Raw to Reels JSON">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Captions -->
+    <div class="inspector-body" data-panel="captions" hidden>
+      <div class="list-head"><span id="cue-count">14 captions</span></div>
+      <div class="editor" id="editor"></div>
+      <div class="footer-actions">
+        <button class="btn quiet" id="reset" type="button">Reset text</button>
+        <button class="btn quiet" id="clear" type="button">Clear captions</button>
+      </div>
+    </div>
+
+    <!-- Style -->
+    <div class="inspector-body" data-panel="style" hidden>
+      <div class="group">
+        <div class="group-label">Preset</div>
+        <div class="presets" id="style-presets">
+          <button type="button" class="preset active" data-preset="clean">
+            <span class="preset-art"><em style="color:#fff">This idea caught fire</em></span>
+            <span class="preset-name">Clean white</span>
+          </button>
+          <button type="button" class="preset" data-preset="bold">
+            <span class="preset-art"><em style="color:#fff;-webkit-text-stroke:2px #000;paint-order:stroke fill">This idea caught fire</em></span>
+            <span class="preset-name">Bold outline</span>
+          </button>
+          <button type="button" class="preset" data-preset="yellow">
+            <span class="preset-art"><em style="color:#FFD400;-webkit-text-stroke:2px #000;paint-order:stroke fill">This idea caught fire</em></span>
+            <span class="preset-name">Creator yellow</span>
+          </button>
+          <button type="button" class="preset" data-preset="boxed">
+            <span class="preset-art"><em style="color:#fff;background:rgba(0,0,0,.75);border-radius:2px">This idea caught fire</em></span>
+            <span class="preset-name">Subtitle box</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="style-grid">
+          <div class="control wide">
+            <label for="cap-font">Font</label>
+            <select id="cap-font">
+              <option value="system">Modern sans</option>
+              <option value="arial">Arial</option>
+              <option value="impact">Impact / condensed</option>
+              <option value="georgia">Georgia / serif</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="cap-size">Size <output id="cap-size-value">28</output></label>
+            <input id="cap-size" type="range" min="14" max="46" step="1" value="28">
+          </div>
+          <div class="control">
+            <label for="cap-position">Height <output id="cap-position-value">20%</output></label>
+            <input id="cap-position" type="range" min="8" max="55" step="1" value="20">
+          </div>
+          <div class="control">
+            <label for="cap-color">Text color</label>
+            <input id="cap-color" type="color" value="#ffffff">
+          </div>
+          <div class="control">
+            <label for="cap-outline-color">Outline color</label>
+            <input id="cap-outline-color" type="color" value="#000000">
+          </div>
+          <div class="control wide">
+            <label for="cap-outline">Outline thickness <output id="cap-outline-value">3px</output></label>
+            <input id="cap-outline" type="range" min="0" max="8" step=".5" value="3">
+          </div>
+          <div class="control">
+            <label for="cap-bg-color">Box color</label>
+            <input id="cap-bg-color" type="color" value="#000000">
+          </div>
+          <div class="control">
+            <label for="cap-bg">Box opacity <output id="cap-bg-value">0%</output></label>
+            <input id="cap-bg" type="range" min="0" max="95" step="5" value="0">
+          </div>
+          <div class="control wide">
+            <label class="checkrow" for="cap-uppercase"><input type="checkbox" id="cap-uppercase"> All caps</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn quiet" id="reset-style" type="button">Reset appearance</button>
+    </div>
+
+    <!-- Assistant -->
+    <div class="inspector-body" data-panel="assistant" hidden>
+      <div class="assistant-frame">
+        <strong>NebulaOne</strong>
+        <p>Loads the first time you open this section.</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Review tool, not part of the product -->
+<div class="theme-picker" id="themes" title="Mockup theme preview">
+  <button class="dot" type="button" data-set="cloud-blue" aria-pressed="true" aria-label="Cloud Blue" style="background:#2F6FED"></button>
+  <button class="dot" type="button" data-set="warm-studio" aria-label="Warm Studio" style="background:#2563EB"></button>
+  <button class="dot" type="button" data-set="cool-mist" aria-label="Cool Mist" style="background:#0F766E"></button>
+  <button class="dot" type="button" data-set="signal-red" aria-label="Signal Red" style="background:#E5473B"></button>
+</div>
+
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+
+/* ---- Theme (review tool) ---------------------------------------- */
+function setTheme(name) {
+  if (!document.querySelector(`.dot[data-set="${name}"]`)) return;
+  document.body.dataset.theme = name;
+  document.querySelectorAll('#themes .dot').forEach((dot) => {
+    dot.setAttribute('aria-pressed', String(dot.dataset.set === name));
+  });
+}
+$('themes').addEventListener('click', (event) => {
+  const dot = event.target.closest('.dot');
+  if (dot) setTheme(dot.dataset.set);
+});
+
+/* ---- Rail: every panel stays in the page and toggles `hidden` ---- */
+function setSection(name) {
+  if (!document.querySelector(`.rail-item[data-section="${name}"]`)) return;
+  document.querySelectorAll('.rail-item').forEach((item) => item.setAttribute('aria-current', String(item.dataset.section === name)));
+  document.querySelectorAll('[data-panel]').forEach((panel) => { panel.hidden = panel.dataset.panel !== name; });
+  document.querySelectorAll('[data-head]').forEach((head) => { head.hidden = head.dataset.head !== name; });
+}
+document.querySelectorAll('.rail-item').forEach((item) => {
+  item.addEventListener('click', () => setSection(item.dataset.section));
+});
+
+/* Deep links for review: ...mockup.html?theme=signal-red#style */
+setTheme(new URLSearchParams(location.search).get('theme') || 'cloud-blue');
+setSection(location.hash.slice(1) || 'media');
+
+/* ---- Reels ------------------------------------------------------- */
+document.querySelectorAll('.reel').forEach((reel) => {
+  reel.addEventListener('click', () => {
+    document.querySelectorAll('.reel').forEach((other) => other.classList.toggle('active', other === reel));
+  });
+});
+
+/* ---- Captions ---------------------------------------------------- */
+const CUES = [
+  [0.0, 3.2, 'so I just stopped showing up'],
+  [3.2, 6.8, 'and nobody noticed for two weeks'],
+  [6.8, 10.4, 'which told me everything I needed to know'],
+  [10.4, 14.1, 'about how much that job actually mattered'],
+  [14.1, 17.6, 'I was answering emails at 6am'],
+  [17.6, 21.0, 'for a company that would replace me in a day'],
+  [21.0, 24.9, 'and the worst part is I was proud of it'],
+  [24.9, 28.3, 'I thought exhaustion was the same as effort'],
+  [28.3, 32.0, 'it took me a year to unlearn that'],
+  [32.0, 35.5, 'now I measure the work by what it makes'],
+  [35.5, 39.2, 'not by how wrecked I feel at the end of it'],
+  [39.2, 42.6, 'if that sounds obvious to you, good'],
+  [42.6, 45.4, 'it was not obvious to me'],
+  [45.4, 48.0, 'and that is the whole video'],
+];
+const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+const grow = (field) => { field.style.height = 'auto'; field.style.height = `${field.scrollHeight}px`; };
+
+let activeCue = 0;
+const editor = $('editor');
+CUES.forEach(([start, , text], index) => {
+  const row = document.createElement('div');
+  row.className = 'cue';
+  row.dataset.index = index;
+
+  const time = document.createElement('span');
+  time.className = 'cue-time';
+  time.textContent = clock(start);
+
+  const input = document.createElement('textarea');
+  input.rows = 1;
+  input.value = text;
+  input.setAttribute('aria-label', `Caption ${index + 1} text`);
+  input.addEventListener('input', () => {
+    grow(input);
+    if (index === activeCue) $('caption-text').textContent = input.value;
+  });
+
+  row.append(time, input);
+  row.addEventListener('click', () => selectCue(index));
+  editor.append(row);
+  grow(input);
+});
+
+function selectCue(index) {
+  activeCue = Math.max(0, Math.min(index, CUES.length - 1));
+  document.querySelectorAll('.cue').forEach((row) => row.classList.toggle('active', Number(row.dataset.index) === activeCue));
+  const row = editor.querySelector(`.cue[data-index="${activeCue}"]`);
+  row?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  $('caption-text').textContent = row.querySelector('textarea').value;
+  const [start] = CUES[activeCue];
+  $('scrub').value = start;
+  $('time').textContent = `${clock(start)} / 0:48`;
+}
+$('prev-cue').addEventListener('click', () => selectCue(activeCue - 1));
+$('next-cue').addEventListener('click', () => selectCue(activeCue + 1));
+selectCue(0);
+
+/* ---- Transport ---------------------------------------------------- */
+$('scrub').addEventListener('input', (event) => {
+  const time = Number(event.target.value);
+  $('time').textContent = `${clock(time)} / 0:48`;
+  const index = CUES.findIndex(([start, end]) => time >= start && time < end);
+  if (index >= 0 && index !== activeCue) selectCue(index);
+});
+
+let playing = false;
+$('play').addEventListener('click', () => {
+  playing = !playing;
+  $('play').innerHTML = playing
+    ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>';
+  $('play').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+});
+
+/* ---- Transcription progress (cosmetic reveal) ---------------------- */
+$('transcribe').addEventListener('click', () => {
+  const strip = $('transcription-progress');
+  strip.hidden = !strip.hidden;
+});
+
+/* ---- Caption appearance, live on the overlay ----------------------- */
+const FONTS = {
+  system: 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif',
+  arial: 'Arial,Helvetica,sans-serif',
+  impact: 'Impact,"Arial Narrow",sans-serif',
+  georgia: 'Georgia,"Times New Roman",serif',
+};
+const hexToRGBA = (hex, alpha) => {
+  const value = parseInt(hex.slice(1), 16);
+  return `rgba(${(value >> 16) & 255},${(value >> 8) & 255},${value & 255},${alpha})`;
+};
+
+function paint() {
+  const text = $('caption-text');
+  const size = Number($('cap-size').value);
+  const height = Number($('cap-position').value);
+  const outline = Number($('cap-outline').value);
+  const box = Number($('cap-bg').value);
+
+  text.style.fontFamily = FONTS[$('cap-font').value];
+  text.style.fontSize = `${size}px`;
+  text.style.color = $('cap-color').value;
+  text.style.webkitTextStroke = `${outline}px ${$('cap-outline-color').value}`;
+  text.style.background = hexToRGBA($('cap-bg-color').value, box / 100);
+  text.style.textTransform = $('cap-uppercase').checked ? 'uppercase' : 'none';
+  $('overlay').style.bottom = `${height}%`;
+
+  $('cap-size-value').textContent = size;
+  $('cap-position-value').textContent = `${height}%`;
+  $('cap-outline-value').textContent = `${outline}px`;
+  $('cap-bg-value').textContent = `${box}%`;
+}
+['cap-font', 'cap-size', 'cap-position', 'cap-color', 'cap-outline-color', 'cap-outline', 'cap-bg-color', 'cap-bg', 'cap-uppercase']
+  .forEach((id) => $(id).addEventListener('input', paint));
+
+const PRESETS = {
+  clean: { 'cap-color': '#ffffff', 'cap-outline': 0, 'cap-outline-color': '#000000', 'cap-bg': 0, 'cap-size': 28, 'cap-uppercase': false },
+  bold: { 'cap-color': '#ffffff', 'cap-outline': 4, 'cap-outline-color': '#000000', 'cap-bg': 0, 'cap-size': 32, 'cap-uppercase': true },
+  yellow: { 'cap-color': '#ffd400', 'cap-outline': 3.5, 'cap-outline-color': '#000000', 'cap-bg': 0, 'cap-size': 30, 'cap-uppercase': true },
+  boxed: { 'cap-color': '#ffffff', 'cap-outline': 0, 'cap-outline-color': '#000000', 'cap-bg': 75, 'cap-size': 26, 'cap-uppercase': false },
+};
+function applyPreset(name) {
+  Object.entries(PRESETS[name]).forEach(([id, value]) => {
+    const field = $(id);
+    if (field.type === 'checkbox') field.checked = value; else field.value = value;
+  });
+  paint();
+}
+document.querySelectorAll('.preset').forEach((preset) => {
+  preset.addEventListener('click', () => {
+    document.querySelectorAll('.preset').forEach((other) => other.classList.toggle('active', other === preset));
+    applyPreset(preset.dataset.preset);
+  });
+});
+$('reset-style').addEventListener('click', () => {
+  document.querySelectorAll('.preset').forEach((other, index) => other.classList.toggle('active', index === 0));
+  applyPreset('clean');
+});
+
+paint();
+</script>
+</body>
+</html>

@@ -6,6 +6,12 @@
 
 ## 2026-10-13
 
+- Picked Cloud Blue as the Caption Studio theme — accent `#2F6FED`, spent only on the selected reel and the Export button. The other three palettes stay in the mockup for reference. _(claude)_
+- Built and signed off `blueprints/active/caption-studio-mockups/rail-layout-mockup.html`, the mockup the rebuild now works from. One self-contained file: 64px icon rail, flexible preview workspace, 360px inspector, all four sections filled with the app's real controls. _(claude)_
+- Rebuilt the mockup after the first version came back inflated — too many elements competing at the same visual weight. The owner supplied the design rules the second version follows. _(claude)_
+- Moved the theme switcher out of the product interface into a faint corner control, so nothing in the mockup implies a feature that ships. _(claude)_
+- Cut developer-facing copy from the interface: the JSON schema paragraph and the `videos/input` path are gone, and Transcribe became a compact toolbar action above the media grid. _(claude)_
+- Rewrote the mockup folder `README.md` around the signed-off design, the rules it encodes, and the three judgement calls that need confirming. _(claude)_
 - Re-opened the Caption Studio UI work and settled on a direction: an icon rail on the left, the 9:16 video in the middle, and one context panel on the right that changes with the selected rail item. From the owner's own reference image. _(claude)_
 - Rejected every Codex design direction. Splice, Director Desk, Proofroom, and Storyboard moved as one block to `blueprints/active/caption-studio-mockups/codex-rejected/`, kept as a record and still openable. _(claude)_
 - Rewrote the mockup folder's `README.md` as a handoff: the chosen direction, eleven decisions already made, the one technical constraint, and the brief for the mockup to build next. _(claude)_
