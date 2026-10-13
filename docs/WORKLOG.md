@@ -4,6 +4,53 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-13 — Folder cleanup
+**Tool:** Claude Code
+
+### Goal
+
+Make the project navigable. The root had grown to thirteen entries and the
+mockups ran six levels deep, which pushed the file tree off the edge of the pane.
+
+### Completed
+
+- Grouped loose root files into `docs/` and `tools/`, and flattened the redundant
+  `ui-layout-mockups/design-directions/` pair into `caption-studio-mockups/`.
+- Normalized casing: `Agents/` to `nebulaone/`, `Videos/` to `videos/`. The first
+  rename also removed a confusing adjacency with `.agents/`, the Claude skills
+  directory, which is unrelated to it.
+- Updated `server.py`'s `ROOT` to climb one extra level now that it sits in
+  `tools/`, and pointed the launcher at `tools\server.py`.
+- Pointed both copies of the project-worklog skill at the new `docs/` paths.
+- Retired the agent test fixtures to `slop/` and fixed the setup guides that
+  referenced them.
+
+### Discoveries
+
+- Committing had been blocked because no Git identity was set at any level,
+  local or global. The two identities in the history came from elsewhere.
+- Verification caught three broken links the plan had not predicted: a
+  `Videos/input` string in `app/js/library.js`, a director-desk link in the
+  mockup index, and two nav links in `splice.html` pointing at pages that moved
+  into `rejected/`. The first was missed because the initial reference sweep
+  covered `.md`, `.py`, and `.html` but not `.js`.
+- `core.autocrlf` made several diffs display as whole-file rewrites. Comparing
+  the stored blobs directly confirmed the committed content was only the
+  intended few lines.
+
+### Decisions
+
+- Historical changelog and worklog entries were left exactly as written rather
+  than rewritten to the new paths. Each log now carries a note pointing at the
+  Repo Map instead.
+- `codex/clip-timeline-experiment` was left alone. This cleanup barely touches
+  it; its real conflict risk is the upcoming Caption Studio UI overhaul, which
+  will rewrite the same `app/js/captions.js` the branch changed.
+
+### Next steps
+
+- Start the Caption Studio UI overhaul in a new chat from `main`.
+
 ## 2026-10-12 — Clip timeline experiment parked
 **Tool:** Codex
 

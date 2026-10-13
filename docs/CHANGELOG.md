@@ -4,6 +4,17 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-13
+
+- Reorganized the folder structure. The root went from thirteen entries to ten and the deepest path from six levels to five. _(claude)_
+- Grouped loose files: `docs/` now holds the changelog, worklog, and technical notes; `tools/` holds `server.py` and `transcribe.py`. _(claude)_
+- Collapsed `ui-layout-mockups/design-directions/` into `blueprints/active/caption-studio-mockups/` and renamed `slop-garbage/` to `rejected/`. _(claude)_
+- Renamed `Agents/` to `nebulaone/`, `Videos/` to `videos/`, and dropped the space from `Technical Notes.md`. _(claude)_
+- Deleted three unused reel fixtures and retired the remaining seven to `slop/retired-test-fixtures/`, since the setup guides still describe how to use them. _(claude)_
+- Moved the clip timeline blueprint to `blueprints/parked/` so `main` matches what the worklog already recorded. _(claude)_
+- Added a **Repo Map** to `README.md`. _(claude)_
+- Set a repo-local Git identity. Commits had been failing because no `user.name` or `user.email` was configured at any level. _(claude)_
+
 ## 2026-10-12
 
 - Rewrote `main` history to remove four large input videos and force-pushed the cleaned branch to GitHub.
