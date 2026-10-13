@@ -114,7 +114,11 @@ This is worth knowing before the design work starts, so the surrounding layout i
 
 ## Status
 
-**Draft for review. Not approved for implementation.** Mockups not yet built.
+**Blueprint approved on 12 October 2026. Design review in progress.**
+
+**Codex contribution:** Built the initial mockups and revised Version B from the owner's feedback. Created three further interactive directions under `ui-layout-mockups/design-directions/`: Splice, Proofroom, and Storyboard, with a comparison gallery, local recording frames, and full transcript review. The directions reflect the owner's light, warm palette constraints, compact media management, on-demand transcript review, and optional NebulaOne assistant.
+
+The owner will choose a visual direction before changes to the real Caption Studio app begin. The previews demonstrate editing flows; source files and the app remain unchanged.
 
 ---
 _Authored with Claude Code._

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f5eb">
+  <title>Storyboard · Raw to Reels</title>
+  <link rel="stylesheet" href="../common.css?v=6">
+  <link rel="stylesheet" href="storyboard.css?v=6">
+  <script src="../demo.js?v=7" defer></script>
+</head>
+<body data-direction="storyboard">
+  <svg class="sb-symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="sb-folder" viewBox="0 0 24 24"><path d="M3 6.5h6l2 2h10v11H3z"/><path d="M3 8.5v-4h6l2 2h8"/></symbol>
+    <symbol id="sb-document" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></symbol>
+    <symbol id="sb-export" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/></symbol>
+    <symbol id="sb-chat" viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4z"/><path d="M8 8h8M8 12h5"/></symbol>
+    <symbol id="sb-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></symbol>
+    <symbol id="sb-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="sb-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+    <symbol id="sb-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="sb-type" viewBox="0 0 24 24"><path d="M4 5h16M12 5v15M8 20h8M4 8V5M20 8V5"/></symbol>
+  </svg>
+
+  <div class="sb-app">
+    <header class="sb-header">
+      <a class="sb-brand" href="../index.html" aria-label="Raw to Reels design directions">
+        <span class="sb-brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Raw to Reels</span>
+      </a>
+      <div class="sb-source">
+        <span class="sb-source-dot" aria-hidden="true"></span>
+        <span data-source-name>IMG_0407.MOV</span>
+        <span class="sb-source-detail">on your computer</span>
+      </div>
+      <div class="sb-header-actions">
+        <button class="sb-button sb-quiet" type="button" data-open="media"><svg aria-hidden="true"><use href="#sb-folder"/></svg><span>Media</span></button>
+        <button class="sb-button sb-quiet sb-assistant" type="button" data-open="assistant"><svg aria-hidden="true"><use href="#sb-chat"/></svg><span>Ask NebulaOne</span></button>
+      </div>
+    </header>
+
+    <main>
+      <div class="sb-project-bar">
+        <div class="sb-project-heading">
+          <h1 data-project-title>Opportunity is everywhere</h1>
+          <span class="sb-format">9:16 reel</span>
+        </div>
+        <button class="sb-button sb-export" type="button" data-open="export"><svg aria-hidden="true"><use href="#sb-export"/></svg><span>Export reel</span></button>
+      </div>
+
+      <div class="sb-bench">
+        <section class="sb-view" aria-label="Reel preview">
+          <div class="sb-view-toolbar">
+            <div class="sb-reel-tabs" role="group" aria-label="Choose a reel">
+              <button type="button" data-cut="0" aria-pressed="true" title="Opportunity is everywhere">Reel 1</button>
+              <button type="button" data-cut="1" aria-pressed="false" title="Ask anyway">Reel 2</button>
+              <button type="button" data-cut="2" aria-pressed="false" title="Make room for the next thing">Reel 3</button>
+            </div>
+            <span class="sb-view-mode">Video preview</span>
+          </div>
+
+          <div class="sb-preview-stage">
+            <div class="sb-phone">
+              <img class="sb-video-image" data-preview-image src="../assets/poster.jpg" alt="A speaker in the selected source recording">
+              <div class="sb-caption" data-active-caption contenteditable="true" role="textbox" aria-label="Preview caption" spellcheck="true">There is opportunity in everything.</div>
+              <span class="sb-safe-corner sb-safe-top" aria-hidden="true"></span>
+              <span class="sb-safe-corner sb-safe-bottom" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="sb-playback">
+            <button class="sb-play" type="button" data-play aria-label="Play preview"><svg aria-hidden="true"><use href="#sb-play"/></svg></button>
+            <div class="sb-scrub-wrap"><input type="range" data-scrub min="0" max="47" step="0.01" value="27" aria-label="Playhead"></div>
+            <span class="sb-time" data-time>00:27 / 00:47</span>
+          </div>
+        </section>
+
+        <aside class="sb-caption-slip" aria-labelledby="sb-caption-heading">
+          <div class="sb-slip-content">
+            <div class="sb-slip-heading"><h2 id="sb-caption-heading">On screen now</h2><svg aria-hidden="true"><use href="#sb-type"/></svg></div>
+            <label class="sb-edit-label" for="sb-current-editor">Edit this caption</label>
+            <textarea id="sb-current-editor" class="sb-caption-editor" data-current-editor spellcheck="true" rows="3">There is opportunity in everything.</textarea>
+            <div class="sb-caption-navigation" aria-label="Move between captions">
+              <button class="sb-line-button" type="button" data-prev><svg aria-hidden="true"><use href="#sb-left"/></svg>Previous</button>
+              <button class="sb-line-button" type="button" data-next>Next<svg aria-hidden="true"><use href="#sb-right"/></svg></button>
+            </div>
+            <p class="sb-save-state"><svg aria-hidden="true"><use href="#sb-check"/></svg><span data-save-state>Saved in this preview</span></p>
+            <button class="sb-look-button" type="button" data-open="style"><span class="sb-type-sample" aria-hidden="true">Aa</span><span>Caption look</span><svg aria-hidden="true"><use href="#sb-right"/></svg></button>
+          </div>
+          <div class="sb-slip-foot">
+            <p>Fix a word elsewhere?</p>
+            <button type="button" data-open="transcript"><svg aria-hidden="true"><use href="#sb-document"/></svg>Review full transcript</button>
+          </div>
+        </aside>
+      </div>
+
+      <section class="sb-sequence" aria-labelledby="sb-sequence-title">
+        <div class="sb-sequence-heading"><h2 id="sb-sequence-title">Your cut</h2><span>Click a piece to jump there</span></div>
+        <div class="sb-filmstrip" role="group" aria-label="Reel sequence">
+          <button class="sb-piece" type="button" data-piece="0" aria-pressed="false">
+            <span class="sb-piece-number">1</span>
+            <img src="../assets/frame-1.jpg" alt="" loading="eager">
+            <span class="sb-piece-copy"><strong>The opening</strong><span data-piece-time>00:14–00:27</span></span>
+            <span class="sb-piece-notch" aria-hidden="true"></span>
+          </button>
+          <button class="sb-piece" type="button" data-piece="1" aria-pressed="false">
+            <span class="sb-piece-number">2</span>
+            <img src="../assets/frame-2.jpg" alt="" loading="eager">
+            <span class="sb-piece-copy"><strong>A different angle</strong><span data-piece-time>00:28–00:33</span></span>
+            <span class="sb-piece-notch" aria-hidden="true"></span>
+          </button>
+          <button class="sb-piece" type="button" data-piece="2" aria-pressed="true">
+            <span class="sb-piece-number">3</span>
+            <img src="../assets/frame-3.jpg" alt="" loading="eager">
+            <span class="sb-piece-copy"><strong>The takeaway</strong><span data-piece-time>00:37–01:05</span></span>
+            <span class="sb-piece-notch" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="sb-footer">
+      <span><span class="sb-local-dot" aria-hidden="true"></span>Storyboard preview</span>
+      <nav aria-label="Design directions"><a href="../index.html">All directions</a><a href="../splice.html?v=8">Splice</a><a href="proofroom.html?v=8">Proofroom</a><span aria-current="page">Storyboard</span></nav>
+    </footer>
+  </div>
+</body>
+</html>

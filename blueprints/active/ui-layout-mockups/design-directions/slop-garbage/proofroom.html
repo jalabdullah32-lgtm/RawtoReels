@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Proofroom | Raw to Reels</title>
+  <link rel="stylesheet" href="../common.css?v=6">
+  <link rel="stylesheet" href="proofroom.css?v=6">
+  <script src="../demo.js?v=7" defer></script>
+</head>
+<body data-direction="proofroom">
+  <div class="proofroom">
+    <header class="pr-mast">
+      <a class="pr-brand" href="../index.html" aria-label="Raw to Reels design directions">
+        <svg width="30" height="28" viewBox="0 0 30 28" aria-hidden="true"><path d="M3 3h7v22H3zM12 7h6v14h-6zM20 11h7v6h-7z" fill="currentColor"/></svg>
+        <span>Raw to Reels</span>
+      </a>
+      <nav class="pr-directions" aria-label="Design directions">
+        <a href="../index.html">All directions</a>
+        <a href="../splice.html?v=8">Splice</a>
+        <a href="proofroom.html?v=8" aria-current="page">Proofroom</a>
+        <a href="storyboard.html?v=8">Storyboard</a>
+      </nav>
+      <span class="pr-preview-label">Design preview</span>
+    </header>
+
+    <div class="pr-project-bar">
+      <div class="pr-project">
+        <h1><span data-project-title>Opportunity is everywhere</span></h1>
+        <div class="pr-source">
+          <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true"><rect x="2" y="2.5" width="14" height="13" rx="2" fill="none" stroke="currentColor"/><path d="m7 6 5 3-5 3V6Z" fill="currentColor"/></svg>
+          <span data-source-name>IMG_0407.MOV</span>
+          <span class="pr-source-status">Video and transcript loaded</span>
+        </div>
+      </div>
+      <div class="pr-project-tools">
+        <button class="pr-button pr-button-quiet" data-open="media"><svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M2 5h6l2 2h8v10H2V5Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Media</button>
+        <button class="pr-button pr-button-quiet" data-open="assistant"><svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M3 3h14v10H9l-5 4v-4H3V3Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>NebulaOne</button>
+        <button class="pr-button pr-export" data-open="export"><svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M3 12v5h14v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Export reel</button>
+      </div>
+    </div>
+
+    <main class="pr-workspace">
+      <section class="pr-manuscript" aria-labelledby="reel-captions-title">
+        <div class="pr-manuscript-head">
+          <div>
+            <h2 id="reel-captions-title">Reel captions</h2>
+            <p>Click a line. Make it sound like you.</p>
+          </div>
+          <button class="pr-text-button" data-open="transcript">Full transcript <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true"><path d="M5 3h8v12H5zM7 6h4M7 9h4M7 12h3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+        </div>
+
+        <div class="pr-proofing-note"><span class="pr-dot"></span><span data-save-state>Changes kept in this preview</span></div>
+        <div class="pr-cue-sheet" data-cues aria-label="Editable reel captions"></div>
+
+        <div class="pr-manuscript-foot">
+          <span>Only the words in this reel appear here.</span>
+          <div class="pr-line-nav">
+            <button class="pr-icon-button" data-prev aria-label="Previous caption"><svg viewBox="0 0 18 18" width="17" height="17" aria-hidden="true"><path d="m12 4-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="pr-icon-button" data-next aria-label="Next caption"><svg viewBox="0 0 18 18" width="17" height="17" aria-hidden="true"><path d="m6 4 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+
+        <section class="pr-reels" aria-labelledby="your-reels-title">
+          <div class="pr-reels-head"><h3 id="your-reels-title">Your reels</h3><span>3 cuts from this recording</span></div>
+          <div class="pr-reel-list">
+            <button class="pr-reel" data-cut="0" aria-pressed="true"><img src="../assets/frame-1.jpg" alt="" width="28" height="40"><span><strong>Opportunity</strong><small>00:46</small></span></button>
+            <button class="pr-reel" data-cut="1" aria-pressed="false"><img src="../assets/frame-2.jpg" alt="" width="28" height="40"><span><strong>Ask anyway</strong><small>00:30</small></span></button>
+            <button class="pr-reel" data-cut="2" aria-pressed="false"><img src="../assets/frame-3.jpg" alt="" width="28" height="40"><span><strong>Take the chance</strong><small>00:25</small></span></button>
+          </div>
+        </section>
+      </section>
+
+      <section class="pr-preview" aria-labelledby="preview-title">
+        <div class="pr-preview-head"><h2 id="preview-title">Your reel</h2><span>9:16 portrait</span></div>
+        <div class="pr-video-wrap">
+          <div class="pr-video">
+            <img class="pr-video-image" data-preview-image src="../assets/poster.jpg" alt="Portrait preview from the loaded recording">
+            <div class="pr-caption" data-active-caption contenteditable="true" role="textbox" aria-label="Preview caption" spellcheck="true">There is opportunity in everything.</div>
+          </div>
+          <span class="pr-preview-hint">You can edit the caption here, too.</span>
+        </div>
+        <div class="pr-playback">
+          <button class="pr-play" data-play aria-label="Play preview"><svg viewBox="0 0 22 22" width="20" height="20" aria-hidden="true"><path d="m8 5 10 6-10 6V5Z" fill="currentColor"/></svg></button>
+          <div class="pr-scrub-wrap"><input class="pr-scrub" type="range" data-scrub min="0" max="47" step=".01" value="12" aria-label="Playhead"><div class="pr-scrub-labels"><span data-time>00:12 / 00:47</span><span>Caption preview</span></div></div>
+          <button class="pr-style-button" data-open="style" aria-label="Caption style"><span aria-hidden="true">Aa</span><span>Style</span></button>
+        </div>
+      </section>
+    </main>
+    <footer class="pr-page-foot"><span>Proofroom</span><span>Preview interactions keep edits in this browser tab.</span></footer>
+  </div>
+</body>
+</html>
