@@ -4,6 +4,66 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-13 — Idea capture
+**Tool:** Claude Code
+
+### Goal
+
+The session started as a scope conversation. The project owner said the build
+had stopped converging and wanted an MVP: one planned video, recorded,
+captioned, exported, and posted. Partway through, a second problem surfaced that
+turned out to be the more urgent one — good ideas were being produced faster than
+they were being recorded, and were dying in chat threads.
+
+### Completed
+
+- Added `IDEAS.md` at the root, seeded with thirteen ideas: the README wishlist
+  plus the take-selection ideas produced during this conversation.
+- Replaced the README's "What I Want Next" section with a pointer to it, and
+  added a repo map row.
+- Added a `Capturing Ideas` section to both copies of the blueprint-planner
+  skill covering when to sweep, how hard to nudge, and how numbering works.
+
+### Discoveries
+
+- Export is already platform-ready. `app/js/video-export.js:30` renders to a
+  720×1280 canvas with audio mixed in and writes MP4 where the browser supports
+  it, so output format was never MVP work. It letterboxes rather than crops, so
+  landscape source gets bars.
+- The Video Planner deliberately produces prompts rather than lines to read
+  (`nebulaone/video-planner-setup.md:148`). That rules out aligning a transcript
+  against a script to find takes, because there is no script to align against.
+  Takes are different attempts at a beat, not repeats of a sentence.
+- The README's "What I Want Next" section had quietly become the project's idea
+  list, which is why it had stopped growing — it is a document written for other
+  people to read.
+- `.claude/` is excluded in `.git/info/exclude:9`, so the Claude copy of each
+  skill is local to this machine while the `.codex` copy is versioned. The two
+  can drift without Git showing it.
+
+### Decisions
+
+- Verbal markers will be interpreted by the agent rather than matched against a
+  hardcoded word list. Natural phrasing like "add that in the video" is outside
+  any list worth maintaining, and a string match cannot tell an instruction to
+  the editor from the same words spoken to the camera. The agent decides what a
+  marker means; timestamps stay deterministic.
+- A recommendation to ship Friday on current capability and build nothing first
+  was declined. The owner is confident of a video by Thursday morning and chose
+  to keep building.
+- Agreed build order: editor-voice markers first, because they change how the
+  recording is made and are worthless if they arrive after it; overlays second.
+- One file rather than a folder, strikethrough as the only closed state, and no
+  reason notes on closed ideas. Asked for explicitly on the grounds that more
+  functionality is not better.
+
+### Next steps
+
+- Blueprint idea `08`, editor-voice markers, in a new chat. Deadline is the
+  Wednesday recording, not the Thursday edit.
+- Overlays (`01`) after that, as its own blueprint.
+- Consider tracking `.claude/` so skill copies cannot silently drift.
+
 ## 2026-10-13 — Folder cleanup
 **Tool:** Claude Code
 

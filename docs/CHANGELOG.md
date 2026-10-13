@@ -6,6 +6,9 @@
 
 ## 2026-10-13
 
+- Added `IDEAS.md` at the repo root. Thirteen numbered ideas grouped by area, open ones plain and closed ones struck through, with permanent numbers so an idea can be referred to by number for its whole life. _(claude)_
+- Folded the README's "What I Want Next" wishlist into `IDEAS.md` and added a repo map row for it. _(claude)_
+- Taught the blueprint-planner skill to capture ideas: sweep them in at natural pauses rather than mid-thought, nudge in one line when a conversation drifts off scope, and accept an idea number as the starting point for a blueprint. Both the `.claude` and `.codex` copies. _(claude)_
 - Reorganized the folder structure. The root went from thirteen entries to ten and the deepest path from six levels to five. _(claude)_
 - Grouped loose files: `docs/` now holds the changelog, worklog, and technical notes; `tools/` holds `server.py` and `transcribe.py`. _(claude)_
 - Collapsed `ui-layout-mockups/design-directions/` into `blueprints/active/caption-studio-mockups/` and renamed `slop-garbage/` to `rejected/`. _(claude)_
