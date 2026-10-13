@@ -34,7 +34,7 @@ Captions stay valid automatically, because padding only ever widens a clip and c
 
 So the real question is whether the buffer counts against the target duration or sits outside it. This is the main thing the timeline is meant to resolve by feel rather than by argument.
 
-**Where the padding is applied:** the agent, when it builds the JSON. This needs no schema change. If it later turns out the padding should be adjustable after the fact, that moves into the app.
+**Where the padding is applied:** Caption Studio adds a small browser-side baseline when a loaded clip begins and ends exactly with its captions. It leaves clips that already contain breathing room alone, which avoids doubling padding supplied by the agent. The selected reel can then be rebuilt from its caption boundaries with the breathing-room control. This needs no schema change.
 
 ## Part two: the timeline
 
@@ -68,15 +68,15 @@ Both are significantly more work than the buffer. They can ship separately — t
 
 **Stage one — buffer only**
 
-1. Decide the default padding and whether it counts against the target duration.
-2. Apply padding in the agent's JSON generation, with the clamping and overlap rules above.
+1. Start with a 0.5-second baseline for a clip that has no existing room, leaving the amount open for real-video evaluation.
+2. Apply the baseline in Caption Studio, with the clamping and overlap rules above.
 3. Confirm padded output still passes `fromReels`.
 4. Watch real reels and judge whether the cuts feel natural.
 
 **Stage two — timeline, if stage one is not enough**
 
 5. Add a timeline strip under the preview showing the current clip with a playhead.
-6. Add draggable handles to adjust clip start and end, honoring the same rules.
+6. Add draggable start and end sliders to adjust a clip, honoring the same rules.
 7. Add the waveform.
 8. Add the filmstrip, with caching so scrubbing stays responsive.
 9. Make edited boundaries persist — decide whether they write back to the loaded JSON or stay in the session.
@@ -133,7 +133,9 @@ Stage two is deliberately ordered so each step is useful alone. A plain timeline
 
 ## Status
 
-**Draft for review. Not approved for implementation.**
+**Parked on 2026-10-12.** Codex added a first working pass: a 0.5-second browser-side baseline for flush clips, a selected-reel timeline with live playheads, editable start and end sliders, reset controls, and JSON synchronization. It passed code syntax checks and a fixture test that reloaded the edited JSON through `fromReels`.
+
+The project owner paused this feature because it is too early to judge how cuts should feel on real videos. The unresolved padding and editing decisions should be revisited only after the core Caption Studio workflow is clearer.
 
 ---
 _Authored with Claude Code._

@@ -15,12 +15,13 @@ app.paint = () => {
   if (index !== state.lastActiveIndex) {
     elements.editor.querySelectorAll('.cue.on').forEach((element) => element.classList.remove('on'));
     const active = elements.editor.querySelector(`.cue[data-index="${index}"]`);
-    if (active) { active.classList.add('on'); if (state.playing && !elements.editor.contains(document.activeElement)) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    if (active) active.classList.add('on');
     state.lastActiveIndex = index;
   }
+  app.paintTimeline?.();
 };
 app.stop = () => { state.playing = false; cancelAnimationFrame(state.raf); elements.video.pause(); app.$('play').textContent = '▶'; app.$('play').setAttribute('aria-label', 'Play'); };
-app.update = () => { app.stop(); state.sourceTime = app.sourceAt(0); if (state.videoURL && Number.isFinite(elements.video.duration)) elements.video.currentTime = Math.min(state.sourceTime, elements.video.duration); app.paint(); app.renderOptions(); app.renderEditor(); };
+app.update = () => { app.stop(); state.sourceTime = app.sourceAt(0); if (state.videoURL && Number.isFinite(elements.video.duration)) elements.video.currentTime = Math.min(state.sourceTime, elements.video.duration); app.paint(); app.renderOptions(); app.renderTimeline(); app.renderEditor(); };
 function tick() {
   if (!state.playing) return;
   state.sourceTime = state.videoURL ? elements.video.currentTime : state.sourceTime + 1 / 60;

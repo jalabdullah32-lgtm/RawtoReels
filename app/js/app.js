@@ -21,6 +21,18 @@ app.$('json-file').addEventListener('change', async (event) => {
   catch (error) { app.setStatus(`Could not load JSON: ${error.message}`, true); }
   event.target.value = '';
 });
+app.$('padding').addEventListener('input', (event) => {
+  if (state.selected < 0 || state.exporting) return;
+  state.padding = Number(event.target.value);
+  const option = state.model.options[state.selected]; app.applyPadding(option, state.padding);
+  app.renderOptions(); app.renderTimeline(); app.paint();
+  app.setStatus(`Applied ${state.padding.toFixed(1)} seconds of breathing room around each spoken section.`);
+});
+app.$('reset-cuts').addEventListener('click', () => {
+  if (state.selected < 0 || state.exporting) return;
+  app.resetOptionCuts(state.model.options[state.selected]); app.renderOptions(); app.renderTimeline(); app.paint();
+  app.setStatus('Restored this reel’s cut boundaries from the JSON you loaded.');
+});
 app.$('download-json').addEventListener('click', () => {
   let payload;
   if (state.model.kind === 'reels') { app.allCues().forEach((cue) => { if (cue.reference) cue.reference.text = cue.text; }); payload = state.model.raw; }

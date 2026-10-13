@@ -3,6 +3,8 @@ Videos/input/*
 !Videos/input/.gitkeep
 Videos/transcripts/*
 !Videos/transcripts/.gitkeep
+Videos/reels/*
+!Videos/reels/.gitkeep
 
 # Python and editor artifacts
 __pycache__/

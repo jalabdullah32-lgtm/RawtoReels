@@ -1,11 +1,17 @@
 ---
 name: blueprint-planner
-description: Turn Raw to Reels ideas, bugs, and improvements into reviewed implementation blueprints before coding starts.
+description: Plan one Raw to Reels feature per chat, keeping related fixes together and moving larger new work to a new chat.
 ---
 
 # Blueprint Planner
 
 Use this skill when the user describes a feature, bug, improvement, deployment task, or uncertainty they want to resolve in Raw to Reels.
+
+## One Feature Per Chat
+
+Treat each chat as the working record for one primary feature. Keep directly related fixes, small additions, and testing discoveries in that chat when they help complete the same feature.
+
+When the user introduces a larger independent feature, do not begin its planning or implementation in the current chat. Explain that the current feature should be finished or parked first, summarize its status if useful, and ask the user to start a new chat for the new feature. A new feature is large when it needs its own blueprint, materially changes a different part of the product, or would make the current chat hard to follow.
 
 ## Plan Before Building
 
@@ -64,6 +70,8 @@ Accept ordinary language such as `Let's build the audio library`, `Start working
 ## Completion
 
 When implementation is complete, summarize the result and ask whether the user wants to move the blueprint from `blueprints/active/` to `blueprints/completed/`. Never move it without their confirmation.
+
+After a feature is completed or parked, state clearly that the chat is closed for that feature and direct the user to start a new chat for their next larger feature. Do not begin another larger feature in the closed chat. Detailed blueprints, changelogs, and worklogs are the handoff record for the next chat.
 
 ## Boundaries
 
