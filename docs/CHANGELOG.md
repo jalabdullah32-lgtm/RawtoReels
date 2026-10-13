@@ -6,6 +6,10 @@
 
 ## 2026-10-13
 
+- Re-opened the Caption Studio UI work and settled on a direction: an icon rail on the left, the 9:16 video in the middle, and one context panel on the right that changes with the selected rail item. From the owner's own reference image. _(claude)_
+- Rejected every Codex design direction. Splice, Director Desk, Proofroom, and Storyboard moved as one block to `blueprints/active/caption-studio-mockups/codex-rejected/`, kept as a record and still openable. _(claude)_
+- Rewrote the mockup folder's `README.md` as a handoff: the chosen direction, eleven decisions already made, the one technical constraint, and the brief for the mockup to build next. _(claude)_
+- Added ideas `14`–`16` — audio controls, brand kit, and aspect ratio choice. All three appear in the owner's reference image but do not exist in the app, so they stay out of the design. _(claude)_
 - Added `IDEAS.md` at the repo root. Thirteen numbered ideas grouped by area, open ones plain and closed ones struck through, with permanent numbers so an idea can be referred to by number for its whole life. _(claude)_
 - Folded the README's "What I Want Next" wishlist into `IDEAS.md` and added a repo map row for it. _(claude)_
 - Taught the blueprint-planner skill to capture ideas: sweep them in at natural pauses rather than mid-thought, nudge in one line when a conversation drifts off scope, and accept an idea number as the starting point for a blueprint. Both the `.claude` and `.codex` copies. _(claude)_

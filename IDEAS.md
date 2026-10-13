@@ -18,6 +18,9 @@ having somewhere to put them.
 - `05` **Export at 1080×1920** — currently 720×1280. Fine on a phone, soft on a desktop feed.
 - `06` **Crop landscape footage to vertical** — today a horizontal source gets letterboxed with bars. Cropping to the speaker would use the whole frame.
 - `07` ~~**Breathing-room padding** — add 2–3 seconds before and after each clip so cuts feel less jerky.~~
+- `14` **Audio controls** — original audio level, mute, and a background music track with volume and fade in/out.
+- `15` **Brand kit** — a saved logo, watermark and position, brand colors, and a default font, applied to every export.
+- `16` **Aspect ratio choice** — export 1:1 or 16:9 as well as 9:16, with fit/fill and a focal point. Related to `06`.
 
 ## NebulaOne
 

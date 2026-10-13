@@ -4,6 +4,55 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-13 — Caption Studio UI direction
+**Tool:** Claude Code
+
+### Goal
+
+The owner named the UI as the biggest source of scope drift — nothing about the interface
+was settled, so every other decision kept moving. The session re-opened
+`improvement-caption-studio-layout.md` to finalize a direction. It deliberately stopped short
+of a blueprint: he wants to see a UI he would actually use before anything is written up.
+
+### Completed
+
+- Rejected all four Codex design directions and archived them under `codex-rejected/`,
+  moved as one block so their relative paths still resolve.
+- Settled the direction from the owner's own two files: a working prototype
+  (`Raw_to_Reels_Desktop_Preview.html`) and a layout reference
+  (`assets/sectionsForeditor.png`) showing an icon rail, centre video, and a right context
+  panel.
+- Agreed the rail carries four sections only — Media, Captions, Style, Assistant — and that
+  the existing app gets re-skinned rather than replaced.
+- Agreed each section becomes its own blueprint and ships working before the next starts,
+  rather than building the whole UI and stripping it back afterwards.
+- Rewrote the mockup folder `README.md` as the handoff document.
+- Filed ideas `14`–`16` for the three reference-image sections the app cannot support.
+
+### Discoveries
+
+- The app is entirely ID-driven: 34 `getElementById` lookups across `app/js`, plus a handful
+  of `.cue` and `[data-preset]` selectors. The HTML can be rearranged freely as long as those
+  IDs survive the move, which is what makes a re-skin cheap.
+- Those lookups all run at load. A panel built on demand would return nothing without raising
+  an error, so every panel has to stay in the page and be hidden instead. This is the single
+  constraint the rebuild has to respect.
+- The owner's prototype already reuses most of those same IDs — `overlay`, `scrub`, `play`,
+  `time`, `editor`, `status`, `cue-count`, every `cap-*` control — which suggests the engine
+  and the new design were never far apart.
+- The prototype overshot its own brief. The prompt asked for three switchable themes and
+  explicitly excluded JSON import/export, undo, and keyboard shortcuts; what came back was one
+  theme with all of them working, plus word-level color marks that survive retyping.
+- Splice, the surviving Codex direction, had quietly stopped matching the approved blueprint:
+  two columns instead of three, phone on the left instead of centred, library and agent demoted
+  to modals. The blueprint had said three columns since 12 October and nobody had noticed the
+  drift.
+
+### Open
+
+- The mockup itself. Rail layout, four real sections, four themes to compare.
+- Per-section blueprints, written only after a theme and the structure are signed off.
+
 ## 2026-10-13 — Idea capture
 **Tool:** Claude Code
 
