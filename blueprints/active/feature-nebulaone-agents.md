@@ -87,15 +87,15 @@ All three options live in **one file**. That is already how the schema works, so
 
 1. ~~**Fix `docs/technical-notes.md`**~~ — **done.** The file now carries the real contract under "Reel JSON schema v1.0", with a corrected example. The SRT line says removal is complete; legacy JSON is still accepted and still scheduled for removal.
 
-2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
+2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `nebulaone/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
 
-3. ~~**Build the Json Handler.**~~ — **built and tested.** Configuration, system prompt, and test cases live in `agents/json-handler-setup.md`. All six test cases passed on 12 October, and its output loads in Caption Studio without manual repair, which is the bar this step was set against.
+3. ~~**Build the Json Handler.**~~ — **built and tested.** Configuration, system prompt, and test cases live in `nebulaone/json-handler-setup.md`. All six test cases passed on 12 October, and its output loads in Caption Studio without manual repair, which is the bar this step was set against.
 
    One defect found: the agent split continuous speech into separate clips. The system prompt now tells it to merge touching selections. **That fix has not been re-tested** — re-run case 2, which produced three touching clips where one would do.
 
    The agent is silent, with no chat starters. Only the Orchestrator carries those.
 
-4. **Build the Video Planner.** — **written, not yet built.** Configuration, system prompt, and seven test cases live in `agents/video-planner-setup.md`; its skill is `agents/skills/raw-to-reels-video-planning-v1.md` (8,624 characters). Add Files and Generate Artifacts, so it can take notes to plan from and hand back markdown or HTML. Data & File Tools is optional here — there is no transcript to load.
+4. **Build the Video Planner.** — **written, not yet built.** Configuration, system prompt, and seven test cases live in `nebulaone/video-planner-setup.md`; its skill is `nebulaone/skills/raw-to-reels-video-planning-v1.md` (8,624 characters). Add Files and Generate Artifacts, so it can take notes to plan from and hand back markdown or HTML. Data & File Tools is optional here — there is no transcript to load.
 
    The skill is built around one rule: **no rubric on the first reply.** Talk first, keep going until the user says they have the angle, and only then produce it. Every question in the rubric has to be built from what the user already said, which is the difference between a prompt they can answer in one take and an interview question. Prompts to speak to, never a script to read.
 
@@ -103,7 +103,7 @@ All three options live in **one file**. That is already how the schema works, so
 
    **The agent is built in NebulaOne. Cases 1 and 2 passed; testing is parked.** It reflected the idea back and asked instead of planning, and it held the thread across follow-up turns, which is the failure it was most at risk of. The owner stopped the phase there on purpose, to resume closer to real integration — this is a deliberate pause, not a blocked step. One artifact was kept, `slop/retired-test-fixtures/internship-reel-rubric.html`, and it reads well against the bar in the skill.
 
-5. **Build the Orchestrator.** — **built, hand-off confirmed working.** Configuration, system prompt, hand-off conditions, chat starters, and eight test cases live in `agents/orchestrator-setup.md`. The eight cases were not run individually; the owner judged it good enough and moved on.
+5. **Build the Orchestrator.** — **built, hand-off confirmed working.** Configuration, system prompt, hand-off conditions, chat starters, and eight test cases live in `nebulaone/orchestrator-setup.md`. The eight cases were not run individually; the owner judged it good enough and moved on.
 
    Each hand-off is configured with a "When to use" condition under **Collaborate with another Agent**. That text is what the model actually routes on, so it carries more weight than the routing prose in the system prompt. Both conditions state the trigger, the one deciding question, and when *not* to fire — the negative clause matters, because a model given two hand-offs and no reason to prefer either tends to pick whichever is described more richly rather than whichever fits. Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Anything unclear gets one question rather than a guess.
 
@@ -180,7 +180,7 @@ Remaining, all of it hands-on in NebulaOne:
 
 - **Finish testing the Video Planner.** The best resumption is not cases 3 to 7 — it is recording one video against the saved rubric and running the transcript through the Json Handler, which exercises the planner, the hand-off, and the cut in one pass.
 - **Finish testing the Orchestrator.** Case 4 first — an ambiguous request that should draw a question rather than a guess, and the most likely real-world phrasing of the two.
-- **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `agents/json-handler-setup.md` under **Merge re-test**.
+- **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `nebulaone/json-handler-setup.md` under **Merge re-test**.
 
 Two assumptions are still assumptions, both recorded as known unknowns in the setup files: whether an attachment survives a hand-off, and whether the user lands back at the Orchestrator afterwards. Each is settled by one test — Orchestrator cases 6 and 8. The build is deliberately safe in the direction of both being true as assumed, so being wrong about either costs a wording change rather than a redesign.
 

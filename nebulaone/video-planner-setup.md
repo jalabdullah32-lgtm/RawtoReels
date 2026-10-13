@@ -14,7 +14,7 @@ Everything needed to build this agent in NebulaOne. Step 4 of
 | Name | RawtoReels - Video planner |
 | Model | `gpt terra` |
 | Capabilities | Add Files, Generate Artifacts |
-| Skill | Raw to Reels Video Planning v1.0 — `agents/skills/raw-to-reels-video-planning-v1.md` |
+| Skill | Raw to Reels Video Planning v1.0 — `nebulaone/skills/raw-to-reels-video-planning-v1.md` |
 
 Add Files lets the user attach notes, a document, or an old transcript to plan from.
 Generate Artifacts returns the rubric as markdown or HTML when the chat is not the
@@ -121,7 +121,7 @@ conversation.
 The internship rant is the main fixture — a real rough idea, 1,297 words, emotional,
 and holding at least four different videos inside it. It lives at
 `slop/retired-test-fixtures/internship-rant.md`, copied verbatim out of
-`agents/Config.md` so it can be pasted straight into a chat.
+`nebulaone/Config.md` so it can be pasted straight into a chat.
 
 **Cases 1 to 3 are one conversation**, not three. They test whether it holds a thread,
 which is the whole point of the agent, and splitting them would test nothing. Cases 4

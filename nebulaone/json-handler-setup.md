@@ -14,7 +14,7 @@ Everything needed to build this agent in NebulaOne. Step 3 of
 | Name | RawtoReels - Json handler |
 | Model | `gpt terra` |
 | Capabilities | Add Files, Data & File Tools, Generate Artifacts |
-| Skill | Raw to Reels Reel JSON v1.0 — `agents/skills/raw-to-reels-reel-json-v1.md` |
+| Skill | Raw to Reels Reel JSON v1.0 — `nebulaone/skills/raw-to-reels-reel-json-v1.md` |
 
 All three capabilities are required. Add Files takes the transcript, Data & File
 Tools runs the Python, Generate Artifacts returns the result as a download. Missing

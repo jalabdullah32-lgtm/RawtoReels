@@ -4,7 +4,7 @@ tool: claude
 
 # Test fixture: internship rant
 
-The raw idea used to test the Video Planner, lifted verbatim from `agents/Config.md`.
+The raw idea used to test the Video Planner, lifted verbatim from `nebulaone/Config.md`.
 Kept here so it can be pasted into a chat without unpicking the `<details>` block it
 lives inside there.
 

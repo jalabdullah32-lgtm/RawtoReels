@@ -43,7 +43,7 @@ You can still use **Load video** and **Load JSON** for files outside the local l
 | `app/` | Caption Studio itself — the browser front end. `js/` holds the logic, `css/` the styling. |
 | `tools/` | `server.py` serves Caption Studio locally; `transcribe.py` runs FFmpeg and Faster-Whisper. |
 | `videos/` | `input/` for your source videos, `transcripts/` for generated JSON. Contents stay off Git. |
-| `agents/` | Setup guides and shared skills for the NebulaOne agents that turn transcripts into reel JSON. |
+| `nebulaone/` | Setup guides and shared skills for the NebulaOne agents that turn transcripts into reel JSON. |
 | `blueprints/` | Plans for features, split into `active/`, `parked/`, and `completed/`. |
 | `docs/` | `CHANGELOG.md`, `WORKLOG.md`, and the technical notes on the reel JSON schema. |
 | `slop/` | Archive. Superseded drafts and retired test fixtures, kept for reference rather than deleted. |
