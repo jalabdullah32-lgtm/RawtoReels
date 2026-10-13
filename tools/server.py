@@ -20,10 +20,10 @@ from transcribe import (
 )
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 APP_DIR = ROOT / "app"
-VIDEOS_DIR = ROOT / "Videos" / "input"
-TRANSCRIPTS_DIR = ROOT / "Videos" / "transcripts"
+VIDEOS_DIR = ROOT / "videos" / "input"
+TRANSCRIPTS_DIR = ROOT / "videos" / "transcripts"
 HOST = "127.0.0.1"
 PORT = 8765
 JOB_LOCK = threading.Lock()

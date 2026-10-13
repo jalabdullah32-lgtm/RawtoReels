@@ -1,5 +1,9 @@
 # Worklog
 
+> Folder paths changed on 13 October 2026. Entries below were written against the
+> older layout and are left as they were recorded. See **Repo Map** in `README.md`
+> for how the old paths map onto the current ones.
+
 ## 2026-10-12 — Clip timeline experiment parked
 **Tool:** Codex
 

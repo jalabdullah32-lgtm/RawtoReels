@@ -152,8 +152,8 @@ def retranscribe_video_file(video, input_dir, transcripts_dir, progress=None):
 
 def main():
     parser = argparse.ArgumentParser(description="Transcribe Raw to Reels input videos")
-    parser.add_argument("--input-dir", type=Path, default=Path("Videos/input"))
-    parser.add_argument("--transcripts-dir", type=Path, default=Path("Videos/transcripts"))
+    parser.add_argument("--input-dir", type=Path, default=Path("videos/input"))
+    parser.add_argument("--transcripts-dir", type=Path, default=Path("videos/transcripts"))
     args = parser.parse_args()
 
     result = transcribe_directory(args.input_dir, args.transcripts_dir)

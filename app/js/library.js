@@ -91,7 +91,7 @@ app.renderLibrary = (videos) => {
   if (!videos.length) {
     const empty = document.createElement('p');
     empty.className = 'library-empty';
-    empty.textContent = 'No videos found yet. Add a supported video to Videos/input, then refresh this page.';
+    empty.textContent = 'No videos found yet. Add a supported video to videos/input, then refresh this page.';
     library.append(empty);
     return;
   }

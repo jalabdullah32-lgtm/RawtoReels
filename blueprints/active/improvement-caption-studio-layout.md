@@ -8,7 +8,7 @@ tool: claude
 
 Rework the Caption Studio layout into three columns — library on the left, phone preview in the middle, agent chat on the right — and cut the visual bloat so the space goes to the things actually being used.
 
-Reference: `RawtoReels UI change Oct 12.jpeg` in this folder.
+Reference: `blueprints/active/assets/RawtoReels UI change Oct 12.jpeg`.
 
 ## What is wrong today
 
@@ -116,7 +116,7 @@ This is worth knowing before the design work starts, so the surrounding layout i
 
 **Blueprint approved on 12 October 2026. Design review in progress.**
 
-**Codex contribution:** Built the initial mockups and revised Version B from the owner's feedback. Created three further interactive directions under `ui-layout-mockups/design-directions/`: Splice, Proofroom, and Storyboard, with a comparison gallery, local recording frames, and full transcript review. The directions reflect the owner's light, warm palette constraints, compact media management, on-demand transcript review, and optional NebulaOne assistant.
+**Codex contribution:** Built the initial mockups and revised Version B from the owner's feedback. Created three further interactive directions under `caption-studio-mockups/`: Splice, Proofroom, and Storyboard, with a comparison gallery, local recording frames, and full transcript review. The directions reflect the owner's light, warm palette constraints, compact media management, on-demand transcript review, and optional NebulaOne assistant.
 
 The owner will choose a visual direction before changes to the real Caption Studio app begin. The previews demonstrate editing flows; source files and the app remain unchanged.
 

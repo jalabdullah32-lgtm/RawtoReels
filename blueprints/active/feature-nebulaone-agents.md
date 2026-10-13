@@ -25,7 +25,7 @@ Two findings to carry into the build:
 
 1. Open the agent panel and pick the chat starter for cutting an existing recording.
 2. The Orchestrator hands off to the Json Handler.
-3. Attach the `.transcript.json` from `Videos/transcripts`.
+3. Attach the `.transcript.json` from `videos/transcripts`.
 4. Say what you want: "a 60 second IG reel about how I got diagnosed with Narcolepsy."
 5. The agent returns **one** `.json` file containing up to three options.
 6. Download it, click **Load JSON**, pick an option, edit captions, export.
@@ -36,13 +36,13 @@ Two findings to carry into the build:
 2. Talk it through. This is a conversation, not a form — it keeps going until you are satisfied with the angle.
 3. The agent produces a rubric and questions covering what you already said, so you can answer them on camera with clarity.
 4. It can also hand you a formatted outline as markdown, or an HTML page if that is easier to read while recording.
-5. Record, drop into `Videos/input`, transcribe, then run the cutting flow above.
+5. Record, drop into `videos/input`, transcribe, then run the cutting flow above.
 
 ## Current project context
 
 - `app.fromReels` (`app/js/captions.js:27`) already validates the output strictly. `checkKeys` rejects **any** unexpected field, so the agent cannot invent keys.
 - `app/js/app.js:20` already routes an uploaded file to the right parser. Agent output loads today with no new code.
-- `Technical Notes.md` lines 25–42 show a **wrong** schema: `source_video` instead of `source`, `reels[]` instead of `options[]`, and no `transcript_end_seconds`, `timestamp_unit`, or `target_duration_seconds`. Line 46 also says SRT removal is "scheduled" when it is already done. Any prompt built from that file produces JSON that fails immediately.
+- `docs/technical-notes.md` lines 25–42 show a **wrong** schema: `source_video` instead of `source`, `reels[]` instead of `options[]`, and no `transcript_end_seconds`, `timestamp_unit`, or `target_duration_seconds`. Line 46 also says SRT removal is "scheduled" when it is already done. Any prompt built from that file produces JSON that fails immediately.
 - NebulaOne agents are public and need no key. Skills take a title, a description under 300 characters, and a body under 30k characters.
 
 ## The output contract
@@ -85,25 +85,25 @@ All three options live in **one file**. That is already how the schema works, so
 
 ## Implementation steps
 
-1. ~~**Fix `Technical Notes.md`**~~ — **done.** The file now carries the real contract under "Reel JSON schema v1.0", with a corrected example. The SRT line says removal is complete; legacy JSON is still accepted and still scheduled for removal.
+1. ~~**Fix `docs/technical-notes.md`**~~ — **done.** The file now carries the real contract under "Reel JSON schema v1.0", with a corrected example. The SRT line says removal is complete; legacy JSON is still accepted and still scheduled for removal.
 
-2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `Agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
+2. ~~**Author the shared skill, "Raw to Reels Reel JSON v1.0."**~~ — **done.** Lives at `agents/skills/raw-to-reels-reel-json-v1.md`. Contains the contract, the buffer rules, a Python validator mirroring `fromReels`, and a failure-modes list. 13,164 characters, comfortably under the 30k limit. The code block is deliberately pure ASCII so it survives being written to a `.py` file on a non-UTF-8 default.
 
-3. ~~**Build the Json Handler.**~~ — **built and tested.** Configuration, system prompt, and test cases live in `Agents/json-handler-setup.md`. All six test cases passed on 12 October, and its output loads in Caption Studio without manual repair, which is the bar this step was set against.
+3. ~~**Build the Json Handler.**~~ — **built and tested.** Configuration, system prompt, and test cases live in `agents/json-handler-setup.md`. All six test cases passed on 12 October, and its output loads in Caption Studio without manual repair, which is the bar this step was set against.
 
    One defect found: the agent split continuous speech into separate clips. The system prompt now tells it to merge touching selections. **That fix has not been re-tested** — re-run case 2, which produced three touching clips where one would do.
 
    The agent is silent, with no chat starters. Only the Orchestrator carries those.
 
-4. **Build the Video Planner.** — **written, not yet built.** Configuration, system prompt, and seven test cases live in `Agents/video-planner-setup.md`; its skill is `Agents/skills/raw-to-reels-video-planning-v1.md` (8,624 characters). Add Files and Generate Artifacts, so it can take notes to plan from and hand back markdown or HTML. Data & File Tools is optional here — there is no transcript to load.
+4. **Build the Video Planner.** — **written, not yet built.** Configuration, system prompt, and seven test cases live in `agents/video-planner-setup.md`; its skill is `agents/skills/raw-to-reels-video-planning-v1.md` (8,624 characters). Add Files and Generate Artifacts, so it can take notes to plan from and hand back markdown or HTML. Data & File Tools is optional here — there is no transcript to load.
 
    The skill is built around one rule: **no rubric on the first reply.** Talk first, keep going until the user says they have the angle, and only then produce it. Every question in the rubric has to be built from what the user already said, which is the difference between a prompt they can answer in one take and an interview question. Prompts to speak to, never a script to read.
 
-   Nothing here can be verified automatically. Case 1 — does it resist delivering a plan on turn one — is the sharp test, and the internship rant at `Agents/test-fixtures/internship-rant.md` is the fixture.
+   Nothing here can be verified automatically. Case 1 — does it resist delivering a plan on turn one — is the sharp test, and the internship rant at `slop/retired-test-fixtures/internship-rant.md` is the fixture.
 
-   **The agent is built in NebulaOne. Cases 1 and 2 passed; testing is parked.** It reflected the idea back and asked instead of planning, and it held the thread across follow-up turns, which is the failure it was most at risk of. The owner stopped the phase there on purpose, to resume closer to real integration — this is a deliberate pause, not a blocked step. One artifact was kept, `Agents/test-fixtures/internship-reel-rubric.html`, and it reads well against the bar in the skill.
+   **The agent is built in NebulaOne. Cases 1 and 2 passed; testing is parked.** It reflected the idea back and asked instead of planning, and it held the thread across follow-up turns, which is the failure it was most at risk of. The owner stopped the phase there on purpose, to resume closer to real integration — this is a deliberate pause, not a blocked step. One artifact was kept, `slop/retired-test-fixtures/internship-reel-rubric.html`, and it reads well against the bar in the skill.
 
-5. **Build the Orchestrator.** — **built, hand-off confirmed working.** Configuration, system prompt, hand-off conditions, chat starters, and eight test cases live in `Agents/orchestrator-setup.md`. The eight cases were not run individually; the owner judged it good enough and moved on.
+5. **Build the Orchestrator.** — **built, hand-off confirmed working.** Configuration, system prompt, hand-off conditions, chat starters, and eight test cases live in `agents/orchestrator-setup.md`. The eight cases were not run individually; the owner judged it good enough and moved on.
 
    Each hand-off is configured with a "When to use" condition under **Collaborate with another Agent**. That text is what the model actually routes on, so it carries more weight than the routing prose in the system prompt. Both conditions state the trigger, the one deciding question, and when *not* to fire — the negative clause matters, because a model given two hand-offs and no reason to prefer either tends to pick whichever is described more richly rather than whichever fits. Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Anything unclear gets one question rather than a guess.
 
@@ -166,7 +166,7 @@ Run the Video Planner on a real rough idea and confirm it keeps the thread acros
 - [x] Three agents exist and the Orchestrator routes correctly on both paths. *Hand-off confirmed working; the full case set is not run.*
 - [x] The Json Handler returns one `.json` that loads in Caption Studio without manual repair.
 - [ ] The Video Planner holds a real back-and-forth conversation. *Early evidence says yes — cases 1 and 2 passed — but left unchecked while testing is parked.*
-- [x] `Technical Notes.md` matches the code.
+- [x] `docs/technical-notes.md` matches the code.
 
 ## Status
 
@@ -180,7 +180,7 @@ Remaining, all of it hands-on in NebulaOne:
 
 - **Finish testing the Video Planner.** The best resumption is not cases 3 to 7 — it is recording one video against the saved rubric and running the transcript through the Json Handler, which exercises the planner, the hand-off, and the cut in one pass.
 - **Finish testing the Orchestrator.** Case 4 first — an ambiguous request that should draw a question rather than a guess, and the most likely real-world phrasing of the two.
-- **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `Agents/json-handler-setup.md` under **Merge re-test**.
+- **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `agents/json-handler-setup.md` under **Merge re-test**.
 
 Two assumptions are still assumptions, both recorded as known unknowns in the setup files: whether an attachment survives a hand-off, and whether the user lands back at the Orchestrator afterwards. Each is settled by one test — Orchestrator cases 6 and 8. The build is deliberately safe in the direction of both being true as assumed, so being wrong about either costs a wording change rather than a redesign.
 

@@ -14,7 +14,7 @@ Everything needed to build this agent in NebulaOne. Step 4 of
 | Name | RawtoReels - Video planner |
 | Model | `gpt terra` |
 | Capabilities | Add Files, Generate Artifacts |
-| Skill | Raw to Reels Video Planning v1.0 — `Agents/skills/raw-to-reels-video-planning-v1.md` |
+| Skill | Raw to Reels Video Planning v1.0 — `agents/skills/raw-to-reels-video-planning-v1.md` |
 
 Add Files lets the user attach notes, a document, or an old transcript to plan from.
 Generate Artifacts returns the rubric as markdown or HTML when the chat is not the
@@ -104,7 +104,7 @@ Do not try to cut a reel here.
 CLOSING
 
 End the rubric with one line on what happens next: record it, drop it in
-Videos/input, transcribe it, then bring the transcript back to be cut.
+videos/input, transcribe it, then bring the transcript back to be cut.
 ```
 
 ## Chat starters
@@ -120,8 +120,8 @@ conversation.
 
 The internship rant is the main fixture — a real rough idea, 1,297 words, emotional,
 and holding at least four different videos inside it. It lives at
-`Agents/test-fixtures/internship-rant.md`, copied verbatim out of `Agents/Config.md`
-so it can be pasted straight into a chat.
+`slop/retired-test-fixtures/internship-rant.md`, copied verbatim out of
+`agents/Config.md` so it can be pasted straight into a chat.
 
 **Cases 1 to 3 are one conversation**, not three. They test whether it holds a thread,
 which is the whole point of the agent, and splitting them would test nothing. Cases 4
@@ -167,7 +167,8 @@ found — it is a phase stopped early on purpose.
 | 3 | Not formally assessed — but see the saved artifact below |
 | 4–7 | Not run |
 
-One artifact was kept from the session: `test-fixtures/internship-reel-rubric.html`,
+One artifact was kept from the session:
+`slop/retired-test-fixtures/internship-reel-rubric.html`,
 the internship rant planned as a 70–75 second reel. It was not scored against cases 3
 and 6, but read on its own it holds up:
 

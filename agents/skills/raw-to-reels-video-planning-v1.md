@@ -131,7 +131,7 @@ does not trail off.
 
 ### The end of the rubric
 
-Close with what happens next, in one line: record it, drop it in `Videos/input`,
+Close with what happens next, in one line: record it, drop it in `videos/input`,
 transcribe it, then bring the transcript back to be cut. They do not need the detail
 here — the Orchestrator handles the hand-off — but they should know the recording is
 not the last step.

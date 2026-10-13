@@ -14,7 +14,7 @@ Everything needed to build this agent in NebulaOne. Step 3 of
 | Name | RawtoReels - Json handler |
 | Model | `gpt terra` |
 | Capabilities | Add Files, Data & File Tools, Generate Artifacts |
-| Skill | Raw to Reels Reel JSON v1.0 — `Agents/skills/raw-to-reels-reel-json-v1.md` |
+| Skill | Raw to Reels Reel JSON v1.0 — `agents/skills/raw-to-reels-reel-json-v1.md` |
 
 All three capabilities are required. Add Files takes the transcript, Data & File
 Tools runs the Python, Generate Artifacts returns the result as a download. Missing
@@ -105,8 +105,9 @@ Orchestrator — users arrive here by being routed, not by picking a starter.
 
 ## Testing
 
-Testing happens in NebulaOne. Attach a fixture from `Agents/test-fixtures/`, paste
-the prompt, and judge the result.
+Testing happens in NebulaOne. Attach a fixture from `slop/retired-test-fixtures/`,
+paste the prompt, and judge the result. These fixtures were retired to `slop/` on
+13 October 2026; they still work, they are simply no longer part of the active tree.
 
 The three `.transcript.json` fixtures match the exact shape `transcribe.py` writes,
 down to the leading space on each word, so the agent sees nothing it would not see
@@ -153,8 +154,8 @@ runs, and the whole of `short.transcript.json` chopped into three touching clips
 Valid output, but a clip boundary where nothing is removed is not a cut. Step 3 of
 the prompt now tells it to merge selections that touch. **Not yet re-tested.**
 
-Agent outputs from these runs are kept in `Agents/test-fixtures/` for comparison
-against later changes.
+Agent outputs from these runs are kept in `slop/retired-test-fixtures/` for
+comparison against later changes.
 
 ### Merge re-test — pending
 

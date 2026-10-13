@@ -1,8 +1,8 @@
 # Personal source media and generated local transcripts
-Videos/input/*
-!Videos/input/.gitkeep
-Videos/transcripts/*
-!Videos/transcripts/.gitkeep
+videos/input/*
+!videos/input/.gitkeep
+videos/transcripts/*
+!videos/transcripts/.gitkeep
 
 # Python and editor artifacts
 __pycache__/

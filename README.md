@@ -32,9 +32,25 @@ The editing is also almost instant. The application gets passed the words from _
 
 Double-click `run-raw-to-reels.cmd`. It uses the project virtual environment when present, otherwise the Windows Python launcher, then starts a local server at `127.0.0.1` and opens Caption Studio in your default browser.
 
-Put source videos in `Videos/input`. The **Your videos** library lists them with a preview and shows whether a matching transcript exists. Click **Transcribe new videos** to create a local JSON transcript for each new video, then click a ready card to load its video and captions together. Transcripts live in `Videos/transcripts` and preserve any subfolder structure from `Videos/input`.
+Put source videos in `videos/input`. The **Your videos** library lists them with a preview and shows whether a matching transcript exists. Click **Transcribe new videos** to create a local JSON transcript for each new video, then click a ready card to load its video and captions together. Transcripts live in `videos/transcripts` and preserve any subfolder structure from `videos/input`.
 
 You can still use **Load video** and **Load JSON** for files outside the local library. Raw source videos and generated transcripts stay on your computer and are excluded from Git.
+
+## Repo Map
+
+| Folder | What's in it |
+| --- | --- |
+| `app/` | Caption Studio itself — the browser front end. `js/` holds the logic, `css/` the styling. |
+| `tools/` | `server.py` serves Caption Studio locally; `transcribe.py` runs FFmpeg and Faster-Whisper. |
+| `videos/` | `input/` for your source videos, `transcripts/` for generated JSON. Contents stay off Git. |
+| `agents/` | Setup guides and shared skills for the NebulaOne agents that turn transcripts into reel JSON. |
+| `blueprints/` | Plans for features, split into `active/`, `parked/`, and `completed/`. |
+| `docs/` | `CHANGELOG.md`, `WORKLOG.md`, and the technical notes on the reel JSON schema. |
+| `slop/` | Archive. Superseded drafts and retired test fixtures, kept for reference rather than deleted. |
+
+The layout was reorganized on 13 October 2026. Log entries written before that date
+refer to the older paths — `Agents/`, `Videos/`, `Technical Notes.md`, and
+`blueprints/active/ui-layout-mockups/` — which map onto the table above.
 
 ## What I Want Next
 

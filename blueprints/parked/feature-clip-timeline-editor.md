@@ -8,7 +8,12 @@ tool: claude
 
 Stop the cuts feeling jerky. Two parts: give every clip some breathing room automatically, and give the user a timeline to nudge clip boundaries by hand when the automatic version is not quite right.
 
-Reference: `sliderBar.png` in this folder.
+Reference: `blueprints/active/assets/sliderBar.png`.
+
+**Parked.** A working prototype of this feature lives on the branch
+`codex/clip-timeline-experiment`. It was parked on 12 October 2026 because the padding
+and cut behaviour could not yet be judged without more real-video use, not because
+anything failed.
 
 ## The problem
 
@@ -38,7 +43,7 @@ So the real question is whether the buffer counts against the target duration or
 
 ## Part two: the timeline
 
-From `sliderBar.png` — a horizontal timeline with:
+From `assets/sliderBar.png` — a horizontal timeline with:
 
 - a **filmstrip** of video thumbnails along the clip
 - a **waveform** of the audio underneath

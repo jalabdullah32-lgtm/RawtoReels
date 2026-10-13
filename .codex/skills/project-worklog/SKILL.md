@@ -17,26 +17,26 @@ Do not ask after read-only work, a trivial formatting change, a failed change th
 
 ## When the User Requests a Log
 
-1. Read `CHANGELOG.md` and `WORKLOG.md` if they exist.
+1. Read `docs/CHANGELOG.md` and `docs/WORKLOG.md` if they exist.
 2. Inspect local Git commits made on the requested date. Also inspect uncommitted changes when they relate to the request.
 3. Use commit messages, changed file names, and diff summaries to understand the work. Do not include large code blocks in either log.
 4. Draft, but do not write, two entries for the user's approval:
-   - `CHANGELOG.md`: a concise dated summary of meaningful changes.
-   - `WORKLOG.md`: a dated record of the goal, work completed, failed attempts, discoveries, and useful next steps.
+   - `docs/CHANGELOG.md`: a concise dated summary of meaningful changes.
+   - `docs/WORKLOG.md`: a dated record of the goal, work completed, failed attempts, discoveries, and useful next steps.
 5. Write the approved entries only after the user confirms the draft.
 
 ## Authorship Tag
 
 Entries written through this skill are tagged so the user can later tell which assistant produced the work.
 
-In `CHANGELOG.md`, suffix each bullet Codex is responsible for:
+In `docs/CHANGELOG.md`, suffix each bullet Codex is responsible for:
 
 ```markdown
 ## 2026-10-12
 - Added audio library panel. _(codex)_
 ```
 
-In `WORKLOG.md`, add a `**Tool:**` line directly under the entry heading:
+In `docs/WORKLOG.md`, add a `**Tool:**` line directly under the entry heading:
 
 ```markdown
 ## 2026-10-12 — Audio library

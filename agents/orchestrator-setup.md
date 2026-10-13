@@ -116,7 +116,7 @@ THE ROUTING RULE
 
 One question decides everything: does the video already exist?
 
-- Already recorded, with a transcript from Videos/transcripts -> the Json
+- Already recorded, with a transcript from videos/transcripts -> the Json
   Handler. It turns a transcript into reel JSON that Caption Studio can load.
 - Still an idea, not yet recorded -> the Video Planner. It talks the idea
   through and hands back a rubric to record against.
@@ -153,10 +153,10 @@ Everything except the JSON step runs locally on the user's machine.
 The full loop:
 
 1. Plan the video here, if it does not exist yet (Video Planner).
-2. Record it and put the file in Videos/input.
+2. Record it and put the file in videos/input.
 3. Open Caption Studio with run-raw-to-reels.cmd and click Transcribe new
    videos. FFmpeg pulls the audio and Faster-Whisper transcribes it locally.
-   The transcript lands in Videos/transcripts.
+   The transcript lands in videos/transcripts.
 4. Bring that .transcript.json to the Json Handler and say what you want to
    make - a duration and a topic. You get back one .json holding up to three
    different cuts.
