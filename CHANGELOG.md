@@ -13,6 +13,12 @@
 - Added the Json Handler setup guide and three fabricated test transcripts. _(claude)_
 - Built the Json Handler in NebulaOne. All six test cases passed and its output loads in Caption Studio without manual repair.
 - Fixed the Json Handler splitting continuous speech into separate clips, by telling it to merge touching selections. Not yet re-tested. _(claude)_
+- Added the shared agent skill `Agents/skills/raw-to-reels-video-planning-v1.md`, built around one rule: no rubric until the conversation has happened. _(claude)_
+- Added the Video Planner setup guide, and extracted the internship rant from `Agents/Config.md` into a pasteable test fixture. _(claude)_
+- Built the Video Planner in NebulaOne. It asks instead of planning on the first reply and holds a thread across turns. Testing parked after cases 1 and 2.
+- Added the Orchestrator setup guide, including hand-off conditions for both specialists and four chat starters with one left unassigned. _(claude)_
+- Built the Orchestrator in NebulaOne. Hand-off to both specialists confirmed working. Remaining cases not run.
+- Recorded the Json Handler merge re-test procedure, with the zero-gap baseline measured from the 12 October outputs. _(claude)_
 
 ## 2026-10-11
 

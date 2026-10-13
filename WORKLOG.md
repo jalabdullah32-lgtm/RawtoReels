@@ -115,6 +115,61 @@ All six passed, and the output loads in Caption Studio without manual repair.
 - Judge the buffer defaults against a real reel with video, now that valid JSON
   can be produced on demand.
 
+## 2026-10-12 — Video Planner and Orchestrator built
+**Tool:** Claude Code
+
+The setup guides, skill, and fixtures were authored with Claude Code. Creating and
+testing the agents in NebulaOne was done by hand.
+
+### Goal
+
+Finish steps 4 and 5 of `feature-nebulaone-agents.md` so all three agents exist and
+the Orchestrator routes between them.
+
+### Completed
+
+- Authored the Video Planning skill and the Video Planner setup guide, with seven
+  test cases. Add Files and Generate Artifacts; Data & File Tools left off, since
+  there is no transcript to load here.
+- Authored the Orchestrator setup guide with hand-off conditions, four chat starters,
+  and eight test cases. No file capabilities and no skill, both on purpose.
+- Extracted the internship rant into `Agents/test-fixtures/internship-rant.md` so it
+  can be pasted without unpicking the `<details>` block it lives in.
+- Built both agents in NebulaOne and confirmed the hand-off works.
+- Wrote up the Json Handler merge re-test with a measured baseline.
+
+### Results
+
+- Video Planner: cases 1 and 2 passed. It reflected the idea back and asked rather
+  than planning, and held the thread across turns. Parked there.
+- Orchestrator: hand-off confirmed working. The eight cases were not run one by one.
+- Both pauses were deliberate, to resume closer to real integration.
+
+### Discoveries
+
+- The hand-off working is the finding that validates the whole design. Without it the
+  Orchestrator has no reason to exist and each specialist needs its own front door.
+- A hand-off's "When to use" text is what the model actually routes on, so it matters
+  more than the routing prose in the system prompt. Each one now names the trigger,
+  the single deciding question, and when not to fire — a model given two hand-offs and
+  no reason to prefer either tends to pick whichever is described more richly.
+- A zero gap between clips in Json Handler output does not prove the agent picked
+  touching selections. `LEAD_IN + TAIL` is 0.9 s and padding clamps to the next clip's
+  start, so padding closes sub-second gaps by itself. It does not change the test: a
+  boundary with nothing removed is the defect whichever step created it.
+- The saved HTML rubric holds up on its own reading — beats summing to target,
+  questions quoting the user's own words, `charset` and `viewport` declared so it opens
+  correctly from `file://`. One artifact is one sample, so it is encouraging, not a pass.
+
+### Next steps
+
+- Re-run Json Handler case 2 and check no clip boundary has a zero gap.
+- Orchestrator case 4 first, then 6 and 8 — those two settle whether an attachment
+  survives a hand-off and whether the round trip is real.
+- Record one video against the saved rubric and run it through the Json Handler. That
+  exercises planner, hand-off, and cut in one pass, and is the only test that says
+  whether a rubric is any good.
+
 ## 2026-10-11
 
 ### Goal
