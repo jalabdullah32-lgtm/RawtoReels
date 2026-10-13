@@ -36,6 +36,60 @@ Under 300 characters.
 > an idea, and it sends you to the right agent — the Json Handler to cut a recording
 > you have, or the Video Planner to shape one you have not made yet.
 
+## Hand-off configuration
+
+Each hand-off is added under **Collaborate with another Agent**, which asks for a
+"When to use" condition. The field pre-fills with the stem *"Call this when the user"*,
+so both of these continue from there.
+
+This text is what the model actually routes on, so it carries more weight than the
+routing prose in the system prompt. Each one states the trigger, the single deciding
+question, and — importantly — when **not** to fire. The negative clause matters more
+than it looks: given two hand-offs and no instruction to prefer either, a model tends
+to pick whichever is described more richly rather than whichever fits.
+
+### RawtoReels - Json handler
+
+```
+Call this when the user already has a recorded video and wants it turned into
+a reel. Signals: they mention a transcript or a .transcript.json file, footage
+they already shot, something they recorded last night or years ago, or they ask
+to cut, trim, clip, or shorten existing material.
+
+The only question that decides this is whether the video already exists. If it
+does, route here regardless of the topic, the length, the platform, or how rough
+the footage is. Do not collect those details first - this agent asks for what it
+needs.
+
+Do not call this when the video has not been recorded yet. That is the Video
+planner. Do not call this when you cannot tell which it is - ask one short
+question first, then route, because a wrong route costs the user a whole round
+trip.
+
+When you route here, tell the user in the same message to attach their
+.transcript.json after they arrive, not before. An attachment is not expected to
+survive the hand-off.
+```
+
+### RawtoReels - Video planner
+
+```
+Call this when the user has an idea for a video they have not recorded yet and
+wants help shaping it before filming. Signals: a topic or idea with no footage, a
+rough rant or notes pasted in, asking what they should make a video about, asking
+how to structure or angle something, or asking for an outline before they record.
+
+The only question that decides this is whether the video already exists. If it
+does not, route here.
+
+Do not call this when a recording or transcript already exists. That is the Json
+handler. Do not call this when you cannot tell which it is - ask one short
+question first, then route.
+
+The user brings their idea or notes after arriving here, not before, so do not
+ask them to attach anything in this chat.
+```
+
 ## The routing rule
 
 One distinction decides everything:
@@ -185,9 +239,32 @@ exists. Asking is correct; guessing is the failure.
 Case 6 is the hand-off assumption in practice. It stays a known unknown until the first
 real route is run end to end.
 
-### Results
+### Results, 12 October 2026 — partial, good enough to proceed
 
-Not yet tested.
+**The agent is built and the hand-off works.** Routing out to a specialist succeeds,
+which was the one thing that could have invalidated the whole three-agent design — if
+hand-offs had not worked, the Orchestrator would have had no reason to exist and the
+two specialists would each need their own front door.
+
+The eight cases were not run individually. The owner judged it good enough for now and
+moved on, the same call made on the Video Planner. That is a deliberate stop, not a
+clean sweep.
+
+| # | Result |
+|---|---|
+| 1–3 | Hand-off confirmed working. Not scored case by case |
+| 4–8 | Not run |
+
+Still worth running when this is picked back up, in this order:
+
+1. **Case 4** — "I want to make a reel about my internship." Reads like existing
+   footage but never says so. Asking is correct, guessing is the failure, and this is
+   the most likely real-world phrasing of the two.
+2. **Case 6** — attach a transcript here and ask for a reel. This is the one that
+   settles whether an attachment survives a hand-off, which is still an assumption
+   rather than a finding.
+3. **Case 8** — coming back after the Video Planner. Confirms the round trip is real
+   and not just intended.
 
 ## Known unknowns
 

@@ -103,7 +103,9 @@ All three options live in **one file**. That is already how the schema works, so
 
    **The agent is built in NebulaOne. Cases 1 and 2 passed; testing is parked.** It reflected the idea back and asked instead of planning, and it held the thread across follow-up turns, which is the failure it was most at risk of. The owner stopped the phase there on purpose, to resume closer to real integration — this is a deliberate pause, not a blocked step. One artifact was kept, `Agents/test-fixtures/internship-reel-rubric.html`, and it reads well against the bar in the skill.
 
-5. **Build the Orchestrator.** — **written, not yet built.** Configuration, system prompt, chat starters, and eight test cases live in `Agents/orchestrator-setup.md`. Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Anything unclear gets one question rather than a guess.
+5. **Build the Orchestrator.** — **built, hand-off confirmed working.** Configuration, system prompt, hand-off conditions, chat starters, and eight test cases live in `Agents/orchestrator-setup.md`. The eight cases were not run individually; the owner judged it good enough and moved on.
+
+   Each hand-off is configured with a "When to use" condition under **Collaborate with another Agent**. That text is what the model actually routes on, so it carries more weight than the routing prose in the system prompt. Both conditions state the trigger, the one deciding question, and when *not* to fire — the negative clause matters, because a model given two hand-offs and no reason to prefer either tends to pick whichever is described more richly rather than whichever fits. Routes on one distinction: a recording that already exists goes to the Json Handler, an idea not yet recorded goes to the Video Planner. Anything unclear gets one question rather than a guess.
 
    **It has no file capabilities, deliberately.** Since an attachment is not expected to survive a hand-off, the Orchestrator cannot be allowed to take the transcript — accepting one would teach a habit that loses the user's file. No skill either; the routing rule and the project explainer both fit in the system prompt.
 
@@ -161,7 +163,7 @@ Run the Video Planner on a real rough idea and confirm it keeps the thread acros
 
 ## Definition of done
 
-- [ ] Three agents exist and the Orchestrator routes correctly on both paths.
+- [x] Three agents exist and the Orchestrator routes correctly on both paths. *Hand-off confirmed working; the full case set is not run.*
 - [x] The Json Handler returns one `.json` that loads in Caption Studio without manual repair.
 - [ ] The Video Planner holds a real back-and-forth conversation. *Early evidence says yes — cases 1 and 2 passed — but left unchecked while testing is parked.*
 - [x] `Technical Notes.md` matches the code.
@@ -170,15 +172,17 @@ Run the Video Planner on a real rough idea and confirm it keeps the thread acros
 
 **In progress.** Steps 1 to 3 are done: the schema is documented, the shared skill is written, and the Json Handler is built and passing all six of its test cases with output that loads in Caption Studio.
 
-**Step 4 is built and parked.** The Video Planner exists in NebulaOne and passed cases 1 and 2 — it asks instead of planning, and it holds a thread. Testing was stopped there by the owner, to resume closer to real integration. Step 5 is written but not built.
+**All three agents now exist in NebulaOne and the hand-off works.** That last point was the real risk in this design: if hand-offs had failed, the Orchestrator would have had no reason to exist and each specialist would have needed its own front door. It did not fail.
+
+What is built is deliberately not fully tested. The Json Handler is the exception — six cases, all passing, output loading in Caption Studio. The Video Planner passed the two cases that mattered most and was parked. The Orchestrator was confirmed routing and parked. Both pauses were the owner's call, made to resume closer to real integration, and neither is a blocked step.
 
 Remaining, all of it hands-on in NebulaOne:
 
-- **Finish testing the Video Planner** when integration comes round. The best resumption is not cases 3 to 7 — it is recording one video against the saved rubric and running the transcript through the Json Handler, which exercises the planner, the hand-off, and the cut in one pass.
-- **Create the Orchestrator** from `Agents/orchestrator-setup.md` and run its eight cases. Case 4 — an ambiguous request that should get a question rather than a guess — is the sharp one.
+- **Finish testing the Video Planner.** The best resumption is not cases 3 to 7 — it is recording one video against the saved rubric and running the transcript through the Json Handler, which exercises the planner, the hand-off, and the cut in one pass.
+- **Finish testing the Orchestrator.** Case 4 first — an ambiguous request that should draw a question rather than a guess, and the most likely real-world phrasing of the two.
 - **Re-test the merge fix** on the Json Handler. Re-run case 2 and check that no clip boundary has a zero gap. The procedure and the before-the-fix numbers are in `Agents/json-handler-setup.md` under **Merge re-test**.
 
-Two assumptions get confirmed or killed on the first real route, and both are recorded as known unknowns in the setup files: whether an attachment survives a hand-off, and whether the user lands back at the Orchestrator afterwards. The build is deliberately safe in the direction of both being true as assumed.
+Two assumptions are still assumptions, both recorded as known unknowns in the setup files: whether an attachment survives a hand-off, and whether the user lands back at the Orchestrator afterwards. Each is settled by one test — Orchestrator cases 6 and 8. The build is deliberately safe in the direction of both being true as assumed, so being wrong about either costs a wording change rather than a redesign.
 
 ---
 _Authored with Claude Code._
