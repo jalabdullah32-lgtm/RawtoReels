@@ -23,6 +23,25 @@ Use this skill when the user describes a feature, bug, improvement, deployment t
    - Status
 4. Do not create or edit a blueprint until the user confirms the draft.
 
+## Capturing Ideas
+
+`IDEAS.md` at the repo root holds every idea for the project. Open ideas are plain, closed
+ideas are struck through, and each carries a permanent two-digit number that is never reused.
+Ideas worth building graduate from there into a blueprint.
+
+The user thinks out loud and produces ideas faster than either of you can act on them. Catch
+them, but never at the cost of the conversation:
+
+- **Sweep at pauses, not mid-thought.** When a planning thread reaches a natural stopping point, offer the ideas you heard as a short list and ask whether to add them. Do not interrupt a train of thought to ask about filing.
+- **Nudge in one line.** When the user raises something outside the scope of what is being planned, say so in a single sentence and offer to put it in `IDEAS.md`, then return to the thread. Do not lecture about scope and do not explore the tangent.
+- **Write the line, not the essay.** An entry is one sentence on what the idea is and why it is wanted. If an idea needs paragraphs, it wants to be a blueprint.
+- **File it under the right heading** and take the next unused number. Numbers only ever count up, including past struck-through ideas.
+- **Strike through, never delete.** An idea that ships and an idea that gets rejected both get struck through and both stay in the file.
+
+When the user asks to build an idea by its number, read that line as the starting point for the
+blueprint, then follow the planning steps above as normal. Once a blueprint exists for an idea,
+the blueprint is the live record; leave the idea line as it is until the work actually ships.
+
 ## Blueprint Storage
 
 After approval, create the blueprint in `blueprints/active/` using one of these filename prefixes:

@@ -45,6 +45,7 @@ You can still use **Load video** and **Load JSON** for files outside the local l
 | `videos/` | `input/` for your source videos, `transcripts/` for generated JSON. Contents stay off Git. |
 | `nebulaone/` | Setup guides and shared skills for the NebulaOne agents that turn transcripts into reel JSON. |
 | `blueprints/` | Plans for features, split into `active/`, `parked/`, and `completed/`. |
+| `IDEAS.md` | Every idea for the project, numbered. Ideas worth building graduate to a blueprint. |
 | `docs/` | `CHANGELOG.md`, `WORKLOG.md`, and the technical notes on the reel JSON schema. |
 | `slop/` | Archive. Superseded drafts and retired test fixtures, kept for reference rather than deleted. |
 
@@ -54,12 +55,8 @@ refer to the older paths — `Agents/`, `Videos/`, `Technical Notes.md`, and
 
 ## What I Want Next
 
-- Turn a raw voice note into a simple recording outline when useful. This is like a pre planning phase. I would do all of this on a sunday, and then record mon-tue.
-- Keep the outline step optional rather than making it part of every workflow.
-- Host the AI agent locally when that work begins, likely in a few weeks.
-- When testing the app, it made me 3 videos and they were great. I did not have to edit a video I recorded 3 years ago. My only issue was the cuts. They were too granular to the time stamps. It would be really cool to add 2-3 seconds before/after the actual clip to mke eveything more natural and less jerky cuts. Other than that its great.
-- The ability to add in overlayed videos. Lets say I am describing something and and to show it on screen. Just being able to upload another video/image/gif whatever would be amazing. Ofc I'd want this to be able to resize these overlays and what not.
-- A sound library. Similar to the overlay section. But I might want to have funny trendy noises. Just to name a few, there is a FAHHHHHHHHH audio that is really funny, maybe a little ding noise that I could use when listing somehinbg out on screen as a caption stuff like this.
-- I mentioned this above and not sure how I'd actually implement it in the app. But I might say something like "Being lazy(pops up on screen and stays there) Being a bum(Same as being lazy) Being a loser(also pops up on screen). This will be very useful. 
+Overlays, a sound library, captions that stay on screen, and finding the good takes in a
+recording. The full list lives in [`IDEAS.md`](IDEAS.md), where open ideas are plain and
+closed ones are struck through.
 
 
