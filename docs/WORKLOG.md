@@ -4,6 +4,71 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-14 — Caption Studio UI port, planned
+**Tool:** Claude Code
+
+### Goal
+
+Plan how the mockup becomes a working interface, with the owner's stated concern being that
+everything ties in cleanly — the JSON, the HTML, and the engine that already exists.
+
+### Completed
+
+- Established which artifact the build follows. Idea `17`, filed earlier the same day, says the
+  UI has to come from `Raw_to_Reels_Desktop_Preview.html`. That contradicted the previous day's
+  sign-off of the rail-layout mockup, and the owner confirmed the Desktop Preview wins.
+- Audited both candidates against the engine before asking anything, so the choice was made
+  with its real cost visible rather than on appearance alone.
+- Settled four decisions: the Desktop Preview is the source of truth; its undo stack, word
+  color marks, and export dialog get ported now rather than deferred; word colors must appear
+  in the exported MP4; and a saved file carries the caption style and word colors in one file
+  so re-opening restores the look.
+- Wrote `blueprints/active/improvement-caption-studio-ui-port.md` and deleted the superseded
+  `improvement-caption-studio-layout.md`.
+- Corrected the mockup folder `README.md`, which still read as though the rail layout were the
+  agreed direction.
+
+### Failed attempts
+
+- **The first plan was rejected for being too big.** It divided the work into four
+  feature-sized blueprints — Media, Captions, Style, Assistant — each shipping before the next
+  started. The owner wanted something smaller: build a bit, check it lightly, move on. The
+  blueprint was rewritten as one document with eleven small steps, each checked in the browser
+  in a minute or two. Worth remembering as a standing preference, not a one-off correction.
+- The per-section rule inherited from 13 October does not survive contact with this prototype.
+  The Desktop Preview is one integrated file, and the tab chrome, video stage, play bar, export
+  button, and status footer belong to no single tab. Any first section would have had to carry
+  the whole shell anyway.
+
+### Discoveries
+
+- **The Desktop Preview cannot play video.** `#frame` holds a 3 MB embedded still image and a
+  fake clock advances the captions. It reads as a working app but has no `<video>` element at
+  all. Replacing that clock cleanly is the load-bearing step, since playback, the caption list,
+  and the overlay all read from it.
+- **Eight of the engine's 35 element IDs are missing** from the preview — `video`, `stage`,
+  `caption-text`, `library-section`, `json-file`, `clear`, `export-hint`, `option-count` — and
+  `json-file` was renamed `media-json-file`. All 35 are looked up the moment `app/js` loads, and
+  a missing one returns nothing without raising an error, so they all go in at step 1.
+- **A file saved by the preview would be refused by the app that saved it.** The preview writes
+  a `caption_studio` block carrying style and word marks; `checkKeys` in `captions.js` rejects
+  any unexpected top-level field. This was the concrete form of the owner's "does it tie in
+  cleanly" question, and schema `1.1` is the answer.
+- The preview is a second implementation rather than a skin — roughly 34 functions including its
+  own looser JSON reader, which accepts `start_seconds` aliases the real validator rejects. The
+  engine's strict validator stays as the single gate; the preview's reader is not kept.
+- Word colors are new data with no home in the schema, and the export draws one color per
+  caption line. Colors in the editor but not in the MP4 would make the preview lie about the
+  finished video, so the two ship together in the same step.
+
+### Next steps
+
+- **Step 1 — shell and tabs.** The preview's markup and stylesheet into `app/index.html` and the
+  two CSS files, the 3 MB still and the demo switcher dropped, the eight missing IDs put in.
+- Three calls left open in the blueprint rather than settled quietly: where Clear captions goes,
+  what the clip sequence strip is allowed to be before idea `04` is unparked, and whether the
+  export hint earns a place in the new layout.
+
 ## 2026-10-13 — Caption Studio rail-layout mockup
 **Tool:** Claude Code
 

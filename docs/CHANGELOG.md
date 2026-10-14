@@ -4,6 +4,17 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-14
+
+- Changed the Caption Studio UI direction: `Raw_to_Reels_Desktop_Preview.html`, the owner's own prototype, becomes the real interface. The rail-layout mockup signed off on 13 October is superseded and stays only as a record. _(claude)_
+- Added idea `17` — the UI has to come from the Desktop Preview, because it is the one the owner would actually be comfortable using.
+- Wrote `blueprints/active/improvement-caption-studio-ui-port.md`, which replaces `improvement-caption-studio-layout.md`. Eleven small steps, each checked in the browser before the next one starts. _(claude)_
+- Decided the app's saved JSON gains a `caption_studio` block for caption style and word colors, written as schema `1.1`, so a saved file re-opens with its look intact. NebulaOne is untouched and keeps emitting `1.0`, which the validator still accepts. _(claude)_
+- Decided word-level colors must appear in the burned-in export, not only the preview, so `drawFrame` gets rewritten to paint word by word. _(claude)_
+- Decided the Desktop Preview's undo stack, word color marks, and export naming dialog get ported in rather than deferred to later blueprints. _(claude)_
+- Corrected the mockup folder `README.md`, which still presented the rail layout as the signed-off direction. _(claude)_
+- Deleted `blueprints/active/improvement-caption-studio-layout.md`, now superseded.
+
 ## 2026-10-13
 
 - Picked Cloud Blue as the Caption Studio theme — accent `#2F6FED`, spent only on the selected reel and the Export button. The other three palettes stay in the mockup for reference. _(claude)_

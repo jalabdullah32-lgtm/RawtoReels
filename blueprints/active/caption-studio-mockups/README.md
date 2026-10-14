@@ -1,5 +1,12 @@
 # Caption Studio UI — where this stands
 
+> **Superseded on 14 October 2026.** The build follows `Raw_to_Reels_Desktop_Preview.html`,
+> not the rail layout — idea `17`. The plan is
+> `blueprints/active/improvement-caption-studio-ui-port.md`. Everything below was written
+> against the rail-layout direction and is kept as a record of how that decision was reached.
+> Its design rules, the Cloud Blue palette, and the 34-ID constraint still read true; its
+> "next action" and sign-off do not.
+
 The Caption Studio redesign is in planning. **No implementation blueprint exists yet, on
 purpose.** The owner wants to see a UI he would actually use before anything gets written up
 or built.

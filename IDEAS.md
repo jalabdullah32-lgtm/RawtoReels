@@ -21,6 +21,7 @@ having somewhere to put them.
 - `14` **Audio controls** — original audio level, mute, and a background music track with volume and fade in/out.
 - `15` **Brand kit** — a saved logo, watermark and position, brand colors, and a default font, applied to every export.
 - `16` **Aspect ratio choice** — export 1:1 or 16:9 as well as 9:16, with fit/fill and a focal point. Related to `06`.
+- '17' UI. It has to come from raw to reels desktop studio. It it what I would actually be comfortable using.  
 
 ## NebulaOne
 
