@@ -218,5 +218,32 @@ real job — but a transcript has never actually come out the other end in testi
 
 Step 6 is next — export, with the two-step naming dialog in front of it.
 
+## Picking this up again
+
+Everything through step 5 is committed and pushed to `main` as `1625765`.
+
+**To run it.** Windows: `run-raw-to-reels.cmd`. Mac or Linux: `.venv/bin/python tools/server.py`.
+Either way it opens `127.0.0.1:8765`. The server needs `faster-whisper` and `numpy` in `.venv` —
+`numpy` is imported at the top of `transcribe.py`, so without it the server will not start at
+all, never mind transcribe.
+
+**The one thing outstanding before step 6.** Transcription has never been seen to succeed. Put a
+video with speech in `videos/input`, open the Media tab with the browser console showing, and
+press Transcribe. Watch for: the progress strip appearing; its label moving through `Preparing
+transcription` → `Loading local transcription model` → `Transcribing <file>` → `Transcription
+complete`; the count and meter tracking together; the Transcribe button and every `↻` greying
+out while it runs and coming back after; the card flipping from `No transcript` to `Ready` with
+its button changing from `Preview` to `Load`. Then press **Load** — the video and its captions
+should arrive together, with real words on timings that land when you play it.
+
+Anything red in the console is worth reporting, as is a card stuck on `No transcript` after a run
+that claimed success, or buttons that stay grey once it finishes.
+
+**How the checks were run.** From step 2 onward, by driving a real Chrome over the DevTools
+protocol — headless `--virtual-time-budget` fast-forwards timers while video decodes in real
+time, so the page outruns its own playback and nothing media-related can be trusted. File
+uploads went through the real pickers using `DOM.setFileInputFiles`. The scripts were scratch
+and are not in the repo.
+
 ---
 _Authored with Claude Code._

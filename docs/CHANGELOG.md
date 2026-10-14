@@ -6,6 +6,14 @@
 
 ## 2026-10-14
 
+- Built steps 1–5 of the Caption Studio UI port. `app/index.html` is now the Desktop Preview's interface running on the existing engine: four tabs, real video in the 9:16 frame, the preview's caption rows, the style controls, and the Media tab. _(claude)_
+- Replaced the caption editor's textareas with the preview's editable rich-text rows, which is what word colors will attach to at step 8. Timestamps jump to the moment, and each active row carries a Replay caption button. _(claude)_
+- Wired the Media tab's Caption JSON picker to the app's strict validator. It had never been connected — a hidden `json-file` input was doing the work. A malformed reel file is now refused with a reason and the loaded work is left alone. _(claude)_
+- Held the live caption overlay to what the export actually draws: it letterboxes rather than crops, wraps at 80%, and matches `drawFrame`'s padding, radius and stroke. The preview had been styled to look good over a still, not to match the MP4. _(claude)_
+- Decided the reel options bar and the clip sequence strip appear only when there is more than one thing to choose, rather than showing a lone "Full source" button with nothing to pick. _(claude)_
+- Gave Clear captions a home in the Media tab's Import row, beside Video file and Caption JSON. It greys out when there is nothing loaded to clear. _(claude)_
+- Added `app/js/tabs.js` for tab switching, with arrow-key, Home and End navigation carried over from the preview. _(claude)_
+- Silenced two pre-existing `favicon.ico` 404s, so a blank console stays a reliable signal for the remaining steps. _(claude)_
 - Changed the Caption Studio UI direction: `Raw_to_Reels_Desktop_Preview.html`, the owner's own prototype, becomes the real interface. The rail-layout mockup signed off on 13 October is superseded and stays only as a record. _(claude)_
 - Added idea `17` — the UI has to come from the Desktop Preview, because it is the one the owner would actually be comfortable using.
 - Wrote `blueprints/active/improvement-caption-studio-ui-port.md`, which replaces `improvement-caption-studio-layout.md`. Eleven small steps, each checked in the browser before the next one starts. _(claude)_

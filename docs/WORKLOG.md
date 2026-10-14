@@ -4,6 +4,69 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-14 — Caption Studio UI port, steps 1–5 built
+**Tool:** Claude Code
+
+### Goal
+
+Make `Raw_to_Reels_Desktop_Preview.html` the real interface of the app, one small step at a
+time, each checked in a browser before the next begins. Committed as `1625765` on `main`.
+
+### Completed
+
+- **Step 1, shell and tabs.** The preview's markup and stylesheet moved into `app/index.html`,
+  `base.css` and `studio.css`, minus the 3 MB embedded still, the demo state picker and the
+  mockup disclaimer notes. All eight missing element IDs went in at once, as the blueprint
+  required. Four tabs switch; every one of the engine's 35 lookups resolves.
+- **Step 2, real video.** Play, scrubbing and the time readout run off the actual video. The
+  readout took the preview's `mm:ss` format; caption timestamps keep sub-second precision
+  because real transcripts have cues less than a second apart. Fullscreen wired.
+- **Step 3, captions on the video.** The caption list is the preview's — a narrow timestamp
+  button that jumps to the moment, and an editable rich-text row. Previous/next, Reset text,
+  Replay caption, the reel options bar and the clip sequence strip all work.
+- **Step 4, style controls.** The four presets and nine appearance controls drive the live
+  overlay, and the overlay now measures itself exactly as `drawFrame` does.
+- **Step 5, Media tab.** Real library, Transcribe and its progress meter, Load video, and
+  Caption JSON import through the strict validator.
+
+### Discoveries
+
+- **The visible Caption JSON picker was never wired.** `media-json-file` sat in the preview's
+  Media tab doing nothing; a hidden `json-file` input carried the handler. Anyone reading the
+  markup would have assumed the visible one worked.
+- **The live overlay was lying about the export.** The preview's stylesheet wrapped text at 88%
+  where `drawFrame` wraps at 80%, carried a drop shadow the export never draws, and gave each
+  wrapped line its own background box where the export draws one box around the whole caption.
+  All four are now in line. Per-line boxes are the better look of the two and are left for step
+  9, when `drawFrame` is being rewritten anyway.
+- **Crop versus letterbox.** The preview cropped the video to fill the 9:16 frame; the export
+  letterboxes. Matched the preview to the export. Whether the *export* should crop instead is a
+  real question for 16:9 source footage, and is recorded in the blueprint rather than decided.
+- **Headless Chrome cannot check video playback.** `--virtual-time-budget` fast-forwards timers
+  while the media pipeline runs in real time, so the page races past its own video. Checking
+  from step 2 onward was done by driving a real Chrome over the DevTools protocol instead,
+  including real file uploads through the actual pickers via `DOM.setFileInputFiles`.
+- **`faster_whisper` is not installed for the Python on this machine**, so transcription cannot
+  complete here. The Faster-Whisper `base` model is in the user cache, so it has run somewhere
+  before; the most likely explanation is a Python upgrade that left the old environment behind.
+
+### Left to test
+
+- **Transcription end to end.** The button, the job, the progress meter, the failure detail, the
+  library refresh and the status line were all confirmed against a real job — but the job failed
+  on the missing module, so a transcript has never come out the other end in testing. Needs a
+  machine where Faster-Whisper runs. Watch the progress strip move through its phases, the
+  buttons grey out while running, the card flip from `No transcript` to `Ready`, and then
+  **Load** bringing video and captions in together.
+
+### Useful next steps
+
+- Step 6, export with the preview's two-step naming dialog in front of it, then steps 7–11:
+  undo, word colors in the editor, word colors in the export, save and re-open at schema 1.1,
+  and the Assistant tab.
+- Two small things noticed and deliberately left: clicking a clip in the sequence strip does not
+  scroll the caption list to that clip, and previous/next stay enabled at the ends of the list.
+
 ## 2026-10-14 — Caption Studio UI port, planned
 **Tool:** Claude Code
 
