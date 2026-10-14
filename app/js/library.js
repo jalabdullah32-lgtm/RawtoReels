@@ -9,9 +9,11 @@ app.refreshLibrary = async () => {
     if (!response.ok) throw Error('The local video library is unavailable.');
     const payload = await response.json();
     section.hidden = false;
+    app.$('transcribe').hidden = false;
     app.renderLibrary(payload.videos || []);
   } catch (_) {
     section.hidden = true;
+    app.$('transcribe').hidden = true;
   }
 };
 
@@ -107,22 +109,27 @@ app.renderLibrary = (videos) => {
     preview.addEventListener('loadeddata', () => { preview.currentTime = Math.min(.1, preview.duration || 0); }, { once: true });
     const name = document.createElement('strong');
     name.textContent = video.name;
-    const detail = document.createElement('span');
-    detail.className = video.has_transcript ? 'library-ready' : 'library-pending';
-    detail.textContent = video.has_transcript ? `Transcript found · ${video.transcript_name}`
+    name.title = video.name;
+    const detail = document.createElement('p');
+    detail.className = `state ${video.has_transcript ? 'library-ready' : 'library-pending'}`;
+    detail.textContent = video.has_transcript ? 'Ready'
+      : video.transcript_issue ? 'Transcript unreadable' : 'No transcript';
+    detail.title = video.has_transcript ? `Transcript found · ${video.transcript_name}`
       : video.transcript_issue ? 'Transcript is empty or unreadable' : 'Needs transcription';
     const actions = document.createElement('div');
     actions.className = 'library-actions';
     const load = document.createElement('button');
-    load.className = 'btn small';
     load.type = 'button';
-    load.textContent = video.has_transcript ? 'Load video' : 'Preview video';
+    load.textContent = video.has_transcript ? 'Load' : 'Preview';
     load.addEventListener('click', () => app.loadLibraryVideo(video));
     const retranscribe = document.createElement('button');
-    retranscribe.className = 'btn small';
+    retranscribe.className = 'icon';
     retranscribe.type = 'button';
     retranscribe.dataset.retranscribe = 'true';
-    retranscribe.textContent = video.has_transcript ? 'Re-transcribe' : 'Transcribe';
+    retranscribe.textContent = '↻';
+    const label = video.has_transcript ? 'Re-transcribe' : 'Transcribe';
+    retranscribe.title = `${label} ${video.name}`;
+    retranscribe.setAttribute('aria-label', `${label} ${video.name}`);
     retranscribe.addEventListener('click', () => app.startTranscription(video.transcribe_url));
     actions.append(load, retranscribe);
     card.append(preview, name, detail, actions);

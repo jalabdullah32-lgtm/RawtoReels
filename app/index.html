@@ -4,44 +4,71 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Raw to Reels · Caption Studio</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/studio.css">
 </head>
 <body>
-<header><div class="shell topbar"><div class="brand"><div class="mark">✦</div><b>Raw to Reels</b></div><span class="topnote">A quieter place to make something worth watching.</span></div></header>
-<main class="shell layout">
-<div>
-<span class="eyebrow">The studio / 01</span><h1>Make every word count.</h1><p class="intro">Bring your video and transcript together, fine-tune captions, then save the finished cut.</p>
-<section class="panel preview" aria-label="Video preview"><div class="stage" id="stage"><video id="video" playsinline preload="auto"></video><div class="placeholder"><span class="icon">▷</span><strong>Your preview starts here</strong><span>Load a video to see your captions in motion.</span></div><div class="caption-overlay" id="overlay" aria-live="off"><span class="caption-text" id="caption-text"></span></div></div><div class="playrow"><button class="btn play" id="play" type="button" aria-label="Play">▶</button><input id="scrub" type="range" min="0" max="30.92" step="0.001" value="0" aria-label="Playhead"><span class="time" id="time">0:00 / 0:31</span></div><p class="preview-note">Vertical 9:16 preview · appearance changes update instantly</p></section>
-<div class="toolbar"><label class="btn file-button">↑ &nbsp;Load video<input id="video-file" type="file" accept="video/*,.mp4,.mov,.webm" aria-label="Load video"></label><label class="btn file-button">⌗ &nbsp;Load JSON<input id="json-file" type="file" accept=".json,application/json" aria-label="Load transcript or Raw to Reels JSON"></label><button class="btn" id="download-json" type="button">Download edited JSON</button><button class="btn" id="clear" type="button">Clear captions</button></div><section class="panel library" id="library-section" hidden><div class="library-head"><div><span class="eyebrow">Local library</span><h2>Your videos</h2><p>Put source videos in <code>videos/input</code>, then choose one to load it with its transcript.</p></div><button class="btn primary" id="transcribe" type="button">Transcribe new videos</button></div><div class="transcription-progress" id="transcription-progress" hidden aria-live="polite"><div><strong id="transcription-label">Preparing transcription</strong><span id="transcription-count"></span></div><progress id="transcription-meter" value="0" max="1"></progress><p id="transcription-detail"></p></div><div class="video-library" id="video-library"></div></section><p class="status" id="status" role="status">Sample captions loaded. Add a video, a transcript JSON, or a Raw to Reels output JSON.</p>
-<section class="panel editcard"><div class="editor-head"><h2>Edit captions</h2><div class="actions"><button class="btn small" id="reset" type="button">Reset text</button></div></div>
-<p class="hint" style="color:var(--muted);margin:8px 0 0">Select a caption to jump to that moment. Edit directly in the larger text boxes; changes appear on your video and in your export.</p>
-<div class="editor-summary"><span id="cue-count">0 captions</span><div class="editor-nav"><button class="btn small" id="prev-cue" type="button">← Previous</button><button class="btn small" id="next-cue" type="button">Next →</button></div></div><div class="editor" id="editor"></div></section>
+<main class="workspace">
+<nav class="reels" id="options" aria-label="Reel options"></nav><span id="option-count" hidden></span>
+<div class="panels">
+
+<section class="preview-panel" aria-label="Video preview">
+<div class="stage-wrap"><div class="frame" id="stage"><video id="video" playsinline preload="auto"></video><div class="placeholder"><span class="glyph" aria-hidden="true">▷</span><strong>Your preview starts here</strong><span>Load a video from the Media tab to see your captions in motion.</span></div><div class="overlay" id="overlay" aria-live="off"><span class="overlay-text" id="caption-text"></span></div></div></div>
+<div class="playrow"><button class="icon" id="play" aria-label="Play preview">▶</button><span class="time" id="time">00:00 / 00:00</span><input type="range" id="scrub" min="0" max="0" step=".01" value="0" aria-label="Video playhead"><button class="icon" id="fullscreen" aria-label="Fullscreen preview">⛶</button><button class="primary" id="export" disabled>↑ Export reel</button></div>
+<p class="note" id="export-hint" hidden></p>
+<div class="sequence-head" id="sequence-head" hidden><span>Cut sequence</span><span id="duration-label">9:16</span></div>
+<div class="sequence" id="sequence" hidden></div>
+</section>
+
+<section class="editor-panel" aria-label="Caption editor">
+<div class="tabs" role="tablist" aria-label="Caption controls"><button role="tab" id="media-tab" aria-selected="false" aria-controls="media-panel" tabindex="-1">Media</button><button role="tab" id="captions-tab" aria-selected="true" aria-controls="captions-panel">Captions</button><button role="tab" id="style-tab" aria-selected="false" aria-controls="style-panel" tabindex="-1">Style</button><button role="tab" id="assistant-tab" aria-selected="false" aria-controls="assistant-panel" tabindex="-1">Assistant</button></div>
+
+<section class="tab-content" id="captions-panel" role="tabpanel" aria-labelledby="captions-tab">
+<div class="panel-head"><h1 id="cue-count">0 captions</h1><div class="head-links"><button class="link" id="undo" aria-label="Undo last caption or style edit" disabled>↶ Undo</button><button class="link" id="reset">Reset text</button></div></div>
+<div class="caption-list" id="editor"></div>
+<div class="list-empty" id="list-empty" hidden><strong>No captions yet</strong>Load a transcript or Raw to Reels JSON from the Media tab, or run Transcribe on a video in your library.</div>
+<div class="editor-nav"><div class="nav-pair"><button id="prev-cue" aria-label="Previous caption">← Previous</button><button id="next-cue" aria-label="Next caption">Next →</button></div><button class="primary" id="download-json">↓ Save caption JSON</button></div>
+</section>
+
+<section class="tab-content" id="style-panel" role="tabpanel" aria-labelledby="style-tab" hidden>
+<div class="panel-head"><h1>Caption appearance</h1><button class="link" id="reset-style">Reset style</button></div>
+<div class="style-scroll">
+<p class="note">Set the default look here. Word colors in the Captions tab override the text color.</p>
+<p class="section-label">Start with a style</p>
+<div class="presets"><button class="preset" data-preset="clean"><span class="preset-art" aria-hidden="true"><em>Sample</em></span><span class="preset-name">Clean white</span><span class="preset-sub">Simple and readable</span></button><button class="preset" data-preset="bold"><span class="preset-art" aria-hidden="true"><em>Sample</em></span><span class="preset-name">Bold outline</span><span class="preset-sub">A little more presence</span></button><button class="preset" data-preset="yellow"><span class="preset-art" aria-hidden="true"><em>Sample</em></span><span class="preset-name">Creator yellow</span><span class="preset-sub">Bright and punchy</span></button><button class="preset" data-preset="boxed"><span class="preset-art" aria-hidden="true"><em>Sample</em></span><span class="preset-name">Subtitle box</span><span class="preset-sub">A softer backdrop</span></button></div>
+<p class="section-label">Typography &amp; placement</p>
+<div class="style-grid"><div class="control wide"><label for="cap-font">Font family</label><select id="cap-font"><option value="system">Modern sans</option><option value="arial">Arial</option><option value="impact">Impact / condensed</option><option value="georgia">Georgia / serif</option></select></div><div class="control"><label for="cap-size">Font size <output id="cap-size-value"></output></label><input id="cap-size" type="range" min="14" max="46" value="28"></div><div class="control"><label for="cap-position">Height from bottom <output id="cap-position-value"></output></label><input id="cap-position" type="range" min="8" max="55" value="20"></div><div class="control"><label for="cap-color">Text color</label><input id="cap-color" type="color" value="#ffffff"></div><div class="control"><label for="cap-outline-color">Outline color</label><input id="cap-outline-color" type="color" value="#000000"></div><div class="control wide"><label for="cap-outline">Outline thickness <output id="cap-outline-value"></output></label><input id="cap-outline" type="range" min="0" max="8" step=".5" value="3"></div><div class="control"><label for="cap-bg-color">Background color</label><input id="cap-bg-color" type="color" value="#000000"></div><div class="control"><label for="cap-bg">Background opacity <output id="cap-bg-value"></output></label><input id="cap-bg" type="range" min="0" max="95" step="5" value="0"></div><label class="check wide"><input type="checkbox" id="cap-uppercase">Uppercase captions</label></div>
 </div>
-<aside class="sidebar"><section class="panel stylecard" aria-label="Caption appearance">
-<div class="sidehead"><h2>Caption style</h2><span class="badge">LIVE PREVIEW</span></div><p>Choose a look, then customize it. Every change is burned into your exported video.</p>
-<div class="presets" id="style-presets">
-<button type="button" class="preset" data-preset="clean">Clean white</button>
-<button type="button" class="preset" data-preset="bold">Bold outline</button>
-<button type="button" class="preset" data-preset="yellow">Creator yellow</button>
-<button type="button" class="preset" data-preset="boxed">Subtitle box</button>
+</section>
+
+<section class="tab-content" id="media-panel" role="tabpanel" aria-labelledby="media-tab" hidden>
+<div class="panel-head"><h1>Media</h1><button class="primary" id="transcribe">↻ Transcribe</button></div>
+<div class="style-scroll">
+<div class="progress-strip" id="transcription-progress" aria-live="polite" hidden><div class="progress-top"><strong id="transcription-label">Preparing transcription</strong><span id="transcription-count"></span></div><progress id="transcription-meter" value="0" max="1"></progress><p id="transcription-detail"></p></div>
+<section id="library-section" hidden><p class="section-label">Library</p><div class="video-library" id="video-library"></div></section>
+<p class="section-label">Import</p>
+<div class="library-actions"><label class="file">Video file<input type="file" id="video-file" accept="video/*,.mp4,.mov,.webm" aria-label="Load video"></label><label class="file">Caption JSON<input type="file" id="media-json-file" accept=".json,application/json" aria-label="Load transcript or Raw to Reels JSON"></label><button id="clear" type="button">Clear captions</button></div>
+<p class="note">A transcript JSON captions the whole video. A Raw to Reels JSON from NebulaOne brings its reel cuts with it.</p>
 </div>
-<div class="style-grid">
-<div class="control wide"><label for="cap-font">Font</label><select id="cap-font"><option value="system">Modern sans</option><option value="arial">Arial</option><option value="impact">Impact / condensed</option><option value="georgia">Georgia / serif</option></select></div>
-<div class="control"><label for="cap-size">Size <output id="cap-size-value">28</output></label><input id="cap-size" type="range" min="14" max="46" step="1" value="28"></div>
-<div class="control"><label for="cap-position">Height <output id="cap-position-value">20%</output></label><input id="cap-position" type="range" min="8" max="55" step="1" value="20"></div>
-<div class="control"><label for="cap-color">Text color</label><input id="cap-color" type="color" value="#ffffff"></div>
-<div class="control"><label for="cap-outline-color">Outline color</label><input id="cap-outline-color" type="color" value="#000000"></div>
-<div class="control wide"><label for="cap-outline">Outline thickness <output id="cap-outline-value">3px</output></label><input id="cap-outline" type="range" min="0" max="8" step=".5" value="3"></div>
-<div class="control"><label for="cap-bg-color">Box color</label><input id="cap-bg-color" type="color" value="#000000"></div>
-<div class="control"><label for="cap-bg">Box opacity <output id="cap-bg-value">0%</output></label><input id="cap-bg" type="range" min="0" max="95" step="5" value="0"></div>
-<div class="control wide"><label class="checkrow" for="cap-uppercase"><input type="checkbox" id="cap-uppercase"> ALL CAPS</label></div>
+</section>
+
+<section class="tab-content" id="assistant-panel" role="tabpanel" aria-labelledby="assistant-tab" hidden>
+<div class="panel-head"><h1>Assistant</h1></div>
+<div class="style-scroll"><div class="assistant-frame"><strong>NebulaOne</strong><p>Loads the first time you open this section.</p></div></div>
+</section>
+
+<footer class="footer"><span id="status" role="status"></span><span>9:16 · 1080 × 1920</span></footer>
+</section>
+
 </div>
-<button class="btn small reset-appearance" id="reset-style" type="button">↺ Reset appearance</button>
-</section><section class="panel sidecard"><div class="sidehead"><h2>Your cuts</h2><span class="badge" id="option-count">SOURCE</span></div><p>Load a Raw to Reels output JSON to choose a reel. A transcript JSON also works for full-video captions.</p><div id="options"></div></section><section class="panel sidecard"><div class="sidehead"><h2>Take it with you</h2><span class="badge">VIDEO EXPORT</span></div><p>Export the selected cut with captions burned into the video and the original audio.</p><button class="btn primary export" id="export" type="button" disabled>↓ &nbsp;Export video</button><p class="hint" id="export-hint">Load a local video to enable export. Your browser chooses MP4 or WebM based on supported recording formats.</p></section><section class="panel sidecard"><h2>Accepted JSON</h2><p>Transcript JSON with <b>source</b>, <b>language</b>, and <b>segments</b> (including optional timestamped <b>words</b>); Raw to Reels output JSON v1.0 with <b>options → clips → captions</b>; or this preview’s legacy <b>segments + groups</b> JSON.</p></section></aside>
 </main>
+
+<div class="export-state" id="export-state" role="dialog" aria-modal="true" aria-labelledby="export-state-title" hidden><div><div id="export-form"><strong id="export-state-title">Export reel</strong><p>Give this reel a name. It becomes the filename of your download.</p><label class="export-field" for="export-title">Title</label><input id="export-title" type="text" autocomplete="off" spellcheck="false"><p class="muted export-meta" id="export-meta">9:16 · 1080 × 1920</p><div class="export-actions"><button type="button" id="export-cancel">Cancel</button><button type="button" class="primary" id="export-go">↑ Export reel</button></div></div><div id="export-progress" hidden><strong>Recording your reel</strong><p>Recording happens in real time. Keep this tab open until your download begins.</p><progress id="export-meter" value="0" max="1"></progress><p class="muted export-meta" id="export-elapsed"></p></div></div></div>
+
 <script defer src="js/dom.js"></script>
 <script defer src="js/state.js"></script>
+<script defer src="js/tabs.js"></script>
 <script defer src="js/utils.js"></script>
 <script defer src="js/captions.js"></script>
 <script defer src="js/playback.js"></script>

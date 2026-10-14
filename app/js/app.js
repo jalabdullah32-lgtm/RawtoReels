@@ -15,7 +15,7 @@ app.$('next-cue').addEventListener('click', () => {
 });
 app.$('reset').addEventListener('click', () => { app.allCues().forEach((cue, index) => { cue.text = state.originalTexts[index]; if (cue.reference && state.model.kind === 'reels') cue.reference.text = cue.text; }); app.renderEditor(); });
 app.$('clear').addEventListener('click', () => app.loadModel({ kind: 'empty', raw: null, cues: [], options: [], extent: state.videoURL ? app.duration() : 0 }));
-app.$('json-file').addEventListener('change', async (event) => {
+app.$('media-json-file').addEventListener('change', async (event) => {
   const file = event.target.files[0]; if (!file) return;
   try { const raw = JSON.parse(await file.text()); const next = raw.schema_version !== undefined || raw.options !== undefined ? app.fromReels(raw) : Array.isArray(raw.segments) && raw.groups !== undefined ? app.fromLegacy(raw) : app.fromTranscript(raw); app.loadModel(next); }
   catch (error) { app.setStatus(`Could not load JSON: ${error.message}`, true); }

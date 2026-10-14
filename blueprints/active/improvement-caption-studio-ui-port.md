@@ -157,11 +157,33 @@ worth doing on step 1, as it was on the mockup.
 
 Three things with no obvious answer, to settle as they come up rather than silently:
 
-- **Clear captions** exists in the app and has no home in the preview's layout.
+- **Clear captions** exists in the app and has no home in the preview's layout. Settled at
+  step 5: it sits in the Media tab's Import row, beside Video file and Caption JSON — the row
+  captions arrive through is the row to throw them out of. It greys out when there is nothing
+  loaded to clear.
 - **The clip sequence strip** is in the preview, but cut-sequence editing belongs to the parked
-  clip-timeline work (idea `04`). It renders as a jump-to-clip strip here, nothing more.
+  clip-timeline work (idea `04`). It renders as a jump-to-clip strip here, nothing more. Built
+  at step 3, and hidden entirely unless a reel has more than one clip — the same rule as the
+  reel options bar.
 - **The export hint** text under the old Export button has nowhere to sit; it stays in the DOM
   for `app/js` and is shown only if it earns a place.
+
+Settled while building:
+
+- **The reel options bar** now stays hidden unless there is more than one thing to pick between,
+  as the preview had it. The engine used to draw a lone "Full source" button with nothing to
+  choose. Settled 14 October at step 2.
+- **The live overlay is held to what the export actually draws.** The preview's stylesheet was
+  written to look good over a still, not to match `drawFrame`: it wrapped text at 88% rather
+  than 80%, carried a drop shadow the export never draws, and gave each wrapped line its own
+  background box where the export draws one box around the whole caption. All four were pulled
+  into line at step 4, along with the box padding and corner radius. Per-line boxes are the
+  nicer look of the two — worth revisiting at step 9, when `drawFrame` is being rewritten
+  anyway, rather than leaving the preview telling a story the MP4 does not.
+- **The video is letterboxed in the frame, not cropped.** The preview's stylesheet cropped the
+  video to fill the 9:16 frame, but the export fits the whole frame inside 1080 × 1920 with
+  bars. Cropping would have meant the preview lied about the export. Whether the export itself
+  should crop instead is a separate question, and a real one for 16:9 source footage.
 
 ## Definition of done
 
@@ -173,9 +195,28 @@ at something that no longer exists.
 
 ## Status
 
-Approved and not yet started. Written 14 October 2026 after the owner chose the Desktop Preview
-over the rail-layout mockup, confirmed word colors must appear in the export, and asked for the
-work to be built and checked one small step at a time.
+In progress. Written 14 October 2026 after the owner chose the Desktop Preview over the
+rail-layout mockup, confirmed word colors must appear in the export, and asked for the work to
+be built and checked one small step at a time.
+
+Steps 1 to 5 done and checked on 14 October 2026. The app wears the preview's interface, all
+four tabs switch, every ID `app/js` looks up resolves, and a real video plays in the frame with
+the play bar, scrubbing, and the time readout running off it. The caption list is the preview's:
+editable rich-text rows with a timestamp that jumps to the moment, previous/next, Reset text,
+and a reel options bar and clip strip that appear only when there is something to choose.
+The four presets and the nine appearance controls drive that overlay, and the overlay now
+measures itself exactly as `drawFrame` does. Console clean throughout.
+
+The Media tab lists the real library, loads video from disk, and imports caption JSON through
+the app's strict validator — a malformed reel file is refused with a reason and the work already
+loaded is left alone. The hidden `json-file` input is gone; `media-json-file` is the real one.
+
+One gap: transcription could not be checked past the point of failure, because `faster_whisper`
+is not installed for the Python on this machine. The Transcribe button, the job, the progress
+meter, the failure detail, the library refresh and the status line were all confirmed against a
+real job — but a transcript has never actually come out the other end in testing.
+
+Step 6 is next — export, with the two-step naming dialog in front of it.
 
 ---
 _Authored with Claude Code._

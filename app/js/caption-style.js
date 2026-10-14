@@ -16,6 +16,7 @@ app.updateStylePreview = () => {
   const style = app.captionStyle; const base = elements.stage.clientWidth || 360; const scale = base / 360;
   elements.overlay.style.bottom = `${style.position}%`; elements.overlay.style.fontFamily = app.fontFamily(); elements.overlay.style.fontSize = `${style.size * scale}px`;
   const caption = app.$('caption-text'); caption.style.color = style.color; caption.style.webkitTextStroke = `${style.outline * scale}px ${style.outlineColor}`; caption.style.paintOrder = 'stroke fill'; caption.style.background = app.rgba(style.bgColor, style.bg / 100); caption.style.textTransform = style.uppercase ? 'uppercase' : 'none';
+  caption.style.padding = style.bg > 0 ? `${5 * scale}px ${9 * scale}px` : '0'; caption.style.borderRadius = `${7 * scale}px`;
   app.$('cap-size-value').textContent = String(style.size); app.$('cap-position-value').textContent = `${style.position}%`; app.$('cap-outline-value').textContent = `${style.outline}px`; app.$('cap-bg-value').textContent = `${style.bg}%`;
   for (const [key, id] of Object.entries(STYLE_FIELDS)) app.$(id)[key === 'uppercase' ? 'checked' : 'value'] = style[key];
   document.querySelectorAll('[data-preset]').forEach((button) => { const preset = STYLE_PRESETS[button.dataset.preset]; const active = Object.keys(preset).every((key) => preset[key] === style[key]); button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });

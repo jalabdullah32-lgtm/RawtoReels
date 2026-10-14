@@ -97,17 +97,57 @@ app.allCues = () => [...state.model.cues, ...state.model.options.flatMap((option
 app.renderOptions = () => {
   const root = app.$('options'); root.replaceChildren();
   const options = [{ title: 'Full source', duration: app.duration() }, ...state.model.options.map((option) => ({ title: option.title, duration: option.duration_seconds }))];
-  options.forEach((option, index) => { const button = document.createElement('button'); button.type = 'button'; button.className = `option${state.selected === index - 1 ? ' active' : ''}`; const title = document.createElement('strong'); const sub = document.createElement('small'); title.textContent = option.title; sub.textContent = `${app.formatTime(option.duration)} · ${index ? 'Edited reel' : 'Original timeline'}`; button.append(title, sub); button.addEventListener('click', () => { if (state.exporting) return; state.selected = index - 1; app.update(); }); root.append(button); });
+  root.hidden = options.length < 2;
+  options.forEach((option, index) => { const button = document.createElement('button'); button.type = 'button'; button.textContent = `${option.title} · ${app.formatClock(option.duration)}`; button.setAttribute('aria-pressed', String(state.selected === index - 1)); button.addEventListener('click', () => { if (state.exporting) return; state.selected = index - 1; app.update(); }); root.append(button); });
   app.$('option-count').textContent = state.model.options.length ? `${state.model.options.length} REEL${state.model.options.length > 1 ? 'S' : ''}` : 'SOURCE';
 };
-app.jumpToCue = (index, scroll = true) => { const cues = app.visibleCues(); const cue = cues[Math.max(0, Math.min(index, cues.length - 1))]; if (!cue) return; app.stop(); state.sourceTime = cue.start; if (state.videoURL) elements.video.currentTime = Math.min(cue.start, elements.video.duration || cue.start); state.lastActiveIndex = -1; app.paint(); if (scroll) elements.editor.querySelector(`.cue[data-index="${cues.indexOf(cue)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+app.jumpToCue = (index, scroll = true) => { const cues = app.visibleCues(); const cue = cues[Math.max(0, Math.min(index, cues.length - 1))]; if (!cue) return; app.stop(); state.sourceTime = cue.start; if (state.videoURL) elements.video.currentTime = Math.min(cue.start, elements.video.duration || cue.start); state.lastActiveIndex = -1; app.setActiveCue(cues.indexOf(cue)); app.paint(); if (scroll) elements.editor.querySelector(`.cue[data-index="${cues.indexOf(cue)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+app.setActiveCue = (index) => {
+  state.activeCueIndex = index;
+  elements.editor.querySelectorAll('.cue.active').forEach((row) => row.classList.remove('active'));
+  elements.editor.querySelector(`.cue[data-index="${index}"]`)?.classList.add('active');
+};
+app.replayCue = (index) => { const cue = app.visibleCues()[index]; if (!cue) return; app.jumpToCue(index, false); state.replayEnd = cue.end; app.startPlayback(); };
 app.renderEditor = () => {
   elements.editor.replaceChildren(); state.lastActiveIndex = -1; const cues = app.visibleCues();
-  app.$('cue-count').textContent = `${cues.length} caption${cues.length === 1 ? '' : 's'} · click Edit to jump to a moment`;
-  app.$('prev-cue').disabled = app.$('next-cue').disabled = !cues.length;
-  if (!cues.length) { elements.editor.innerHTML = '<div class="editor-empty">No spoken captions in this selection.</div>'; app.$('reset').disabled = true; return; }
-  app.$('reset').disabled = false; const fragment = document.createDocumentFragment();
-  cues.forEach((cue, index) => { const row = document.createElement('div'); row.className = 'cue'; row.dataset.index = index; const top = document.createElement('div'); top.className = 'cue-top'; const label = document.createElement('strong'); label.textContent = `${index + 1}. ${app.formatTime(cue.start)} – ${app.formatTime(cue.end)}`; const jump = document.createElement('button'); jump.type = 'button'; jump.className = 'btn small'; jump.textContent = '▶ Edit here'; jump.addEventListener('click', () => app.jumpToCue(index)); top.append(label, jump); const input = document.createElement('textarea'); input.rows = 2; input.value = cue.text; input.setAttribute('aria-label', `Caption ${index + 1} text`); input.spellcheck = true; input.addEventListener('focus', () => { if (!state.playing && Math.abs(state.sourceTime - cue.start) > .05) app.jumpToCue(index, false); }); input.addEventListener('input', () => { cue.text = input.value; app.paint(); }); row.append(top, input); fragment.append(row); });
-  elements.editor.append(fragment); app.paint();
+  app.$('cue-count').textContent = `${cues.length} caption${cues.length === 1 ? '' : 's'}`;
+  app.$('prev-cue').disabled = app.$('next-cue').disabled = app.$('reset').disabled = !cues.length;
+  app.$('clear').disabled = state.model.kind === 'empty';
+  app.$('list-empty').hidden = Boolean(cues.length);
+  if (!cues.length) { state.activeCueIndex = -1; return; }
+  const fragment = document.createDocumentFragment();
+  cues.forEach((cue, index) => {
+    const row = document.createElement('article'); row.className = 'cue'; row.dataset.index = index;
+    const stamp = document.createElement('button'); stamp.type = 'button'; stamp.className = 'cue-time'; stamp.textContent = app.formatClock(cue.start);
+    stamp.setAttribute('aria-label', `Jump to caption ${index + 1} at ${app.formatTime(cue.start)}`);
+    stamp.addEventListener('click', () => app.jumpToCue(index));
+    const body = document.createElement('div');
+    const box = document.createElement('div'); box.className = 'text-box'; box.contentEditable = 'plaintext-only'; box.textContent = cue.text; box.spellcheck = false;
+    box.setAttribute('role', 'textbox'); box.setAttribute('aria-multiline', 'true'); box.setAttribute('aria-label', `Caption ${index + 1}`);
+    box.addEventListener('focus', () => { app.setActiveCue(index); if (!state.playing && Math.abs(state.sourceTime - cue.start) > .05) app.jumpToCue(index, false); });
+    box.addEventListener('input', () => { cue.text = box.innerText.replace(/\r/g, ''); app.paint(); });
+    const tools = document.createElement('div'); tools.className = 'cue-tools';
+    const bottom = document.createElement('div'); bottom.className = 'cue-bottom';
+    const replay = document.createElement('button'); replay.type = 'button'; replay.className = 'link'; replay.textContent = '▶ Replay caption';
+    replay.addEventListener('click', () => app.replayCue(index));
+    const span = document.createElement('span'); span.className = 'cue-hint'; span.textContent = `${app.formatTime(cue.start)} – ${app.formatTime(cue.end)}`;
+    bottom.append(replay, span); tools.append(bottom); body.append(box, tools); row.append(stamp, body); fragment.append(row);
+  });
+  elements.editor.append(fragment); app.setActiveCue(state.activeCueIndex); app.paint();
+};
+app.renderSequence = () => {
+  const root = app.$('sequence'); root.replaceChildren(); const clips = app.activeClips();
+  const solo = clips.length < 2; app.$('sequence-head').hidden = solo; root.hidden = solo;
+  if (solo) return;
+  let elapsed = 0;
+  clips.forEach((clip, index) => {
+    const start = elapsed; elapsed += Math.max(0, clip.end - clip.start);
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'cut';
+    const title = document.createElement('strong'); title.textContent = `Clip ${index + 1} · ${app.formatClock(clip.start)} – ${app.formatClock(clip.end)}`;
+    const length = document.createElement('span'); length.textContent = `${(clip.end - clip.start).toFixed(1)}s`;
+    button.append(title, length);
+    button.addEventListener('click', () => { app.stop(); state.sourceTime = app.sourceAt(start); if (state.videoURL) elements.video.currentTime = state.sourceTime; app.paint(); });
+    root.append(button);
+  });
 };
 app.loadModel = (next) => { app.stop(); state.model = next; state.selected = -1; state.originalTexts = next.cues.map((cue) => cue.text); next.options.forEach((option) => option.clips.forEach((clip) => clip.captions.forEach((cue) => state.originalTexts.push(cue.text)))); app.update(); app.setStatus(next.kind === 'reels' ? `Loaded ${next.options.length} reel option${next.options.length === 1 ? '' : 's'}. Select a cut and export it with your video.` : 'Captions loaded. Add a video to preview and export.'); };
