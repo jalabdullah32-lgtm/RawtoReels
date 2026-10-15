@@ -211,33 +211,63 @@ The Media tab lists the real library, loads video from disk, and imports caption
 the app's strict validator — a malformed reel file is refused with a reason and the work already
 loaded is left alone. The hidden `json-file` input is gone; `media-json-file` is the real one.
 
-One gap: transcription could not be checked past the point of failure, because `faster_whisper`
-is not installed for the Python on this machine. The Transcribe button, the job, the progress
-meter, the failure detail, the library refresh and the status line were all confirmed against a
-real job — but a transcript has never actually come out the other end in testing.
+**Transcription re-test, 15 October.** The user reported that the controls disabled while the
+transcript loaded, then re-enabled, and that the video was playing in the app. The end-to-end
+transcription check is now complete. The progress bar filling gradually, instead of jumping near
+the end, was captured as Idea `18`.
 
-Step 6 is next — export, with the two-step naming dialog in front of it.
+**Step 6, export, implemented by Codex on 15 October.** The existing naming dialog is wired to
+the export button, its title becomes the download filename, and the progress bar follows recorded
+clip time. A 4-second smoke export downloaded as MP4 and contains both video and audio tracks;
+the meter showed 20% after about one second. The exported file was not visually reopened, so
+burned-in captions still need a direct check.
+
+**Step 7, undo, implemented by Codex on 15 October.** Caption typing, style-control gestures,
+presets, Reset text, and Reset style now save a shared history snapshot before they change the
+project. Undo restores both caption text and caption style, keeps up to 100 edits, and is cleared
+when a different caption file or reel option loads. The button disables when the stack is empty;
+Ctrl/Cmd+Z also works while editing a caption.
+
+**Step 8, word colors in the editor, implemented by Codex on 15 October.** Each caption can now
+hold color ranges, rendered as colored spans in the editor and live preview. The active caption
+shows white, red, yellow, and blue controls plus Reset word; Ctrl/Cmd+Shift+1–4 applies the four
+colors and Ctrl/Cmd+Shift+0 resets the selection. Color ranges move with edits made before or
+after them and are dropped when the colored text itself is rewritten. Undo and Reset text both
+include color ranges.
 
 ## Picking this up again
 
-Everything through step 5 is committed and pushed to `main` as `1625765`.
+Steps 1 to 5 are committed and pushed to `main` as `1625765`. Steps 6 to 11 are implemented in
+the current worktree and are not yet committed.
 
 **To run it.** Windows: `run-raw-to-reels.cmd`. Mac or Linux: `.venv/bin/python tools/server.py`.
 Either way it opens `127.0.0.1:8765`. The server needs `faster-whisper` and `numpy` in `.venv` —
 `numpy` is imported at the top of `transcribe.py`, so without it the server will not start at
 all, never mind transcribe.
 
-**The one thing outstanding before step 6.** Transcription has never been seen to succeed. Put a
-video with speech in `videos/input`, open the Media tab with the browser console showing, and
-press Transcribe. Watch for: the progress strip appearing; its label moving through `Preparing
-transcription` → `Loading local transcription model` → `Transcribing <file>` → `Transcription
-complete`; the count and meter tracking together; the Transcribe button and every `↻` greying
-out while it runs and coming back after; the card flipping from `No transcript` to `Ready` with
-its button changing from `Preview` to `Load`. Then press **Load** — the video and its captions
-should arrive together, with real words on timings that land when you play it.
+**Step 6 check completed by the owner on 15 October.** The downloaded smoke-export MP4 plays
+with the captions burned into the picture. Its video and audio tracks, chosen filename, and live
+progress had already been confirmed during the export.
 
-Anything red in the console is worth reporting, as is a card stuck on `No transcript` after a run
-that claimed success, or buttons that stay grey once it finishes.
+**Step 9, word colors in the export, implemented by Codex on 15 October.** Canvas caption layout
+now keeps source-text offsets while wrapping words to the same 80% width. Each marked run uses
+its editor color, while the caption keeps its centred lines, shared outline, background box,
+uppercase setting, and existing position. The owner confirmed the colored-caption export matches
+the preview. Step 9 is complete.
+
+**Step 10, save and re-open, implemented by Codex on 15 October.** Saved files now use schema
+1.1 and include a strict `caption_studio` block containing the complete style and word-color
+ranges for every reel option. Transcript and legacy saves use the same metadata and preserve
+their current caption text. The loader still accepts untouched reel schema 1.0 files, validates
+all 1.1 style and color data before replacing current work, and restores the saved presentation.
+A save, refresh, and re-open pass still needs checking in the browser.
+
+_Owner note: I did not test this feature because I didn’t feel like it._
+
+**Step 11, Assistant tab, implemented by Codex on 15 October.** The first visit to the Assistant
+tab creates a cross-origin frame for the public NebulaOne Orchestrator. Later visits reuse the
+same frame and chat session. The panel also provides an external-link fallback. Opening the tab
+and confirming that NebulaOne renders still needs a browser check.
 
 **How the checks were run.** From step 2 onward, by driving a real Chrome over the DevTools
 protocol — headless `--virtual-time-budget` fast-forwards timers while video decodes in real

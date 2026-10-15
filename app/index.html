@@ -54,8 +54,8 @@
 </section>
 
 <section class="tab-content" id="assistant-panel" role="tabpanel" aria-labelledby="assistant-tab" hidden>
-<div class="panel-head"><h1>Assistant</h1></div>
-<div class="style-scroll"><div class="assistant-frame"><strong>NebulaOne</strong><p>Loads the first time you open this section.</p></div></div>
+<div class="panel-head"><h1>Assistant</h1><a class="assistant-link" href="https://cs.nebulaone.ai/public-chat/orchestr8/true" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a></div>
+<div class="style-scroll assistant-scroll"><div class="assistant-frame" id="assistant-frame"><div class="assistant-placeholder"><strong>NebulaOne</strong><p>Opening the Raw to Reels assistant…</p></div></div></div>
 </section>
 
 <footer class="footer"><span id="status" role="status"></span><span>9:16 · 1080 × 1920</span></footer>
@@ -64,7 +64,7 @@
 </div>
 </main>
 
-<div class="export-state" id="export-state" role="dialog" aria-modal="true" aria-labelledby="export-state-title" hidden><div><div id="export-form"><strong id="export-state-title">Export reel</strong><p>Give this reel a name. It becomes the filename of your download.</p><label class="export-field" for="export-title">Title</label><input id="export-title" type="text" autocomplete="off" spellcheck="false"><p class="muted export-meta" id="export-meta">9:16 · 1080 × 1920</p><div class="export-actions"><button type="button" id="export-cancel">Cancel</button><button type="button" class="primary" id="export-go">↑ Export reel</button></div></div><div id="export-progress" hidden><strong>Recording your reel</strong><p>Recording happens in real time. Keep this tab open until your download begins.</p><progress id="export-meter" value="0" max="1"></progress><p class="muted export-meta" id="export-elapsed"></p></div></div></div>
+<div class="export-state" id="export-state" role="dialog" aria-modal="true" aria-labelledby="export-state-title" aria-describedby="export-description" hidden><div><div id="export-form"><strong id="export-state-title">Export reel</strong><p id="export-description">Give this reel a name. It becomes the filename of your download.</p><label class="export-field" for="export-title">Title</label><input id="export-title" type="text" autocomplete="off" spellcheck="false" maxlength="100"><p class="muted export-meta" id="export-meta">9:16 · 1080 × 1920</p><div class="export-actions"><button type="button" id="export-cancel">Cancel</button><button type="button" class="primary" id="export-go">↑ Export reel</button></div></div><div id="export-progress" hidden><strong>Recording your reel</strong><p>Recording happens in real time. Keep this tab open until your download begins.</p><progress id="export-meter" value="0" max="1" aria-label="Export progress"></progress><p class="muted export-meta" id="export-elapsed" aria-live="polite"></p></div></div></div>
 
 <script defer src="js/dom.js"></script>
 <script defer src="js/state.js"></script>

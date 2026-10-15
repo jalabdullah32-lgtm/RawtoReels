@@ -4,6 +4,71 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-15: Caption Studio UI port, steps 9–11
+**Tool:** Codex, with browser checks by the project owner
+
+### Goal
+
+Finish the remaining Caption Studio UI port work: word colors in exported video, resumable
+schema 1.1 project files, and the embedded NebulaOne Assistant.
+
+### Completed
+
+- Finished colored-word rendering in exported video. The owner confirmed it works.
+- Added schema 1.1 project saving and restoration. The owner intentionally left it untested.
+- Added the lazy-loaded NebulaOne Assistant frame. The owner confirmed it works.
+- Recorded that all eleven planned implementation steps are complete.
+
+### Results and discoveries
+
+- Exported word colors retain the caption's wrapping, centering, outline, background, uppercase
+  setting, and position.
+- Caption Studio files now store style and word-color ranges while the loader continues to accept
+  untouched NebulaOne schema 1.0 files.
+- The Assistant frame loads once and keeps its chat session when switching tabs. An external link
+  remains available if the embedded view cannot load.
+
+### Next steps
+
+- Optionally check step 10 by saving, refreshing, and reopening a Caption Studio file.
+- Run a final console pass, mark the blueprint complete, and commit the finished port.
+
+## 2026-10-15 — Caption Studio export, undo, and word colors
+**Tool:** Codex, with hands-on transcription testing by the project owner
+
+### Goal
+
+Continue the Caption Studio UI port by confirming transcription works end to end and building steps 6–8: export controls, undo history, and word-level caption colors.
+
+### Completed
+
+- Confirmed the transcription workflow through hands-on testing. Controls disabled while the transcript loaded, re-enabled afterward, and the generated captions played with the source video.
+- Wired the existing export dialog to the real export process. It suggests a title, converts it into a safe filename, shows recording progress based on completed clip time, and supports Cancel, Escape, backdrop closing, and keyboard focus management.
+- Produced a four-second MP4 smoke export. The file contained both video and audio tracks, and the progress meter advanced during recording.
+- Added a shared undo stack that keeps up to 100 edits. Caption typing, style changes, presets, Reset text, and Reset style now save restorable snapshots.
+- Added Ctrl/Cmd+Z support while editing captions and cleared history when a different caption file or reel option loads.
+- Added word-level color ranges to captions. Selected text can be made white, red, yellow, or blue from the active caption row or with Ctrl/Cmd+Shift shortcuts.
+- Rendered word colors in both the caption editor and live video preview. Color ranges follow edits made before or after them and are removed when the colored text itself is rewritten.
+- Included word colors in undo history and Reset text behavior.
+- Updated the active Caption Studio blueprint with the implementation status and remaining checks.
+- Recorded Idea `18` for smoother transcription progress.
+- Recorded Idea `19` for deleting or merging caption bubbles. Clearing a caption's text was confirmed as a useful current workaround for unwanted Faster-Whisper groupings.
+
+### Results and discoveries
+
+- Faster-Whisper's transcription quality is strong, although it can occasionally split one fluid sentence into awkward caption groups.
+- Clearing the text inside an unwanted caption bubble hides it without changing the source video or audio.
+- Export recording progress can follow the actual accumulated clip duration rather than moving only when the job finishes.
+- The exported MP4 could not be visually reopened through the automated browser because local file URLs were blocked. Its video and audio tracks were confirmed, but burned-in captions still need a direct visual check.
+- Steps 7 and 8 have not yet received a browser interaction check.
+- All changes from this session remain uncommitted in the current worktree.
+
+### Next steps
+
+- Open the smoke export directly and confirm captions are burned into the picture.
+- Exercise undo and word-color editing with real captions in the browser.
+- Continue with step 9: draw word-level colors into exported video.
+
 ## 2026-10-14 — Caption Studio UI port, steps 1–5 built
 **Tool:** Claude Code
 

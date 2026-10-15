@@ -22,6 +22,8 @@ having somewhere to put them.
 - `15` **Brand kit** — a saved logo, watermark and position, brand colors, and a default font, applied to every export.
 - `16` **Aspect ratio choice** — export 1:1 or 16:9 as well as 9:16, with fit/fill and a focal point. Related to `06`.
 - '17' UI. It has to come from raw to reels desktop studio. It it what I would actually be comfortable using.  
+- `18` **Smooth transcription progress** — fill the status bar gradually while a transcript loads instead of jumping to completion all at once; the controls already disable during processing and re-enable afterward.
+- `19` **Delete or merge caption bubbles** — remove a caption without changing the video or audio, and optionally merge strangely grouped text into the previous caption. Clearing the bubble text works as the current workaround.
 
 ## NebulaOne
 

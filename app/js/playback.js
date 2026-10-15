@@ -11,7 +11,7 @@ app.paint = () => {
   app.$('time').textContent = `${app.formatClock(Number(elements.scrub.value))} / ${app.formatClock(total)}`;
   app.$('duration-label').textContent = total ? `${Math.round(total)} seconds · 9:16` : '9:16';
   const cue = app.activeCue(state.sourceTime);
-  app.$('caption-text').textContent = cue?.text || '';
+  app.renderColoredText(app.$('caption-text'), cue);
   const index = app.visibleCues().indexOf(cue);
   if (index >= 0 && index !== state.lastActiveIndex) {
     app.setActiveCue(index);

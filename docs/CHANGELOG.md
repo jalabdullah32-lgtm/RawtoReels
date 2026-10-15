@@ -4,6 +4,19 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-15
+
+- Completed the end-to-end transcription check. The owner confirmed that controls disable while captions load, re-enable afterward, and the resulting captions play with the video.
+- Added an export naming dialog, safe download filenames, real-time recording progress, cancellation controls, and keyboard/focus handling. A four-second MP4 smoke export contained video and audio tracks. _(codex)_
+- Added shared undo history for caption text, caption styling, presets, Reset text, and Reset style, including Ctrl/Cmd+Z support. _(codex)_
+- Added selectable word colors to the caption editor and live preview, with white, red, yellow, and blue choices, reset controls, keyboard shortcuts, and undo support. _(codex)_
+- Added ideas `18` and `19`: smoother transcription progress and the ability to delete or merge caption bubbles. Clearing a bubble's text currently handles unwanted captions without changing the video. _(codex)_
+- Updated the active Caption Studio blueprint to record steps 6–8 as implemented in the current worktree. _(codex)_
+- Added word-level colors to exported video while preserving caption wrapping, centering, outlines, backgrounds, and uppercase styling. The owner confirmed the exported result matches the preview. _(codex)_
+- Added schema 1.1 Caption Studio saves containing caption style and word-color data, with strict restoration and continued support for NebulaOne schema 1.0. The owner chose not to test save and reopen. _(codex)_
+- Embedded the NebulaOne Orchestrator in the Assistant tab with lazy loading and an external-link fallback. The owner confirmed it works. _(codex)_
+- Completed implementation of all eleven Caption Studio UI port steps. _(codex)_
+
 ## 2026-10-14
 
 - Built steps 1–5 of the Caption Studio UI port. `app/index.html` is now the Desktop Preview's interface running on the existing engine: four tabs, real video in the 9:16 frame, the preview's caption rows, the style controls, and the Media tab. _(claude)_

@@ -21,8 +21,26 @@ app.updateStylePreview = () => {
   for (const [key, id] of Object.entries(STYLE_FIELDS)) app.$(id)[key === 'uppercase' ? 'checked' : 'value'] = style[key];
   document.querySelectorAll('[data-preset]').forEach((button) => { const preset = STYLE_PRESETS[button.dataset.preset]; const active = Object.keys(preset).every((key) => preset[key] === style[key]); button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
 };
-for (const [key, id] of Object.entries(STYLE_FIELDS)) app.$(id).addEventListener(key === 'uppercase' ? 'change' : 'input', () => { app.captionStyle[key] = key === 'uppercase' ? app.$(id).checked : ['size','position','outline','bg'].includes(key) ? Number(app.$(id).value) : app.$(id).value; app.updateStylePreview(); });
-document.querySelectorAll('[data-preset]').forEach((button) => button.addEventListener('click', () => { app.captionStyle = { ...STYLE_PRESETS[button.dataset.preset] }; app.updateStylePreview(); }));
-app.$('reset-style').addEventListener('click', () => { app.captionStyle = { ...DEFAULT_STYLE }; app.updateStylePreview(); });
+for (const [key, id] of Object.entries(STYLE_FIELDS)) {
+  const control = app.$(id); let styleGesture = false;
+  control.addEventListener('pointerdown', () => { styleGesture = false; });
+  control.addEventListener(key === 'uppercase' ? 'change' : 'input', () => {
+    const value = key === 'uppercase' ? control.checked : ['size','position','outline','bg'].includes(key) ? Number(control.value) : control.value;
+    if (app.captionStyle[key] === value) return;
+    if (!styleGesture) { app.saveHistory(); styleGesture = true; }
+    app.captionStyle[key] = value; app.updateStylePreview();
+  });
+  control.addEventListener('change', () => { styleGesture = false; });
+  control.addEventListener('blur', () => { styleGesture = false; });
+}
+document.querySelectorAll('[data-preset]').forEach((button) => button.addEventListener('click', () => {
+  const next = STYLE_PRESETS[button.dataset.preset];
+  if (Object.keys(next).every((key) => next[key] === app.captionStyle[key])) return;
+  app.saveHistory(); app.captionStyle = { ...next }; app.updateStylePreview();
+}));
+app.$('reset-style').addEventListener('click', () => {
+  if (Object.keys(DEFAULT_STYLE).every((key) => DEFAULT_STYLE[key] === app.captionStyle[key])) return;
+  app.saveHistory(); app.captionStyle = { ...DEFAULT_STYLE }; app.updateStylePreview();
+});
 if ('ResizeObserver' in window) new ResizeObserver(app.updateStylePreview).observe(elements.stage);
 window.addEventListener('resize', app.updateStylePreview);
