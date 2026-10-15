@@ -16,6 +16,7 @@
 - Added schema 1.1 Caption Studio saves containing caption style and word-color data, with strict restoration and continued support for NebulaOne schema 1.0. The owner chose not to test save and reopen. _(codex)_
 - Embedded the NebulaOne Orchestrator in the Assistant tab with lazy loading and an external-link fallback. The owner confirmed it works. _(codex)_
 - Completed implementation of all eleven Caption Studio UI port steps. _(codex)_
+- Added a macOS launcher that prepares the Python environment, checks for FFmpeg, and opens Caption Studio. Added Mac setup instructions. _(codex)_
 
 ## 2026-10-14
 

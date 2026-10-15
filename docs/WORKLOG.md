@@ -4,6 +4,29 @@
 > older layout and are left as they were recorded. See **Repo Map** in `README.md`
 > for how the old paths map onto the current ones.
 
+## 2026-10-15 — Mac launcher
+**Tool:** Codex
+
+### Goal
+
+Make Caption Studio straightforward to start on a MacBook while keeping the browser app and local Python server.
+
+### Completed
+
+- Added `run-raw-to-reels.command`. It checks for Python 3.9+ and FFmpeg, creates `.venv` when needed, installs the declared packages when the requirements change, then starts `tools/server.py`.
+- Added `requirements.txt` for Faster Whisper and NumPy, and `.gitattributes` to preserve the launcher's LF line endings and executable mode.
+- Added Mac startup instructions to `README.md` and saved the approved plan in `blueprints/active/feature-macos-launcher.md`.
+- Committed the Mac launcher changes on `mac` as `b3bc3bc`.
+
+### Discovery
+
+Caption Studio's browser UI and Python server already work across platforms. Mac support needed a setup launcher; the server imports NumPy at startup, and transcription requires FFmpeg on `PATH`.
+
+### Checks and next steps
+
+- The launcher has not been run on a MacBook. This Windows environment cannot verify Finder launch, dependency installation, or transcription on macOS.
+- On the MacBook, check first-run setup and repeat launch, then transcribe a short video. Record any Python or package compatibility issue before closing the blueprint.
+
 ## 2026-10-15: Caption Studio UI port, steps 9–11
 **Tool:** Codex, with browser checks by the project owner
 
