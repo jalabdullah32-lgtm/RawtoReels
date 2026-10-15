@@ -32,6 +32,8 @@ The editing is also almost instant. The application gets passed the words from _
 
 Double-click `run-raw-to-reels.cmd`. It uses the project virtual environment when present, otherwise the Windows Python launcher, then starts a local server at `127.0.0.1` and opens Caption Studio in your default browser.
 
+On macOS, install Python 3.9 or newer and FFmpeg, then double-click `run-raw-to-reels.command`. With Homebrew, you can install both from Terminal with `brew install python ffmpeg`. The first launch creates the project virtual environment and installs the Python packages; later launches reuse it. The launcher starts a local server at `127.0.0.1` and opens Caption Studio in your default browser. Press **Control+C** in Terminal to stop it.
+
 Put source videos in `videos/input`. The **Your videos** library lists them with a preview and shows whether a matching transcript exists. Click **Transcribe new videos** to create a local JSON transcript for each new video, then click a ready card to load its video and captions together. Transcripts live in `videos/transcripts` and preserve any subfolder structure from `videos/input`.
 
 You can still use **Load video** and **Load JSON** for files outside the local library. Raw source videos and generated transcripts stay on your computer and are excluded from Git.
